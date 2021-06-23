@@ -1,0 +1,122 @@
+
+import { action, makeObservable, observable } from 'mobx';
+import { IMainStore, User } from '../customtypes';
+
+const defaultUser: User = {
+    id: undefined,
+    name: undefined,
+    head: undefined,
+    auth: undefined,
+    role: undefined,
+    isLogined: false,
+};
+
+//TODO need implement
+const myInfoMockData = {
+    id: "1221221",
+    name: "zhangsan",
+    pic: undefined,
+}
+
+class Store implements IMainStore {
+
+    @observable
+    user: User = { ...defaultUser };
+
+    @observable
+    hiddenRegister: boolean = true;
+
+    @observable
+    hiddenLogin: boolean = true;
+
+    @observable
+    hiddenResetPassword: boolean = true;
+
+    constructor() {
+        const token = localStorage.getItem('token');
+        if (token) {
+            this.login(token);
+        }
+        makeObservable(this);
+    }
+
+    @action
+    login(token: string) {
+        localStorage.setItem('token', token);
+        this.user = {
+            ...this.user,
+            auth: token,
+            isLogined: true,
+        };
+    }
+
+    logout(): void {
+        this.dispose();
+    }
+
+    @action
+    async loadProfile(): Promise<void> {
+        try {
+            //TODO need implement
+            const info = myInfoMockData;
+            this.user = {
+                ...this.user,
+                id: info.id,
+                name: info.name,
+                // head: info.pic ? info.pic.key : undefined,
+                // role: info.role,
+            };
+        } catch (err) {
+            console.error(err);
+            localStorage.removeItem('token');
+            this.user = { ...defaultUser };
+        }
+    }
+
+    @action
+    updateUser(user: User) {
+        const newUser = {
+            ...this.user,
+            ...user,
+        };
+        this.user = newUser;
+    }
+
+    @action
+    toggleLogin(flag: boolean): void {
+        this.hiddenLogin = !flag;
+        if (flag) {
+            this.hiddenRegister = true;
+            this.hiddenResetPassword = true;
+        }
+    }
+
+    @action
+    toggleRegister(flag: boolean): void {
+        this.hiddenRegister = !flag;
+        if (flag) {
+            this.hiddenLogin = true;
+            this.hiddenResetPassword = true;
+        }
+    }
+
+    @action
+    toggleResetPassword(flag: boolean): void {
+        this.hiddenResetPassword = !flag;
+        if (flag) {
+            this.hiddenLogin = true;
+            this.hiddenRegister = true;
+        }
+    }
+
+    dispose(): void {
+        localStorage.removeItem('token');
+        this.user = { ...defaultUser };
+    }
+}
+
+const win: { [key: string]: any } = window;
+const store = win['__STORE__'] || new Store();
+win['__STORE__'] = store;
+
+export default store;

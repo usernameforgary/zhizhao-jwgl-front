@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col, message } from 'antd';
 import { useState } from 'react';
 import { getStore } from '../../store/useStore';
 import { IMainStore } from '../../customtypes';
@@ -12,19 +12,19 @@ const layout = {
     wrapperCol: { span: 16 },
 };
 
-const Denglu = (): JSX.Element => {
+const DengLu = (): JSX.Element => {
     const store = getStore() as IMainStore;
-    const [err, setError] = useState<string>();
     const [loading, setLoading] = useState<boolean>(false);
     const history = useHistory();
 
     const doLogin = async (shouJi: string, miMa: string) => {
         try {
-            console.log('ddddddddddd')
             setLoading(true);
             const token = await login(shouJi, miMa);
+            store.login(token);
+            history.push('/zhuye')
         } catch (err) {
-            console.error(err);
+            message.error(err.message || err.toString());
             setLoading(false);
         }
     }
@@ -76,4 +76,4 @@ const Denglu = (): JSX.Element => {
     );
 };
 
-export default Denglu;
+export default DengLu;

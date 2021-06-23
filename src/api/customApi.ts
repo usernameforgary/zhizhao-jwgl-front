@@ -41,6 +41,18 @@ const checkNoPermission = (body: APIResponseBody) => {
     return false;
 };
 
+const checkNoAuthorization = (body: APIResponseBody) => {
+    const globalConfig = getGlobalConfig();
+    const customCheckNoAuthorization = globalConfig.service.checkNoAuthrization;
+    if (customCheckNoAuthorization) {
+        return customCheckNoAuthorization(body);
+    }
+    if (Number(body.code) === 401) {
+        return true;
+    }
+    return false;
+};
+
 const checkSuccess = (body: APIResponseBody) => {
     const globalConfig = getGlobalConfig();
     const customCheckSuccess = globalConfig.service.checkSuccess;
@@ -62,7 +74,7 @@ const invoke = async (method: RequestMethod, url: string, params?: RequestParams
     }
 
     return new Promise((resolve, reject) => {
-        const { setting, getToken, errorHandlers, service } = globalConfig;
+        const { setting, getToken, errorHandlers } = globalConfig;
         let fullUrl = setting.apiGateway;
         if (!fullUrl.endsWith('/')) {
             fullUrl = fullUrl + '/';
@@ -101,9 +113,18 @@ const invoke = async (method: RequestMethod, url: string, params?: RequestParams
             headers = buildTokenHeader(token, headers);
         }
 
-        const doAuthFail = (msg: string | Error) => {
-            if (errorHandlers && errorHandlers.authFail) {
-                const result = errorHandlers.authFail(msg);
+        const doAuthorizationFail = (msg: string | Error) => {
+            if (errorHandlers && errorHandlers.authorizationFail) {
+                const result = errorHandlers.authorizationFail(msg);
+                if (result === true) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        const doAuthenticationFail = (msg: string | Error) => {
+            if (errorHandlers && errorHandlers.authenticationFail) {
+                const result = errorHandlers.authenticationFail(msg);
                 if (result === true) {
                     return true;
                 }
@@ -133,7 +154,11 @@ const invoke = async (method: RequestMethod, url: string, params?: RequestParams
                     if (!checkSuccess(body)) {
                         const err = new APIError(body.code, body.message || 'unknow');
                         if (checkNoPermission(body)) {
-                            if (doAuthFail(body.message || 'no permission')) {
+                            if (doAuthenticationFail(body.message || 'no permission')) {
+                                return;
+                            }
+                        } else if (checkNoAuthorization(body)) {
+                            if (doAuthorizationFail(body.message || '认证失败')) {
                                 return;
                             }
                         } else {
@@ -158,13 +183,13 @@ const invoke = async (method: RequestMethod, url: string, params?: RequestParams
                 if (response) {
                     if (response.status === 401) {
                         const apiErr = new APIError("401", "用户未认证");
-                        if (doAuthFail(apiErr)) {
+                        if (doAuthorizationFail(apiErr)) {
                             return;
                         }
                         reject(apiErr);
                     } else if (response.status === 403) {
                         const apiErr = new APIError("403", "用户未授权");
-                        if (doAuthFail(apiErr)) {
+                        if (doAuthenticationFail(apiErr)) {
                             return;
                         }
                         reject(apiErr);

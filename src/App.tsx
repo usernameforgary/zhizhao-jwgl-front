@@ -23,11 +23,19 @@ configLib(customeService({
         ...setting
     },
     errorHandlers: {
-        authFail: (err) => {
+        authorizationFail: (err) => {
+            console.log('---unauthorized--')
+            if (window.location.pathname === '/login') {
+                return;
+            }
             getStore<IMainStore>().logout();
             window.location.href = '/login';
         },
+        authenticationFail: (err) => {
+            alert("没有权限");
+        },
         apiFail: (err) => {
+            console.log('---api error--')
             console.error(err);
         }
     },
@@ -39,7 +47,11 @@ const App = () => {
         <BrowserRouter>
             <Switch>
                 <Route exact path="/login" component={getComponentByName("denglu")}></Route>
-                <Route exact path="/" component={protectedRoute(getComponentByName("yuangong"))}></Route>
+                <Route path="/zhuye">
+                    <AppLayout>
+                        <Route component={protectedRoute(getComponentByName("zhuye"))}></Route>
+                    </AppLayout>
+                </Route>
                 <Route path="/home">
                     <AppLayout>
                         <Route component={protectedRoute(getComponentByName("yuangong"))}></Route>

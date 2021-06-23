@@ -16,6 +16,13 @@ const checkNoPermission = (body: APIResponseBody): boolean => {
     return false;
 }
 
+const checkNoAuthrization = (body: APIResponseBody): boolean => {
+    if (Number(body.code) === 401) {
+        return true;
+    }
+    return false;
+}
+
 const checkSuccess = (body: APIResponseBody): boolean => {
     if (Number(body.code) === 1) {
         return true;
@@ -27,6 +34,7 @@ export default (globalConfig: GlobalConfig): GlobalConfig => {
     globalConfig.service = {
         convertResponse,
         checkNoPermission,
+        checkNoAuthrization,
         checkSuccess,
     };
     return globalConfig;

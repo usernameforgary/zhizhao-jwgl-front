@@ -1,11 +1,13 @@
-import React, { ComponentType, ReactNode } from 'react';
-import Denglu from '../pages/denglu/Denglu';
+import { ComponentType } from 'react';
+import DengLu from '../pages/denglu/DengLu';
 import YuanGongLieBiao from '../pages/yuangong/YuanGongLieBiao';
+import ZhuYe from '../pages/zhuye/ZhuYe';
 
 //TODO 暂时未找到更好方案
 const components: { [name: string]: ComponentType } = {
-    "denglu": Denglu,
-    "yuangong": YuanGongLieBiao
+    "denglu": DengLu,
+    "yuangong": YuanGongLieBiao,
+    "zhuye": ZhuYe
 }
 
 export const getComponentByName = (name: string) => {

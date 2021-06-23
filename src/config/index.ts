@@ -10,7 +10,10 @@ let globalConfig: GlobalConfig = {
     },
     moment: {},
     errorHandlers: {
-        authFail: (err) => {
+        authorizationFail: (err) => {
+            window.alert(err.toString());
+        },
+        authenticationFail: (err) => {
             window.alert(err.toString());
         },
         apiFail: (err) => {
@@ -46,7 +49,7 @@ const setting: Setting = win['__SETTING__'] ? {
     cdn: "",
     publicOSS: "",
     privateOSS: "",
-    apiGateway: ""
+    apiGateway: "http://localhost:8586"
 }
 
 export {

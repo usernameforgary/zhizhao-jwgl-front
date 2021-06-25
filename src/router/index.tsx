@@ -1,36 +1,43 @@
 import { ComponentType } from 'react';
+import { Redirect } from 'react-router-dom';
 import DengLu from '../pages/denglu/DengLu';
+import Page404 from '../pages/page404/Page404';
 import YuanGongLieBiao from '../pages/yuangong/YuanGongLieBiao';
-import ZhuYe from '../pages/zhuye/ZhuYe';
 
-//TODO 暂时未找到更好方案
-const components: { [name: string]: ComponentType } = {
-    "denglu": DengLu,
-    "yuangong": YuanGongLieBiao,
-    "zhuye": ZhuYe
+type RoutComponent = {
+    name: routeName,
+    key?: string,
+    path: string,
+    component?: ComponentType,
+    withoutLayout: boolean,
+    exact?: boolean
 }
 
-export const getComponentByName = (name: string) => {
-    return components[name];
+export enum routeName {
+    denglu,
+    page404,
+    zhuye,
+    yuangongliebiao
 }
 
-interface IRouter {
-    title: string
-    path: string
-    key: string
-    icon?: string
-    component?: string
-    children?: IRouter[]
+//TODO 因为webpack动路由，不能指定全路径。暂时未找到解决方案
+export const routes: RoutComponent[] = [
+    { name: routeName.denglu, path: "/", component: DengLu, withoutLayout: false, exact: true },
+    { name: routeName.page404, path: "/404", component: Page404, withoutLayout: true },
+
+    { name: routeName.yuangongliebiao, path: "/yuangong/yuangongliebiao", component: YuanGongLieBiao, withoutLayout: false },
+];
+
+// 根据route名称获取预定义的route
+export const getDefinedRouteByRouteName = (routeName: routeName): RoutComponent | undefined => {
+    return routes.find(r => r.name === routeName);
 }
 
-const router: IRouter[] = [
-    {
-        path: '/login',
-        title: "登录",
-        key: "denglu",
-        component: "denglu"
-    },
-
-]
-
-export default router;
+// 根据route名称获取预定义route对应的组件(页面)
+export const getComponentByRouteName = (routeName: routeName): ComponentType | undefined => {
+    let component;
+    if (routes.find(c => c.name === routeName)) {
+        component = routes.find(c => c.name === routeName)?.component;
+    }
+    return component;
+}

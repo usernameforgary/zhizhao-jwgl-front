@@ -22,7 +22,7 @@ const DengLu = (): JSX.Element => {
             setLoading(true);
             const token = await login(shouJi, miMa);
             store.login(token);
-            history.push('/zhuye')
+            history.push('/index');
         } catch (err) {
             message.error(err.message || err.toString());
             setLoading(false);

@@ -30,7 +30,7 @@ const checkSuccess = (body: APIResponseBody): boolean => {
     return false;
 }
 
-export default (globalConfig: GlobalConfig): GlobalConfig => {
+const customServices = (globalConfig: GlobalConfig): GlobalConfig => {
     globalConfig.service = {
         convertResponse,
         checkNoPermission,
@@ -39,3 +39,5 @@ export default (globalConfig: GlobalConfig): GlobalConfig => {
     };
     return globalConfig;
 }
+
+export default customServices;

@@ -1,3 +1,5 @@
+import React from "react";
+
 export type GlobalConfig = {
     moment: any;
     getToken: () => string;
@@ -5,6 +7,14 @@ export type GlobalConfig = {
     errorHandlers?: ErrorHandlers;
     service: ServiceOverries;
 };
+export interface IRouter {
+    title: string
+    path: string
+    key: string
+    icon?: string
+    component?: string
+    children?: IRouter[]
+}
 
 export type ServiceOverries = {
     invoke?: (method: RequestMethod, url: string, params?: RequestParams, hearders?: RequsetHeader) => Promise<SourceData>;
@@ -90,8 +100,31 @@ export interface IMainStore extends IStore {
     toggleResetPassword(flag: boolean): void;
 };
 
+export type PageableListResponse = {
+    data: any[];
+    pageNum: number;
+    pageSize: number;
+    total: number;
+    totalPage: number;
+};
 
-export type XueYuan = {
+export type SearchResult<T extends IdValue> = {
+    list: T[];
+    total: number;
+    totalPage?: number;
+    page: number;
+    pageSize: number;
+}
+
+//员工信息
+export type YuanGong = {
     xingMing: string
-    touXiang: string
+    shouJi: string
+    //是否授课
+    isLaoShi: boolean
+    beiZhu?: string,
+    //角色
+    jueSeZu: string,
+    //在职状态
+    zaiZhiZhuangTai: boolean
 } & IdValue

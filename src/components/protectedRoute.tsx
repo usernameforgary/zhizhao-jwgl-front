@@ -1,15 +1,20 @@
 import React, { ComponentType } from 'react';
 
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { getStore } from '../store/useStore';
 import { IMainStore } from '../customtypes';
 
-const protectedRoute = (RouteComponent: ComponentType) => {
-    const userStore = getStore<IMainStore>();
-    if (userStore.user?.isLogined) {
-        return () => <RouteComponent />;
+//TODO find out why this doesn't work
+const protectedRoute = (RouteComponent: ComponentType | undefined) => {
+    if (RouteComponent) {
+        console.log('------- proteced-------------')
+        const userStore = getStore<IMainStore>();
+        if (userStore.user?.isLogined) {
+            return () => <RouteComponent />;
+        }
+        return () => <Redirect to="/" />;
     }
-    return () => <Redirect to="/login" />;
+    return () => null;
 };
 
 export default protectedRoute;

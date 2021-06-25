@@ -1,17 +1,11 @@
 import React, { Component } from 'react'
 import { Layout, Menu } from 'antd';
-import { UserOutlined, UploadOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import './AppLayout.module.css';
-import ContentLayout from '../ContentLayout';
+import './index.css';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
-export type MyLayoutProps = {
-    contentProps: React.ReactNode
-}
-
-export class AppLayout extends Component {
+export class Index extends Component {
     render() {
         return (
             <div className="App">
@@ -27,8 +21,10 @@ export class AppLayout extends Component {
                         }}
                     >
                         <div className="logo" />
-                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-                            <Menu.Item key="shouye" icon>
+                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['index']}
+                            style={{ height: '100%', borderRight: 0 }}
+                        >
+                            <Menu.Item key="index" icon>
                                 首页
                             </Menu.Item>
                             <SubMenu key="jiaowuzhongxin" icon title="教务中心">
@@ -61,15 +57,16 @@ export class AppLayout extends Component {
                     <Layout style={{ height: "100vh" }}>
                         <Header className="site-layout-sub-header-background" style={{ padding: 0, backgroundColor: '#fff' }} />
                         <Content style={{ margin: '24px 16px 0' }}>
-                            <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                            <div className="site-layout-background" style={{ padding: 24, minHeight: 480 }}>
                                 {this.props.children}
                             </div>
                         </Content>
-                        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                        <Footer style={{ textAlign: 'center' }}>教务管理 ©2021 Created by 智曌教育</Footer>
                     </Layout>
                 </Layout>
             </div>
         )
     }
 }
-export default AppLayout;
+
+export default Index;

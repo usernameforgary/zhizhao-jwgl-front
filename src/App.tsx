@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import AppLayout from './layout/applayout/AppLayout';
+import { message } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';
-import { getComponentByName } from './router';
-import protectedRoute from './components/protectedRoute';
 import { config as configLib, setting } from './config';
 import customeService from './services/overrides'
 import dayjs from 'dayjs';
 import { getStore } from './store/useStore';
 import { IMainStore } from './customtypes';
+import DengLu from './pages/denglu/DengLu';
+import PrivateRouter from "./components/privateRotuer";
 
 import './store';
+import Index from './pages/index/Index';
+import Page404 from './pages/page404/Page404';
 
 configLib(customeService({
     moment: dayjs,
@@ -25,38 +27,32 @@ configLib(customeService({
     errorHandlers: {
         authorizationFail: (err) => {
             console.log('---unauthorized--')
-            if (window.location.pathname === '/login') {
+            if (window.location.pathname === "/") {
                 return;
             }
             getStore<IMainStore>().logout();
-            window.location.href = '/login';
+            window.location.href = "/";
         },
         authenticationFail: (err) => {
             alert("没有权限");
         },
         apiFail: (err) => {
             console.log('---api error--')
-            console.error(err);
         }
     },
     service: {}
 }));
 
 const App = () => {
+    const userStore = getStore<IMainStore>();
+
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path="/login" component={getComponentByName("denglu")}></Route>
-                <Route path="/zhuye">
-                    <AppLayout>
-                        <Route component={protectedRoute(getComponentByName("zhuye"))}></Route>
-                    </AppLayout>
-                </Route>
-                <Route path="/home">
-                    <AppLayout>
-                        <Route component={protectedRoute(getComponentByName("yuangong"))}></Route>
-                    </AppLayout>
-                </Route>
+                <Route exact path="/" component={DengLu} />
+                {/* <Route path="/index" component={protectedRoute(Index)}></Route> */}
+                <PrivateRouter component={Index} path="/sys" />
+                <Route path="*" component={Page404} />
             </Switch>
         </BrowserRouter>
     );

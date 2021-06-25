@@ -209,7 +209,7 @@ const invoke = async (method: RequestMethod, url: string, params?: RequestParams
                     }
                 } else {
                     //somthing went wrong
-                    const aipErr = new APIError('-1', 'Network Error');
+                    const aipErr = new APIError('-1', '网络请求异常');
                     if (doApiFail(aipErr)) {
                         return;
                     }

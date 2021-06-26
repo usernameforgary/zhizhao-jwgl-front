@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { message } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';
 import { config as configLib, setting } from './config';
@@ -44,8 +42,6 @@ configLib(customeService({
 }));
 
 const App = () => {
-    const userStore = getStore<IMainStore>();
-
     return (
         <BrowserRouter>
             <Switch>

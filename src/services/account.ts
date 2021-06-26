@@ -12,6 +12,8 @@ const convertYuanGong = (obj: SourceData): YuanGong => {
         beiZhu: obj.beiZhu || undefined,
         jueSeZu: obj.jueSeZu,
         zaiZhiZhuangTai: obj.zaiZhiZhuangTai,
+
+        key: obj.id
     };
     return item;
 }

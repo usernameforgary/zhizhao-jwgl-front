@@ -1,85 +1,114 @@
-import React, { Component } from 'react'
-import { Layout, Menu } from 'antd';
-import { Switch, Route, Link } from 'react-router-dom';
-import PrivateRouter from '../../components/privateRotuer';
+import { Layout, Menu, Button, Row, Col, Space, BackTop } from 'antd';
+import { Switch, Route, Link, useHistory } from 'react-router-dom';
 import ContextContainer from './components/ContentContainer';
 import './index.css';
 import XueYuanLieBiao from '../xueyuan/XueYuanLieBiao';
 import YuanGongLieBiao from '../yuangong/YuanGongLieBiao';
+import { getStore } from '../../store/useStore';
+import { IMainStore } from '../../customtypes';
+import XinJianYuanGong from '../yuangong/xinjianyuangong/XinJianYuanGong';
+import PrivateRouter from '../../components/privateRotuer';
+import Page404 from '../page404/Page404';
 
 const { SubMenu } = Menu;
-const { Header, Content, Sider, Footer } = Layout;
+const { Header, Sider } = Layout;
 
-export class Index extends Component {
-    render() {
-        return (
-            <div className="App">
-                <Layout>
-                    <Header className="header">
-                        <div className="logo" />
+const Index = () => {
+    const userStore = getStore<IMainStore>();
+    const history = useHistory();
+
+    const logout = () => {
+        userStore.logout();
+        history.push("/");
+    }
+
+    return (
+        <div className="App" style={{ height: '100vh' }}>
+            <Layout>
+                <Header className="header">
+                    <Row align="middle">
+                        <Col span={8}>
+                            <div className="logo" />
+                        </Col>
                         {/* <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
                             <Menu.Item key="1">nav 1</Menu.Item>
                             <Menu.Item key="2">nav 2</Menu.Item>
                             <Menu.Item key="3">nav 3</Menu.Item>
                         </Menu> */}
-                    </Header>
-                    <Layout>
-                        <Sider width={200} className="site-layout-background">
-                            <Menu
-                                mode="inline"
-                                defaultSelectedKeys={['index']}
-                                defaultOpenKeys={['sub1']}
-                                style={{ height: '100%', borderRight: 0 }}
-                            >
-                                <Menu.Item key="index" icon>
-                                    首页
-                                </Menu.Item>
-                                <SubMenu key="jiaowuzhongxin" icon title="教务中心">
-                                    <Menu.Item key="xueyuangaunli">学员管理</Menu.Item>
-                                    <Menu.Item key="banjigaunli">班级管理</Menu.Item>
-                                    <Menu.Item key="laoshiguanli">老师管理</Menu.Item>
-                                    <Menu.Item key="kechengguanli">课程管理</Menu.Item>
-                                    <Menu.Item key="shangkejilu">上课记录</Menu.Item>
-                                </SubMenu>
+                        <Col span={16} >
+                            <Row justify="end">
+                                <Space>
+                                    <Button type="primary">导入导出</Button>
+                                    <Button type="primary">帮助</Button>
+                                    <Button type="primary">修改密码</Button>
+                                    <Button onClick={logout} type="primary">退出登录</Button>
+                                </Space>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Header>
+                <Layout>
+                    <Sider width={200} className="site-layout-background">
+                        <Menu
+                            mode="inline"
+                            defaultSelectedKeys={['index']}
+                            defaultOpenKeys={['sub1']}
+                            style={{ height: '100%', borderRight: 0 }}
+                        >
+                            <Menu.Item key="index" icon>
+                                首页
+                            </Menu.Item>
+                            <SubMenu key="jiaowuzhongxin" icon title="教务中心">
+                                <Menu.Item key="xueyuangaunli">学员管理</Menu.Item>
+                                <Menu.Item key="banjigaunli">班级管理</Menu.Item>
+                                <Menu.Item key="laoshiguanli">老师管理</Menu.Item>
+                                <Menu.Item key="kechengguanli">课程管理</Menu.Item>
+                                <Menu.Item key="shangkejilu">上课记录</Menu.Item>
+                            </SubMenu>
 
-                                <SubMenu key="xiaoshouzhongxin" icon title="销售中心">
-                                    <Menu.Item key="xueyuandangan">学员档案</Menu.Item>
-                                    <Menu.Item key="xueyuanbaoming">学员报名</Menu.Item>
-                                    <Menu.Item key="xufeiyujing">续费预警</Menu.Item>
-                                    <Menu.Item key="shitingjilu">试听记录</Menu.Item>
-                                    <Menu.Item key="chengzhangjilu">成长记录</Menu.Item>
-                                </SubMenu>
+                            <SubMenu key="xiaoshouzhongxin" icon title="销售中心">
+                                <Menu.Item key="xueyuandangan">学员档案</Menu.Item>
+                                <Menu.Item key="xueyuanbaoming">学员报名</Menu.Item>
+                                <Menu.Item key="xufeiyujing">续费预警</Menu.Item>
+                                <Menu.Item key="shitingjilu">试听记录</Menu.Item>
+                                <Menu.Item key="chengzhangjilu">成长记录</Menu.Item>
+                            </SubMenu>
 
-                                <SubMenu key="caiwuzhongxin" icon title="财务中心">
-                                    <Menu.Item key="jiaofeijilu">缴费记录</Menu.Item>
-                                    <Menu.Item key="tuizhuankejilu">退转课记录</Menu.Item>
-                                    <Menu.Item key="laoshikeshijilu">老师课时记录</Menu.Item>
-                                </SubMenu>
+                            <SubMenu key="caiwuzhongxin" icon title="财务中心">
+                                <Menu.Item key="jiaofeijilu">缴费记录</Menu.Item>
+                                <Menu.Item key="tuizhuankejilu">退转课记录</Menu.Item>
+                                <Menu.Item key="laoshikeshijilu">老师课时记录</Menu.Item>
+                            </SubMenu>
 
-                                <SubMenu key="jigoushezhi" icon title="机构设置">
-                                    <Menu.Item key="yuangongguanli">
-                                        <Link to="/sys/yuangongguanli"></Link>员工管理</Menu.Item>
-                                </SubMenu>
-                            </Menu>
-                        </Sider>
-                        <Layout style={{ padding: '24px 24px 24px' }}>
-                            {/* <Breadcrumb style={{ margin: '16px 0' }}>
+                            <SubMenu key="jigoushezhi" icon title="机构设置">
+                                <Menu.Item key="yuangongguanli">
+                                    <Link to="/sys/yuangongguanli"></Link>员工管理</Menu.Item>
+                            </SubMenu>
+                        </Menu>
+
+                    </Sider>
+                    <Layout style={{ padding: '24px 24px 24px' }}>
+                        {/* <Breadcrumb style={{ margin: '16px 0' }}>
                                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                                 <Breadcrumb.Item>List</Breadcrumb.Item>
                                 <Breadcrumb.Item>App</Breadcrumb.Item>
                                 </Breadcrumb> */}
-                            <ContextContainer>
-                                <Switch>
-                                    <Route exact key="xueyuanliebiao" path="/sys/xueyuanliebiao" component={XueYuanLieBiao} />
-                                    <Route exact key="yuangongliebiao" path="/sys/yuangongguanli" component={YuanGongLieBiao} />
-                                </Switch>
-                            </ContextContainer>
-                        </Layout>
+                        <ContextContainer>
+                            <Switch>
+                                <PrivateRouter exact key="xueyuanliebiao" path="/sys/xueyuanliebiao" component={XueYuanLieBiao} />
+                                <PrivateRouter exact key="yuangongliebiao" path="/sys/yuangongguanli" component={YuanGongLieBiao} />
+                                <PrivateRouter exact key="xinjianyuangong" path="/sys/xinjianyuangong" component={XinJianYuanGong} />
+                                <Route path="*" component={Page404} />
+                            </Switch>
+                        </ContextContainer>
+
                     </Layout>
                 </Layout>
-            </div>
-        )
-    }
+            </Layout>
+            <BackTop visibilityHeight={64}>
+            </BackTop>
+        </div>
+    )
 }
 
 export default Index;

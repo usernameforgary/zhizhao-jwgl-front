@@ -1,5 +1,3 @@
-import React from "react";
-
 export type GlobalConfig = {
     moment: any;
     getToken: () => string;
@@ -116,9 +114,15 @@ export type SearchResult<T extends IdValue> = {
     pageSize: number;
 }
 
+export type ReactUninqueKey = {
+    key?: string
+}
+
 //员工信息
 export type YuanGong = {
+    //姓名
     xingMing: string
+    //手机
     shouJi: string
     //是否授课
     isLaoShi: boolean
@@ -127,4 +131,4 @@ export type YuanGong = {
     jueSeZu: string,
     //在职状态
     zaiZhiZhuangTai: boolean
-} & IdValue
+} & IdValue & ReactUninqueKey

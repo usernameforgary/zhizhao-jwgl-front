@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx'
 import { YuanGong } from '../../customtypes'
-import { Table, Switch, TableColumnType, TablePaginationConfig, message } from 'antd';
+import { Table, Switch, TableColumnType, TablePaginationConfig, message, Spin } from 'antd';
 import { observer } from 'mobx-react';
 import { useState } from 'react';
 
@@ -9,6 +9,7 @@ import { Button, Row, Col, Input } from 'antd'
 import './yuangongliebiao.css'
 import { houQuYuanGongLieBiao } from '../../services/account';
 import { useEffect } from 'react';
+import LinkButton from '../../components/linkbutton';
 
 const { Search } = Input;
 
@@ -21,32 +22,7 @@ class YuanGongLieBiaoStore {
     }
 
     @observable
-    list: YuanGong[] = [
-        {
-            id: '1234',
-            xingMing: 'YUANGONG1',
-            shouJi: '13566666',
-            isLaoShi: false,
-            jueSeZu: "lll",
-            zaiZhiZhuangTai: true,
-        },
-        {
-            id: '1234',
-            xingMing: 'YUANGONG2',
-            shouJi: '13566666',
-            isLaoShi: false,
-            jueSeZu: "lll",
-            zaiZhiZhuangTai: false,
-        },
-        {
-            id: '1234',
-            xingMing: 'YUANGONG3',
-            shouJi: '1367777777',
-            isLaoShi: false,
-            jueSeZu: "dafdsf",
-            zaiZhiZhuangTai: true,
-        },
-    ];
+    list: YuanGong[] = [];
 
     @observable
     keyword: string = '';
@@ -62,11 +38,12 @@ class YuanGongLieBiaoStore {
     @action
     async huoQuYuanGongLieBiao(pagination: TablePaginationConfig) {
         try {
+            const { current, pageSize } = pagination;
             const result = await houQuYuanGongLieBiao(pagination.current || 1, pagination.pageSize || 10);
             if (result) {
                 const { list } = result;
                 this.list = list;
-                this.pagination = pagination;
+                this.pagination = { ...this.pagination, current, pageSize };
             }
         } catch (err) {
             message.error(err.message || err.toString());
@@ -75,22 +52,24 @@ class YuanGongLieBiaoStore {
 
     @action
     onTableChange(pagination: TablePaginationConfig, filters: any, sorter: any) {
-        console.log(pagination);
         this.huoQuYuanGongLieBiao(pagination);
     }
 }
 
 const YuanGongLieBiao = () => {
     const [viewStore] = useState<YuanGongLieBiaoStore>(new YuanGongLieBiaoStore());
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { list, pagination } = viewStore;
 
     useEffect(() => {
         try {
+            setLoading(true);
             viewStore.huoQuYuanGongLieBiao(pagination);
         } catch (err) {
             console.log(err)
         }
+        setLoading(false);
     }, []);
 
     const clikced = (checked: boolean, record: YuanGong) => {
@@ -102,7 +81,9 @@ const YuanGongLieBiao = () => {
 
     //TODO 其他查询条件
     const onTableChange = (pagination: TablePaginationConfig, filters: any, sorter: any) => {
+        setLoading(true);
         viewStore.onTableChange(pagination, filters, sorter);
+        setLoading(false);
     }
 
     const columns: TableColumnType<YuanGong>[] = [
@@ -161,10 +142,9 @@ const YuanGongLieBiao = () => {
 
     return (
         <>
+            {loading ? <Spin /> : ""}
             <Row className="row-padding">
-                <Button type="primary">
-                    添加员工
-                </Button>
+                <LinkButton to="/sys/xinjianyuangong" text="添加员工"></LinkButton>
             </Row>
             <Row className="row-padding" justify="space-around">
                 <Col span={8}>

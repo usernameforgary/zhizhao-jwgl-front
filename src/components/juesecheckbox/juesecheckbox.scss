@@ -1,0 +1,25 @@
+.juese-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f2f5;;
+    border-radius: 5px;
+    margin: 10px, 10px;
+}
+.text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.selected-icon-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.title-container {
+    font-weight: bold;
+}
+.content-contianer {
+    padding: 10px;
+}

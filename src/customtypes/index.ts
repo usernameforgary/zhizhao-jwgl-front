@@ -98,6 +98,10 @@ export interface IMainStore extends IStore {
     toggleResetPassword(flag: boolean): void;
 };
 
+export type NonPageableListResponse = {
+    data: any[];
+};
+
 export type PageableListResponse = {
     data: any[];
     pageNum: number;
@@ -105,6 +109,10 @@ export type PageableListResponse = {
     total: number;
     totalPage: number;
 };
+
+export type NoPageSearchResult<T extends IdValue> = {
+    list: T[];
+}
 
 export type SearchResult<T extends IdValue> = {
     list: T[];
@@ -126,9 +134,29 @@ export type YuanGong = {
     shouJi: string
     //是否授课
     isLaoShi: boolean
-    beiZhu?: string,
+    beiZhu?: string
     //角色
-    jueSeZu: string,
+    jueSeZu: string
     //在职状态
     zaiZhiZhuangTai: boolean
 } & IdValue & ReactUninqueKey
+
+//系统菜单
+export type XiTongCaiDan = {
+    // 直接父级菜单Id
+    fuId?: string
+    // 当前菜单所有父级菜单, [fuId1][fuId2]
+    fuIds?: string
+    // 菜单名称
+    mingCheng: string
+    // 菜单路由
+    url: string
+    // 菜单排序
+    paiXu: number
+    // 隐藏
+    yinCang: boolean
+    // 菜单图标
+    tuBiao?: string
+    // 是不是叶子节点
+    isYeZi: boolean
+} & IdValue

@@ -3,7 +3,6 @@ import { PageableListResponse, SearchResult, SourceData, YuanGong } from "../cus
 import { convertSearchResult } from "../utils/converter";
 
 const convertYuanGong = (obj: SourceData): YuanGong => {
-    const json: SourceData = obj.json || {};
     const item: YuanGong = {
         id: obj.id,
         xingMing: obj.xingMing,

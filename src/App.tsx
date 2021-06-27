@@ -12,6 +12,7 @@ import PrivateRouter from "./components/privateRotuer";
 import './store';
 import Index from './pages/index/Index';
 import Page404 from './pages/page404/Page404';
+import { message } from 'antd';
 
 configLib(customeService({
     moment: dayjs,
@@ -36,6 +37,8 @@ configLib(customeService({
         },
         apiFail: (err) => {
             console.log('---api error--')
+            message.error(err.message || err.toString());
+            return true;
         }
     },
     service: {}

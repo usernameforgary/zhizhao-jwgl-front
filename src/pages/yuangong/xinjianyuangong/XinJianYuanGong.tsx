@@ -1,25 +1,71 @@
-import { Form, Input, Radio, Switch, Select, Row, Col, Button, Checkbox, Card } from "antd"
-import { useState } from "react";
+import { Form, Input, Radio, Switch, Select, Row, Col, Button, Checkbox, message } from "antd"
+import { action, makeObservable, observable } from "mobx";
+import { observer } from "mobx-react";
+import { useEffect, useState } from "react";
 
 import JueseGroupFormItem from "../../../components/juesecheckbox";
 import { JueseGroupData } from "../../../components/juesecheckbox/JueseCheckboxGroup";
 import TianJiaJueSeModal from "../../../components/modals/tianjiajuese/TianJiaJueSeModal";
+import { JueSe, NoPageSearchResult, ShanChangKeMu, XingBie } from "../../../customtypes";
+import { huoQuShanChangKeMu } from "../../../services/common";
+import { huoQuJueSeLieBiao } from "../../../services/juese";
 ;
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-const mockJueseDatas: JueseGroupData[] = [
-    { val: "aaaa", mingCheng: "校长", miaoShu: "负责学校的日常管理，拥有系统内可设置的全部权限" },
-    { val: "bbbb", mingCheng: "老师", miaoShu: "负责管理班级、学员和点名等日常教学事务，拥有教务模块部分权限" },
-    { val: "cccc", mingCheng: "教务", miaoShu: "负责班级管理、学员管理等日常教学事务，拥有教务管理模块全部权限。" },
-    { val: "dddd", mingCheng: "财务", miaoShu: "负责学校的财务管理，拥有财务模块的全部的权限" },
-    { val: "eeee", mingCheng: "跟进人（课程顾问）", miaoShu: "负责学员报名、学员档案管理，拥有报名、学员档案管理、销售中心的管理权限" },
-]
+const convertJueSe2JueseGroupData = (data: NoPageSearchResult<JueSe>): JueseGroupData[] => {
+    const jueSeGroupDatas: JueseGroupData[] = [];
+    data.list.map(v => {
+        const jueSeGroupData: JueseGroupData = {
+            val: v.id || "",
+            mingCheng: v.mingCheng,
+            jianJie: v.jianJie || ""
+        }
+        jueSeGroupDatas.push(jueSeGroupData);
+    });
+    return jueSeGroupDatas;
+}
+
+class XinJianYuanGongStore {
+    @observable
+    shanChangKeMuList: ShanChangKeMu[] = [];
+
+    @action
+    async getShanChangKeMuLieBiao(): Promise<void> {
+        const result = await huoQuShanChangKeMu();
+        this.shanChangKeMuList = result.list;
+    }
+
+    constructor() {
+        makeObservable(this)
+    }
+}
 
 const XinJianYuanGong = () => {
     const [form] = Form.useForm();
+    //是否显示添加角色模态窗口
     const [showTianJianJueseModal, setShowTianJianJueseModal] = useState<boolean>(false);
+    const [jueSeDatas, setJueSeDatas] = useState<JueseGroupData[]>([]);
+    const [viewStore] = useState<XinJianYuanGongStore>(new XinJianYuanGongStore());
+
+    const { shanChangKeMuList } = viewStore;
+
+    //获取角色列表
+    const getJueSeLieBiao = async () => {
+        try {
+            const res = await huoQuJueSeLieBiao();
+            const jueSeDatas: JueseGroupData[] = convertJueSe2JueseGroupData(res);
+            setJueSeDatas([...jueSeDatas]);
+        } catch (err) {
+            message.error(err.message || err.toString());
+        }
+    }
+
+    useEffect(() => {
+        getJueSeLieBiao();
+        viewStore.getShanChangKeMuLieBiao();
+    }, []);
 
     const onFinish = (value: any) => {
         console.log(value)
@@ -45,33 +91,37 @@ const XinJianYuanGong = () => {
                 <Form.Item label="手机" name="shouJi" rules={[{ required: true, message: "请输入手机号" }]}>
                     <Input></Input>
                 </Form.Item>
-                <Form.Item label="性别" name="xingBie">
+                <Form.Item label="性别" name="xingBie" initialValue={XingBie.NAN}>
                     <Radio.Group>
-                        <Radio value="nan">男</Radio>
-                        <Radio value="nv">女</Radio>
+                        <Radio value={XingBie.NAN}>男</Radio>
+                        <Radio value={XingBie.NV}>女</Radio>
                     </Radio.Group>
                 </Form.Item>
-                {/* <Form.Item label="是否授课" name="isLaoShi">
-                <Switch />
-            </Form.Item> */}
-                <Form.Item label="擅长科目" name="shanChangKeMu" initialValue={[{ value: "jack", label: 'Light' }]}>
-                    <Select
-                        mode="multiple"
-                        allowClear
-                        labelInValue
-                        style={{ width: 120 }}
-                        onChange={selectShanChang}
-                    >
-                        <Option value="yuwen">语文</Option>
-                        <Option value="shuxue">数学</Option>
-                    </Select>
+                <Form.Item label="是否授课" name="isLaoShi">
+                    <Switch defaultChecked={false} />
                 </Form.Item>
+                <Row>
+                    <Form.Item label="擅长科目" name="shanChangKeMu">
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            labelInValue
+                            style={{ width: 120 }}
+                            onChange={selectShanChang}
+                        >
+                            {
+                                shanChangKeMuList.map(v => <Option value={v.id || ""}>{v.mingCheng}</Option>)
+                            }
+                        </Select>
+                    </Form.Item>
+                    <a>编辑擅长科目</a>
+                </Row>
                 <Form.Item label="备注" name="beiZhu">
                     <TextArea showCount maxLength={50}></TextArea>
                 </Form.Item>
                 <Button type="primary" onClick={tianJanJueSeHandler} >自定义添加角色</Button>
                 <Form.Item label="功能权限选择" name="jueSeZu" rules={[{ required: true, message: "点击选择角色" }]}>
-                    <JueseGroupFormItem datas={mockJueseDatas} />
+                    <JueseGroupFormItem datas={jueSeDatas} />
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
@@ -85,4 +135,4 @@ const XinJianYuanGong = () => {
     )
 }
 
-export default XinJianYuanGong
+export default observer(XinJianYuanGong)

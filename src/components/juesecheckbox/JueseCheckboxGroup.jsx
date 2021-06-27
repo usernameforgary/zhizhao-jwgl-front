@@ -6,7 +6,7 @@ import JueSeFormItem from './JueseCheckbox';
 export type JueseGroupData = {
     val: string,
     mingCheng: String,
-    miaoShu: string
+    jianJie: string
 }
 
 export type JueseCheckboxProps = {
@@ -39,7 +39,7 @@ const JueseCheckboxGroup: React.FC<JueseCheckboxProps> = ({ datas, onChange }: J
                     datas.map((data, index) => {
                         return (
                             <Col span={8} key={index}>
-                                <JueSeFormItem key={data.val} JueSeFormItem val={data.val} mingCheng={data.mingCheng} miaoShu={data.miaoShu} onChange={onChangeComplete} ></JueSeFormItem>
+                                <JueSeFormItem key={data.val} JueSeFormItem val={data.val} mingCheng={data.mingCheng} jianJie={data.jianJie} onChange={onChangeComplete} ></JueSeFormItem>
                             </Col>
                         )
                     })

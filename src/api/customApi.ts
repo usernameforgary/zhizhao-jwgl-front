@@ -1,6 +1,12 @@
 import axios from "axios";
+import JSONbig from 'json-bigint';
 import { getGlobalConfig } from "../config";
 import { APIError, APIResponseBody, RequestMethod, RequestParams, RequsetHeader, SourceData } from "../customtypes";
+
+
+axios.defaults.transformResponse = [function (data) {
+    return data;
+}];
 
 const JWT_TOKEN_HEADER_KEY = 'Authorization';
 

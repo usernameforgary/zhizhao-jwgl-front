@@ -1,3 +1,5 @@
+import { DataNode } from "antd/lib/tree";
+
 export type GlobalConfig = {
     moment: any;
     getToken: () => string;
@@ -160,3 +162,36 @@ export type XiTongCaiDan = {
     // 是不是叶子节点
     isYeZi: boolean
 } & IdValue
+
+// 角色
+export type JueSe = {
+    mingCheng: string,
+    jianJie?: string,
+    xiTongCaiDanZu: number[] | [],
+    xiTongApiZu?: number[] | []
+} & IdValue
+
+
+// 扩展antd的Tree的DataNode，可排序
+export interface OrderableDataNode extends DataNode {
+    paiXu: number | 0,
+    children?: OrderableDataNode[]
+}
+
+// 通用类型
+export type CommonData = {
+    mingCheng: string
+} & IdValue
+
+// 标签
+export type BiaoQian = {
+} & CommonData
+
+//擅长科目
+export type ShanChangKeMu = {
+} & CommonData
+
+// 性别
+export enum XingBie {
+    NAN = "NAN", NV = "NV"
+}

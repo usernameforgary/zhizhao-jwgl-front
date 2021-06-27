@@ -8,11 +8,11 @@ export type JueseCheckboxProps = {
     selected?: boolean
     val: string
     mingCheng: string
-    miaoShu: string
+    jianJie: string
     onChange: (value: string, seleced: boolean) => void
 }
 
-const JueseCheckbox: React.FC<JueseCheckboxProps> = ({ val, mingCheng, miaoShu, onChange }: JueseCheckboxProps) => {
+const JueseCheckbox: React.FC<JueseCheckboxProps> = ({ val, mingCheng, jianJie, onChange }: JueseCheckboxProps) => {
     const [selected, setSelected] = useState<boolean>(false);
 
     const toggleSelected = () => {
@@ -27,7 +27,7 @@ const JueseCheckbox: React.FC<JueseCheckboxProps> = ({ val, mingCheng, miaoShu, 
             </div>
             <div className="text-container">
                 <span className="title-container">{mingCheng}</span>
-                <span className="content-contianer">{miaoShu}</span>
+                <span className="content-contianer">{jianJie}</span>
 
             </div>
         </div>

@@ -28,7 +28,6 @@ const JueseCheckbox: React.FC<JueseCheckboxProps> = ({ val, mingCheng, jianJie, 
             <div className="text-container">
                 <span className="title-container">{mingCheng}</span>
                 <span className="content-contianer">{jianJie}</span>
-
             </div>
         </div>
     )

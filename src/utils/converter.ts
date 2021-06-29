@@ -1,4 +1,4 @@
-import { IdValue, NoPageSearchResult, OrderableDataNode, SearchResult, SourceData, XiTongCaiDan } from "../customtypes";
+import { IdValue, NoPageSearchResult, OrderableDataNode, SearchResult, SourceData, XingBie, XiTongCaiDan } from "../customtypes";
 
 // 转换带分页的请求结果
 export function convertSearchResult<T extends IdValue>(data: SourceData, mapper: (itemSrc: SourceData) => T): SearchResult<T> {
@@ -13,6 +13,9 @@ export function convertSearchResult<T extends IdValue>(data: SourceData, mapper:
         pageSize: size,
     }
 }
+
+// 转换带分页的请求结果（后端JPA返回）
+
 
 // 转换不带分页的请求结果
 export function convertSearchResultNonPageable<T extends IdValue>(data: SourceData, mapper: (itemSrc: SourceData) => T): NoPageSearchResult<T> {
@@ -56,4 +59,15 @@ export function convertCaiDanList2TreeData(data: NoPageSearchResult<XiTongCaiDan
     })
 
     return parentNodes;
+}
+
+export function convertXingBie2Text(xingBie: XingBie): string {
+    switch (xingBie) {
+        case XingBie.NAN:
+            return "男";
+        case XingBie.NV:
+            return "女";
+        default:
+            return "其他"
+    }
 }

@@ -29,3 +29,7 @@ export const houQuYuanGongLieBiao = async (page: number, pageSize: number): Prom
         return convertYuanGong(obj);
     });
 };
+
+export const chuangJianYuanGong = async (xingMing: string, shouJi: string, xingBie: string, isLaoShi: boolean, shanChangKeMu: string[]) => {
+
+}

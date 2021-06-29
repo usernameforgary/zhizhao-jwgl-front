@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,YAAY,CAAC;EACT,cAAc,EAAE,IAAI;CACvB",
-    "sources": [
-        "yuangongliebiao.scss"
-    ],
-    "names": [],
-    "file": "yuangongliebiao.css"
-}
+{"version":3,"sources":["yuangongliebiao.scss"],"names":[],"mappings":"AAAA;EACI,oBAAA;AACJ","file":"yuangongliebiao.css"}

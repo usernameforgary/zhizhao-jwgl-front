@@ -28,7 +28,7 @@ class YuanGongLieBiaoStore {
     keyword: string = '';
 
     @observable
-    pagination: TablePaginationConfig = { current: 1, pageSize: 1 };
+    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 1 };
 
     @action
     updateKeyword(val: string) {
@@ -39,11 +39,11 @@ class YuanGongLieBiaoStore {
     async huoQuYuanGongLieBiao(pagination: TablePaginationConfig) {
         try {
             const { current, pageSize } = pagination;
-            const result = await houQuYuanGongLieBiao(pagination.current || 1, pagination.pageSize || 10);
+            const result = await houQuYuanGongLieBiao(current || 0, pageSize || 10);
             if (result) {
-                const { list } = result;
+                const { list, total } = result;
                 this.list = list;
-                this.pagination = { ...this.pagination, current, pageSize };
+                this.pagination = { ...this.pagination, total, current, pageSize };
             }
         } catch (err) {
             message.error(err.message || err.toString());
@@ -122,7 +122,7 @@ const YuanGongLieBiao = () => {
             render: (value, record) => {
                 return (
                     <span onClick={() => clikced(value, record)}>
-                        <Switch key={record.id} checked={value} onClick={(value) => { console.log("xxxclickedxxxxx") }} />
+                        <Switch key={record.id} checked={value} onClick={() => { console.log("xxxclickedxxxxx") }} />
                     </span>
                 )
 

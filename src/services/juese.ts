@@ -23,6 +23,7 @@ export const huoQuJueSeLieBiao = async (): Promise<NoPageSearchResult<JueSe>> =>
 }
 
 // 创建角色
-export const chuangJianJueSe = async (mingCheng: string, jianJie: string, xiTongCaiDanZu: number[]): Promise<void> => {
-    await post("/jueSe/chuangJianJueSe", { mingCheng, jianJie, xiTongCaiDanZu });
+export const chuangJianJueSe = async (mingCheng: string, jianJie: string, xiTongCaiDanZu: number[]): Promise<string> => {
+    const { id } = await post("/jueSe/chuangJianJueSe", { mingCheng, jianJie, xiTongCaiDanZu });
+    return id;
 }

@@ -9,6 +9,7 @@ import { IMainStore } from '../../customtypes';
 import XinJianYuanGong from '../yuangong/xinjianyuangong/XinJianYuanGong';
 import PrivateRouter from '../../components/privateRotuer';
 import Page404 from '../page404/Page404';
+import DashBord from '../dashbord/DashBord';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -98,6 +99,7 @@ const Index = () => {
                                 <PrivateRouter exact key="xueyuanliebiao" path="/sys/xueyuanliebiao" component={XueYuanLieBiao} />
                                 <PrivateRouter exact key="yuangongliebiao" path="/sys/yuangongguanli" component={YuanGongLieBiao} />
                                 <PrivateRouter exact key="xinjianyuangong" path="/sys/xinjianyuangong" component={XinJianYuanGong} />
+                                <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>
                                 <Route path="*" component={Page404} />
                             </Switch>
                         </ContextContainer>

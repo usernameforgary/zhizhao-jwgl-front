@@ -138,7 +138,7 @@ export type YuanGong = {
     isLaoShi: boolean
     beiZhu?: string
     //角色
-    jueSeZu: string
+    jueSeZu: string[] | []
     //在职状态
     zaiZhiZhuangTai: boolean
 } & IdValue & ReactUninqueKey

@@ -28,7 +28,7 @@ class YuanGongLieBiaoStore {
     keyword: string = '';
 
     @observable
-    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 1 };
+    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 2 };
 
     @action
     updateKeyword(val: string) {
@@ -114,6 +114,11 @@ const YuanGongLieBiao = () => {
             title: '角色',
             dataIndex: 'jueSeZu',
             key: 'jueSeZu',
+            render: (value, record) => {
+                let jueSeStr: string = "";
+                record.jueSeZu.forEach(v => { jueSeStr += ", " + v })
+                return jueSeStr.substr(1);
+            }
         },
         {
             title: '在职状态',
@@ -122,7 +127,7 @@ const YuanGongLieBiao = () => {
             render: (value, record) => {
                 return (
                     <span onClick={() => clikced(value, record)}>
-                        <Switch key={record.id} checked={value} onClick={() => { console.log("xxxclickedxxxxx") }} />
+                        <Switch key={record.id} checked={value} onClick={(value) => { console.log("xxxclickedxxxxx") }} />
                     </span>
                 )
 

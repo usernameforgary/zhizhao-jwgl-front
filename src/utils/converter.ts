@@ -31,28 +31,29 @@ export function convertCaiDanList2TreeData(data: NoPageSearchResult<XiTongCaiDan
     //TODO 目前仅支持2级菜单的处理
     const parentNodes: OrderableDataNode[] = [];
     // 取得所有父节点
-    data.list.map(val => {
+    data.list.forEach(val => {
         if (!val.isYeZi && !val.yinCang) {
             const parentNode: OrderableDataNode = { key: val.id ?? 0, title: val.mingCheng, paiXu: val.paiXu, isLeaf: false, children: [] }
             parentNodes.push(parentNode);
         }
-    });
+    })
 
     //父节点排序
     parentNodes.sort((a, b) => (a.paiXu > b.paiXu) ? 1 : ((b.paiXu > a.paiXu) ? -1 : 0));
     //插入子节点
-    data.list.map(val => {
+    data.list.forEach(val => {
         if (val.isYeZi && !val.yinCang) {
             const childNode: OrderableDataNode = { key: val.id ?? 0, title: val.mingCheng, isLeaf: true, paiXu: val.paiXu };
-            parentNodes.map((p, idx) => {
+            parentNodes.forEach((p, idx) => {
                 if (p.key === val.fuId) {
                     parentNodes[idx].children?.push(childNode);
                 }
             })
         }
     })
+
     //子节点排序
-    parentNodes.map(p => {
+    parentNodes.forEach(p => {
         if (p.children) {
             p.children.sort((a, b) => (a.paiXu > b.paiXu) ? 1 : ((b.paiXu > a.paiXu) ? -1 : 0));
         }

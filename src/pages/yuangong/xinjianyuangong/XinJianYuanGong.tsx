@@ -1,4 +1,5 @@
 import { Form, Input, Radio, Switch, Select, Row, Col, Button, Checkbox, message } from "antd"
+import { LabeledValue } from "antd/lib/select";
 import { action, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import { useEffect, useState } from "react";
@@ -9,6 +10,7 @@ import { JueseGroupData } from "../../../components/juesecheckbox/JueseCheckboxG
 import TianJiaJueSeModal from "../../../components/modals/tianjiajuese/TianJiaJueSeModal";
 import ShanChangKeMuModal from "../../../components/modals/tianjiashanchangkemu/ShanChangKeMuModal";
 import { JueSe, NoPageSearchResult, ShanChangKeMu, XingBie } from "../../../customtypes";
+import { chuangJianYuanGong } from "../../../services/account";
 import { huoQuShanChangKeMu } from "../../../services/common";
 import { huoQuJueSeLieBiao } from "../../../services/juese";
 import { convertXingBie2Text } from "../../../utils/converter";
@@ -18,7 +20,7 @@ const { TextArea } = Input;
 
 const convertJueSe2JueseGroupData = (data: NoPageSearchResult<JueSe>): JueseGroupData[] => {
     const jueSeGroupDatas: JueseGroupData[] = [];
-    data.list.map(v => {
+    data.list.forEach(v => {
         const jueSeGroupData: JueseGroupData = {
             val: v.id || "",
             mingCheng: v.mingCheng,
@@ -95,8 +97,19 @@ const XinJianYuanGong = () => {
     }
 
     //表单提交
-    const onFormSubmit = (value: any) => {
-        console.log(value)
+    const onFormSubmit = async (value: any) => {
+        let shanChangKeMuSelected: LabeledValue[] = [];
+        const shanChangKeMuKeys: string[] = [];
+        const { xingMing, shouJi, xingBie, isLaoShi, jueSeZu, beiZhu, shanChangKeMu } = value;
+        if (shanChangKeMu) {
+            shanChangKeMuSelected = shanChangKeMu;
+        }
+        shanChangKeMuSelected.forEach(s => {
+            shanChangKeMuKeys.push(s.key || s.value.toString());
+        });
+
+        await chuangJianYuanGong(xingMing, shouJi, jueSeZu, xingBie, isLaoShi, beiZhu, shanChangKeMuKeys)
+        history.goBack();
     }
 
     // 角色窗口显示
@@ -123,7 +136,9 @@ const XinJianYuanGong = () => {
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <Form.Item labelAlign="left" labelCol={{ span: 8 }} label="手机" name="shouJi" rules={[{ required: true, message: "请输入手机号" }]}>
+                        <Form.Item labelAlign="left" labelCol={{ span: 8 }} label="手机" name="shouJi"
+                            rules={[{ required: true, message: "请输入手机号" }, { message: "请正确输入手机号", pattern: new RegExp("^1(3|4|5|6|7|8|9)\\d{9}$") }]}
+                        >
                             <Input></Input>
                         </Form.Item>
                     </Col>

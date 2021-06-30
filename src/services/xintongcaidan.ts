@@ -2,7 +2,7 @@ import { get } from "../api/customApi"
 import { NonPageableListResponse, NoPageSearchResult, SourceData, XiTongCaiDan } from "../customtypes";
 import { convertSearchResultNonPageable } from "../utils/converter";
 
-const convertYuanGong = (obj: SourceData): XiTongCaiDan => {
+export const convertXiTongCaiDan = (obj: SourceData): XiTongCaiDan => {
     const item: XiTongCaiDan = {
         id: obj.id,
         // 直接父级菜单Id
@@ -29,6 +29,6 @@ const convertYuanGong = (obj: SourceData): XiTongCaiDan => {
 export const huoQuXiTongCaiDanLieBiao = async (): Promise<NoPageSearchResult<XiTongCaiDan>> => {
     const res: NonPageableListResponse = await get('/xiTongCaiDan/huoQuXiTongCaiDan');
     return convertSearchResultNonPageable<XiTongCaiDan>(res, (obj: SourceData) => {
-        return convertYuanGong(obj);
+        return convertXiTongCaiDan(obj);
     });
 }

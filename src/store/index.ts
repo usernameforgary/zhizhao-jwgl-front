@@ -1,6 +1,7 @@
 
 import { action, makeObservable, observable } from 'mobx';
 import { IMainStore, User } from '../customtypes';
+import { huoQuZhangHaoXinXi } from '../services/account';
 
 const defaultUser: User = {
     id: undefined,
@@ -9,14 +10,8 @@ const defaultUser: User = {
     auth: undefined,
     role: undefined,
     isLogined: false,
+    xiTongCaiDanZu: []
 };
-
-//TODO need implement
-const myInfoMockData = {
-    id: "1221221",
-    name: "zhangsan",
-    pic: undefined,
-}
 
 class Store implements IMainStore {
 
@@ -57,12 +52,12 @@ class Store implements IMainStore {
     @action
     async loadProfile(): Promise<void> {
         try {
-            //TODO need implement
-            const info = myInfoMockData;
+            const res: User = await huoQuZhangHaoXinXi();
             this.user = {
                 ...this.user,
-                id: info.id,
-                name: info.name,
+                id: res.id,
+                name: res.name,
+                xiTongCaiDanZu: res.xiTongCaiDanZu
                 // head: info.pic ? info.pic.key : undefined,
                 // role: info.role,
             };

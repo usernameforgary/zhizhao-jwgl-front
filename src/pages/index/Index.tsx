@@ -10,6 +10,7 @@ import XinJianYuanGong from '../yuangong/xinjianyuangong/XinJianYuanGong';
 import PrivateRouter from '../../components/privateRotuer';
 import Page404 from '../page404/Page404';
 import DashBord from '../dashbord/DashBord';
+import { useEffect } from 'react';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -17,6 +18,10 @@ const { Header, Sider } = Layout;
 const Index = () => {
     const userStore = getStore<IMainStore>();
     const history = useHistory();
+
+    useEffect(() => {
+        userStore.loadProfile();
+    }, []);
 
     const logout = () => {
         userStore.logout();
@@ -56,8 +61,8 @@ const Index = () => {
                             defaultOpenKeys={['sub1']}
                             style={{ height: '100%', borderRight: 0 }}
                         >
-                            <Menu.Item key="index" icon>
-                                首页
+                            <Menu.Item key="dashborad" icon>
+                                <Link to="/sys">首页</Link>
                             </Menu.Item>
                             <SubMenu key="jiaowuzhongxin" icon title="教务中心">
                                 <Menu.Item key="xueyuangaunli">学员管理</Menu.Item>
@@ -83,7 +88,8 @@ const Index = () => {
 
                             <SubMenu key="jigoushezhi" icon title="机构设置">
                                 <Menu.Item key="yuangongguanli">
-                                    <Link to="/sys/yuangongguanli"></Link>员工管理</Menu.Item>
+                                    <Link to="/sys/yuangongguanli">员工管理</Link>
+                                </Menu.Item>
                             </SubMenu>
                         </Menu>
 

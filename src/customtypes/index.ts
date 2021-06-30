@@ -75,6 +75,7 @@ export type Account = {
     name?: string;
     head?: string;
     auth?: string;
+    xiTongCaiDanZu?: XiTongCaiDan[]
 } & IdValue;
 
 

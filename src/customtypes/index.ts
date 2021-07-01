@@ -164,6 +164,11 @@ export type XiTongCaiDan = {
     isYeZi: boolean
 } & IdValue
 
+// antd里面的Menue
+export interface Menu extends IRouter {
+
+}
+
 // 角色
 export type JueSe = {
     mingCheng: string,
@@ -176,6 +181,8 @@ export type JueSe = {
 // 扩展antd的Tree的DataNode，可排序
 export interface OrderableDataNode extends DataNode {
     paiXu: number | 0,
+    // 增加此字段，为了主页左侧菜单可复用此OrderableDataNode
+    url?: string,
     children?: OrderableDataNode[]
 }
 

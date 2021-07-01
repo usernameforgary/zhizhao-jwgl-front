@@ -10,6 +10,7 @@ import './yuangongliebiao.css'
 import { houQuYuanGongLieBiao } from '../../services/account';
 import { useEffect } from 'react';
 import LinkButton from '../../components/linkbutton';
+import Loading from '../../components/loading/Loading';
 
 const { Search } = Input;
 
@@ -62,14 +63,14 @@ const YuanGongLieBiao = () => {
 
     const { list, pagination } = viewStore;
 
-    useEffect(() => {
-        try {
-            setLoading(true);
-            viewStore.huoQuYuanGongLieBiao(pagination);
-        } catch (err) {
-            console.log(err)
-        }
+    const huoQuYuanGongLieBiao = async (pagination: TablePaginationConfig) => {
+        setLoading(!loading);
+        await viewStore.huoQuYuanGongLieBiao(pagination)
         setLoading(false);
+    }
+
+    useEffect(() => {
+        huoQuYuanGongLieBiao(pagination);
     }, []);
 
     const clikced = (checked: boolean, record: YuanGong) => {
@@ -81,9 +82,7 @@ const YuanGongLieBiao = () => {
 
     //TODO 其他查询条件
     const onTableChange = (pagination: TablePaginationConfig, filters: any, sorter: any) => {
-        setLoading(true);
-        viewStore.onTableChange(pagination, filters, sorter);
-        setLoading(false);
+        huoQuYuanGongLieBiao(pagination);
     }
 
     const columns: TableColumnType<YuanGong>[] = [
@@ -147,7 +146,7 @@ const YuanGongLieBiao = () => {
 
     return (
         <>
-            {loading ? <Spin /> : ""}
+            {loading ? <Loading /> : ""}
             <Row className="row-padding">
                 <LinkButton to="/sys/xinjianyuangong" text="添加员工"></LinkButton>
             </Row>

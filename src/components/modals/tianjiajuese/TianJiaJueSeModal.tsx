@@ -30,7 +30,7 @@ const TianJiaJueSeModal: React.FC<TianJiaJueSeModalProps> = ({ id, modalTitle, v
     const huoQuXiTongCaiDan = async () => {
         try {
             const result = await huoQuXiTongCaiDanLieBiao();
-            const treeData = convertCaiDanList2TreeData(result);
+            const treeData = convertCaiDanList2TreeData(result.list);
             console.log(treeData);
             setTreeData(treeData);
         } catch (error) {

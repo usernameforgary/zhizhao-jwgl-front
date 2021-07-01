@@ -5,12 +5,17 @@ import './index.css';
 import XueYuanLieBiao from '../xueyuan/XueYuanLieBiao';
 import YuanGongLieBiao from '../yuangong/YuanGongLieBiao';
 import { getStore } from '../../store/useStore';
-import { IMainStore } from '../../customtypes';
+import { IMainStore, OrderableDataNode } from '../../customtypes';
 import XinJianYuanGong from '../yuangong/xinjianyuangong/XinJianYuanGong';
 import PrivateRouter from '../../components/privateRotuer';
 import Page404 from '../page404/Page404';
 import DashBord from '../dashbord/DashBord';
 import { useEffect } from 'react';
+import { useState } from 'react';
+import Loading from '../../components/loading/Loading';
+import { convertCaiDanList2TreeData } from '../../utils/converter';
+import KeChengLieBiao from '../kecheng/KeChengLieBiao';
+
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -18,9 +23,19 @@ const { Header, Sider } = Layout;
 const Index = () => {
     const userStore = getStore<IMainStore>();
     const history = useHistory();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [menuNodes, setMenuNodes] = useState<OrderableDataNode[]>([]);
+
+    const loadProfile = async () => {
+        setLoading(!loading);
+        await userStore.loadProfile();
+        const nodes = convertCaiDanList2TreeData(userStore.user.xiTongCaiDanZu ?? []);
+        setMenuNodes(nodes);
+        setLoading(false);
+    }
 
     useEffect(() => {
-        userStore.loadProfile();
+        loadProfile();
     }, []);
 
     const logout = () => {
@@ -30,6 +45,7 @@ const Index = () => {
 
     return (
         <div className="App" style={{ height: '100vh' }}>
+            {loading ? <Loading /> : ""}
             <Layout>
                 <Header className="header">
                     <Row align="middle">
@@ -57,42 +73,36 @@ const Index = () => {
                     <Sider width={200} className="site-layout-background">
                         <Menu
                             mode="inline"
-                            defaultSelectedKeys={['index']}
+                            defaultSelectedKeys={['dashborad']}
                             defaultOpenKeys={['sub1']}
                             style={{ height: '100%', borderRight: 0 }}
                         >
-                            <Menu.Item key="dashborad" icon>
-                                <Link to="/sys">首页</Link>
-                            </Menu.Item>
-                            <SubMenu key="jiaowuzhongxin" icon title="教务中心">
-                                <Menu.Item key="xueyuangaunli">学员管理</Menu.Item>
-                                <Menu.Item key="banjigaunli">班级管理</Menu.Item>
-                                <Menu.Item key="laoshiguanli">老师管理</Menu.Item>
-                                <Menu.Item key="kechengguanli">课程管理</Menu.Item>
-                                <Menu.Item key="shangkejilu">上课记录</Menu.Item>
-                            </SubMenu>
-
-                            <SubMenu key="xiaoshouzhongxin" icon title="销售中心">
-                                <Menu.Item key="xueyuandangan">学员档案</Menu.Item>
-                                <Menu.Item key="xueyuanbaoming">学员报名</Menu.Item>
-                                <Menu.Item key="xufeiyujing">续费预警</Menu.Item>
-                                <Menu.Item key="shitingjilu">试听记录</Menu.Item>
-                                <Menu.Item key="chengzhangjilu">成长记录</Menu.Item>
-                            </SubMenu>
-
-                            <SubMenu key="caiwuzhongxin" icon title="财务中心">
-                                <Menu.Item key="jiaofeijilu">缴费记录</Menu.Item>
-                                <Menu.Item key="tuizhuankejilu">退转课记录</Menu.Item>
-                                <Menu.Item key="laoshikeshijilu">老师课时记录</Menu.Item>
-                            </SubMenu>
-
-                            <SubMenu key="jigoushezhi" icon title="机构设置">
-                                <Menu.Item key="yuangongguanli">
-                                    <Link to="/sys/yuangongguanli">员工管理</Link>
-                                </Menu.Item>
-                            </SubMenu>
+                            {/* 左侧菜单列表 */}
+                            {menuNodes ? (
+                                menuNodes.map(n => {
+                                    if (!n.children || n.children.length === 0) {
+                                        return (
+                                            <Menu.Item key={n.key} icon>
+                                                <Link to={n.url ?? ""}>{n.title}</Link>
+                                            </Menu.Item>
+                                        );
+                                    }
+                                    return (
+                                        <SubMenu key={n.key} icon title={n.title}>
+                                            {
+                                                n.children?.map(cn => {
+                                                    return (
+                                                        <Menu.Item key={cn.key} icon>
+                                                            <Link to={cn.url ?? ""}>{cn.title}</Link>
+                                                        </Menu.Item>
+                                                    )
+                                                })
+                                            }
+                                        </SubMenu>
+                                    );
+                                })
+                            ) : ""}
                         </Menu>
-
                     </Sider>
                     <Layout style={{ padding: '24px 24px 24px' }}>
                         {/* <Breadcrumb style={{ margin: '16px 0' }}>
@@ -102,8 +112,10 @@ const Index = () => {
                                 </Breadcrumb> */}
                         <ContextContainer>
                             <Switch>
+                                {/* 生成路由 */}
                                 <PrivateRouter exact key="xueyuanliebiao" path="/sys/xueyuanliebiao" component={XueYuanLieBiao} />
-                                <PrivateRouter exact key="yuangongliebiao" path="/sys/yuangongguanli" component={YuanGongLieBiao} />
+                                <PrivateRouter exact key="kechengliebiao" path="/sys/kechengliebiao" component={KeChengLieBiao} />
+                                <PrivateRouter exact key="yuangongliebiao" path="/sys/yuangongliebiao" component={YuanGongLieBiao} />
                                 <PrivateRouter exact key="xinjianyuangong" path="/sys/xinjianyuangong" component={XinJianYuanGong} />
                                 <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>
                                 <Route path="*" component={Page404} />

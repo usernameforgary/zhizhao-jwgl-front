@@ -15,6 +15,7 @@ import { useState } from 'react';
 import Loading from '../../components/loading/Loading';
 import { convertCaiDanList2TreeData } from '../../utils/converter';
 import KeChengLieBiao from '../kecheng/KeChengLieBiao';
+import XinJianKeCheng from '../kecheng/xinzengkecheng/XinJianKeCheng';
 
 
 const { SubMenu } = Menu;
@@ -22,16 +23,17 @@ const { Header, Sider } = Layout;
 
 const Index = () => {
     const userStore = getStore<IMainStore>();
+
     const history = useHistory();
-    const [loading, setLoading] = useState<boolean>(false);
     const [menuNodes, setMenuNodes] = useState<OrderableDataNode[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const loadProfile = async () => {
-        setLoading(!loading);
+        setLoading(true);
         await userStore.loadProfile();
+        setLoading(false);
         const nodes = convertCaiDanList2TreeData(userStore.user.xiTongCaiDanZu ?? []);
         setMenuNodes(nodes);
-        setLoading(false);
     }
 
     useEffect(() => {
@@ -112,11 +114,12 @@ const Index = () => {
                                 </Breadcrumb> */}
                         <ContextContainer>
                             <Switch>
-                                {/* 生成路由 */}
-                                <PrivateRouter exact key="xueyuanliebiao" path="/sys/xueyuanliebiao" component={XueYuanLieBiao} />
-                                <PrivateRouter exact key="kechengliebiao" path="/sys/kechengliebiao" component={KeChengLieBiao} />
+                                {/* 生成路由, 临时方案 */}
                                 <PrivateRouter exact key="yuangongliebiao" path="/sys/yuangongliebiao" component={YuanGongLieBiao} />
                                 <PrivateRouter exact key="xinjianyuangong" path="/sys/xinjianyuangong" component={XinJianYuanGong} />
+                                <PrivateRouter exact key="xueyuanliebiao" path="/sys/xueyuanliebiao" component={XueYuanLieBiao} />
+                                <PrivateRouter exact key="kechengliebiao" path="/sys/kechengliebiao" component={KeChengLieBiao} />
+                                <PrivateRouter exact key="xinjiankecheng" path="/sys/xinjiankecheng" component={XinJianKeCheng} />
                                 <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>
                                 <Route path="*" component={Page404} />
                             </Switch>

@@ -1,7 +1,6 @@
 import { Modal, Form, Input, Button, Row, Col } from 'antd';
-import { values } from 'mobx';
+import { useForm } from 'antd/lib/form/Form';
 import React from 'react';
-import { useState } from 'react';
 import { ShanChangKeMu } from '../../../customtypes';
 import { chuangJianShanChangKeMu } from '../../../services/common';
 
@@ -15,10 +14,12 @@ type ShanChangKeMuModalProps = {
 }
 
 const ShanChangKeMuModal: React.FC<ShanChangKeMuModalProps> = ({ visible, onClose, existShanChangKeMu, addNew }: ShanChangKeMuModalProps) => {
+    const [form] = useForm();
 
     //新增
     const addNewItem = async (mingCheng: string) => {
         const id: string = await chuangJianShanChangKeMu(mingCheng);
+        form.setFieldsValue({ mingCheng: "" });
         if (addNew) {
             const newItem: ShanChangKeMu = { id: id, mingCheng: mingCheng };
             addNew(newItem);
@@ -42,7 +43,9 @@ const ShanChangKeMuModal: React.FC<ShanChangKeMuModalProps> = ({ visible, onClos
         >
 
             <Form
-                onFinish={onFormFinish}>
+                form={form}
+                onFinish={onFormFinish}
+            >
                 <Row>
                     <Form.Item name="mingCheng" label="名称" rules={[{ required: true, message: "输入擅长科目名" }]}>
                         <Input></Input>

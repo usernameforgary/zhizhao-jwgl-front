@@ -1,4 +1,4 @@
-import { Form, Input, Radio, Switch, Select, Row, Col, Button, Checkbox, message } from "antd"
+import { Form, Input, Radio, Switch, Select, Row, Col, Button } from "antd"
 import { LabeledValue } from "antd/lib/select";
 import { action, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
@@ -155,8 +155,8 @@ const XinJianYuanGong = () => {
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <Form.Item labelAlign="left" labelCol={{ span: 8 }} label="是否授课" name="isLaoShi">
-                            <Switch defaultChecked={false} />
+                        <Form.Item labelAlign="left" initialValue={false} labelCol={{ span: 8 }} label="是否授课" name="isLaoShi">
+                            <Switch />
                         </Form.Item>
                     </Col>
                 </Row>

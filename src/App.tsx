@@ -36,9 +36,8 @@ configLib(customeService({
             alert("没有权限");
         },
         apiFail: (err) => {
-            console.log('---api error--')
+            console.error("api error", err)
             message.error(err.message || err.toString());
-            return true;
         }
     },
     service: {}

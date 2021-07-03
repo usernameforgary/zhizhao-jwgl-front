@@ -1,5 +1,4 @@
 import { ComponentType } from 'react';
-import { Redirect } from 'react-router-dom';
 import DashBord from '../pages/dashbord/DashBord';
 import DengLu from '../pages/denglu/DengLu';
 import Index from '../pages/index/Index';
@@ -49,13 +48,13 @@ export const subRoutes: RouteComponent[] = [
 
 // 根据route名称获取预定义的route
 export const getDefinedRouteByRouteName = (routeName: routeName): RouteComponent | undefined => {
-    return routes.find(r => r.name === routeName);
+    const allRoutes = [...routes, ...subRoutes];
+    return allRoutes.find(r => r.name === routeName);
 }
 
 // 根据route名称获取预定义route对应的组件(页面)
 export const getComponentByRouteName = (routeName: routeName): ComponentType | undefined => {
     let component;
-    const allRoutes = [...routes, ...subRoutes];
     if (routes.find(c => c.name === routeName)) {
         component = routes.find(c => c.name === routeName)?.component;
     }

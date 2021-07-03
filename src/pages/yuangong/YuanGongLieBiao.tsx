@@ -1,10 +1,10 @@
 import { action, makeObservable, observable } from 'mobx'
 import { YuanGong } from '../../customtypes'
-import { Table, Switch, TableColumnType, TablePaginationConfig, message, Spin } from 'antd';
+import { Table, Switch, TableColumnType, TablePaginationConfig } from 'antd';
 import { observer } from 'mobx-react';
 import { useState } from 'react';
 
-import { Button, Row, Col, Input } from 'antd'
+import { Row, Col, Input } from 'antd'
 
 import './yuangongliebiao.css'
 import { houQuYuanGongLieBiao } from '../../services/account';
@@ -13,10 +13,6 @@ import LinkButton from '../../components/linkbutton';
 import Loading from '../../components/loading/Loading';
 
 const { Search } = Input;
-
-type YuanGongLiebiaoProps = {
-
-}
 class YuanGongLieBiaoStore {
     constructor() {
         makeObservable(this);
@@ -38,16 +34,12 @@ class YuanGongLieBiaoStore {
 
     @action
     async huoQuYuanGongLieBiao(pagination: TablePaginationConfig) {
-        try {
-            const { current, pageSize } = pagination;
-            const result = await houQuYuanGongLieBiao(current || 0, pageSize || 10);
-            if (result) {
-                const { list, total } = result;
-                this.list = list;
-                this.pagination = { ...this.pagination, total, current, pageSize };
-            }
-        } catch (err) {
-            message.error(err.message || err.toString());
+        const { current, pageSize } = pagination;
+        const result = await houQuYuanGongLieBiao(current || 0, pageSize || 10);
+        if (result) {
+            const { list, total } = result;
+            this.list = list;
+            this.pagination = { ...this.pagination, total, current, pageSize };
         }
     }
 
@@ -64,8 +56,8 @@ const YuanGongLieBiao = () => {
     const { list, pagination } = viewStore;
 
     const huoQuYuanGongLieBiao = async (pagination: TablePaginationConfig) => {
-        setLoading(!loading);
-        await viewStore.huoQuYuanGongLieBiao(pagination)
+        setLoading(true);
+        await viewStore.huoQuYuanGongLieBiao(pagination).catch(e => { });
         setLoading(false);
     }
 

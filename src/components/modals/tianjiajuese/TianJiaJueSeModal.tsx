@@ -1,4 +1,4 @@
-import { Modal, Button, Form, Input, message, Tree, Row, Col } from 'antd';
+import { Modal, Button, Form, Input, Row, Col } from 'antd';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
@@ -8,6 +8,7 @@ import { huoQuXiTongCaiDanLieBiao } from '../../../services/xintongcaidan';
 import { randomId } from '../../../utils';
 import { convertCaiDanList2TreeData } from '../../../utils/converter';
 import { JueseGroupData } from '../../juesecheckbox/JueseCheckboxGroup';
+import Loading from '../../loading/Loading';
 import FormTree from './FormTree';
 
 export type TianJiaJueSeModalProps = {
@@ -29,12 +30,12 @@ const TianJiaJueSeModal: React.FC<TianJiaJueSeModalProps> = ({ id, modalTitle, v
     // 获取系统菜单
     const huoQuXiTongCaiDan = async () => {
         try {
+            setLoading(true);
             const result = await huoQuXiTongCaiDanLieBiao();
+            setLoading(false);
             const treeData = convertCaiDanList2TreeData(result.list);
-            console.log(treeData);
             setTreeData(treeData);
         } catch (error) {
-            message.error(error.message || error.toString())
         }
     }
 
@@ -69,6 +70,7 @@ const TianJiaJueSeModal: React.FC<TianJiaJueSeModalProps> = ({ id, modalTitle, v
             onCancel={onClose}
             footer={false}
         >
+            {loading ? <Loading></Loading> : ""}
             <Form
                 onFinish={onFormFinish}
             >

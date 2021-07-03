@@ -203,3 +203,32 @@ export type ShanChangKeMu = {
 export enum XingBie {
     NAN = "NAN", NV = "NV"
 }
+
+// 课程
+export type KeCheng = {
+    //名称
+    mingCheng: string
+    //单价
+    danJia: number
+    //定价标准
+    dingJiaBiaoZhunZu?: [{ [key: string]: string | number }]
+    //请假扣课时
+    qingJiaKouKeShi: boolean
+    //未到扣课时
+    weiDaoKouKeShi: boolean
+    //备注
+    beiZhu?: string,
+    // 在读学员数
+    zaiDuXueYuanShu?: number
+    // 启用状态
+    qiYongZhuangTai?: boolean
+} & IdValue
+
+// 课程定价标准
+export type DingJiaBiaoZhun = {
+    key: number
+    mingCheng: string
+    keShi: number
+    zongJia: number
+    keChengDanJia: number
+}

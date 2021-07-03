@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Row, Col, message, Spin } from 'antd';
+import { Form, Input, Button, Row, Col, Spin } from 'antd';
 import { useState } from 'react';
 import { getStore } from '../../store/useStore';
 import { IMainStore } from '../../customtypes';
@@ -21,12 +21,13 @@ const DengLu = (): JSX.Element => {
         try {
             setLoading(true);
             const token = await login(shouJi, miMa);
-            store.login(token);
-            history.push('/sys');
+            if (token) {
+                store.login(token);
+                history.push('/sys');
+            }
         } catch (err) {
-            message.error(err.message || err.toString());
-            setLoading(false);
         }
+        setLoading(false);
     }
 
     return (

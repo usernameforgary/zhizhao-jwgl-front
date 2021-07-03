@@ -1,5 +1,4 @@
 import axios from "axios";
-import JSONbig from 'json-bigint';
 import { getGlobalConfig } from "../config";
 import { APIError, APIResponseBody, RequestMethod, RequestParams, RequsetHeader, SourceData } from "../customtypes";
 

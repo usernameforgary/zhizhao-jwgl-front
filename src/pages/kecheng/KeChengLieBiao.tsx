@@ -1,13 +1,15 @@
-import { Button, Row, Col, Space, TablePaginationConfig, TableColumnType, Switch, Table } from 'antd';
+import { Button, Row, Col, Space, TablePaginationConfig, TableColumnType, Switch, Table, Input } from 'antd';
 import { action, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Loading from '../../components/loading/Loading';
 import SearchItemInput from '../../components/searchitems/searchiteminput/SearchItemInput';
 import { DingJiaBiaoZhun, KeCheng } from '../../customtypes';
 import { getDefinedRouteByRouteName, routeName } from '../../router';
 import { huoQuKeChengLieBiao } from '../../services/kecheng';
 
+const { Search } = Input
 class KeChengLieBiaoStore {
     constructor() {
         makeObservable(this);
@@ -47,18 +49,19 @@ class KeChengLieBiaoStore {
 const KeChengLieBiao: React.FC = () => {
     const history = useHistory();
     const [viewStore] = useState<KeChengLieBiaoStore>(new KeChengLieBiaoStore());
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { list, pagination } = viewStore;
 
     const search = async () => {
-        await viewStore.search(pagination).catch(e => {
-
-        })
+        setLoading(true);
+        await viewStore.search(pagination).catch(e => { })
+        setLoading(false);
     }
 
     useEffect(() => {
         search();
-    }, [])
+    }, []);
 
     const onQiYongZhuangTaiClick = (checked: boolean, record: KeCheng) => {
         console.log('record: ', record);
@@ -128,9 +131,19 @@ const KeChengLieBiao: React.FC = () => {
 
     return (
         <>
-            <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+            {loading ? <Loading /> : ""}
+            <Space direction="vertical" size="large" style={{ width: "100%" }}>
                 <Row style={{ width: '100%' }}>
-                    <SearchItemInput></SearchItemInput>
+                    <Col>
+                        <Row align="middle">
+                            <Col>
+                                <span>搜索课程：</span>
+                            </Col>
+                            <Col>
+                                <Search onSearch={() => { }} />
+                            </Col>
+                        </Row>
+                    </Col>
                 </Row>
                 <Row>
                     <Button type="primary" onClick={() => {

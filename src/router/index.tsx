@@ -1,10 +1,12 @@
 import { ComponentType } from 'react';
+import BanJiLieBiao from '../pages/banji/BanJiLieBiao';
 import DashBord from '../pages/dashbord/DashBord';
 import DengLu from '../pages/denglu/DengLu';
 import Index from '../pages/index/Index';
 import KeChengLieBiao from '../pages/kecheng/KeChengLieBiao';
 import XinJianKeCheng from '../pages/kecheng/xinzengkecheng/XinJianKeCheng';
 import Page404 from '../pages/page404/Page404';
+import XueYuanBaoMing from '../pages/xueyuan/XueYuanBaoMing';
 import XueYuanLieBiao from '../pages/xueyuan/XueYuanLieBiao';
 import XinJianYuanGong from '../pages/yuangong/xinjianyuangong/XinJianYuanGong';
 import YuanGongLieBiao from '../pages/yuangong/YuanGongLieBiao';
@@ -28,6 +30,8 @@ export enum routeName {
     xueyuanliebiao,
     kechengliebiao,
     xinjiankecheng,
+    xueyuanbaoming,
+    banjiliebiao,
 }
 
 //TODO 因为webpack动态路由，不能指定全路径。暂时未找到解决方案
@@ -43,6 +47,8 @@ export const subRoutes: RouteComponent[] = [
     { name: routeName.xueyuanliebiao, path: "/sys/xueyuanliebiao", component: XueYuanLieBiao, withoutLayout: false },
     { name: routeName.kechengliebiao, path: "/sys/kechengliebiao", component: KeChengLieBiao, withoutLayout: false },
     { name: routeName.xinjiankecheng, path: "/sys/xinjiankecheng", component: XinJianKeCheng, withoutLayout: false },
+    { name: routeName.xueyuanbaoming, path: "/sys/xueyuanbaoming", component: XueYuanBaoMing, withoutLayout: false },
+    { name: routeName.banjiliebiao, path: "/sys/banjiliebiao", component: BanJiLieBiao, withoutLayout: false },
     { name: routeName.dashboard, path: "/sys", component: DashBord, withoutLayout: false },
 ]
 

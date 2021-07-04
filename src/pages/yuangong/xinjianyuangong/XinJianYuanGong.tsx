@@ -108,8 +108,11 @@ const XinJianYuanGong = () => {
             shanChangKeMuKeys.push(s.key || s.value.toString());
         });
 
-        await chuangJianYuanGong(xingMing, shouJi, jueSeZu, xingBie, isLaoShi, beiZhu, shanChangKeMuKeys)
-        history.goBack();
+        try {
+            await chuangJianYuanGong(xingMing, shouJi, jueSeZu, xingBie, isLaoShi, beiZhu, shanChangKeMuKeys);
+            history.goBack();
+        } catch (e) {
+        }
     }
 
     // 角色窗口显示

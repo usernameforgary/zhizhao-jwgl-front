@@ -1,4 +1,4 @@
-import { IdValue, NoPageSearchResult, OrderableDataNode, SearchResult, SourceData, XingBie, XiTongCaiDan } from "../customtypes";
+import { IdValue, NonPageableListResponse, NoPageSearchResult, OrderableDataNode, SearchResult, SourceData, XingBie, XiTongCaiDan } from "../customtypes";
 
 // 转换带分页的请求结果
 export function convertSearchResult<T extends IdValue>(data: SourceData, mapper: (itemSrc: SourceData) => T): SearchResult<T> {
@@ -18,7 +18,7 @@ export function convertSearchResult<T extends IdValue>(data: SourceData, mapper:
 
 
 // 转换不带分页的请求结果
-export function convertSearchResultNonPageable<T extends IdValue>(data: SourceData, mapper: (itemSrc: SourceData) => T): NoPageSearchResult<T> {
+export function convertSearchResultNonPageable<T extends IdValue>(data: NonPageableListResponse, mapper: (itemSrc: SourceData) => T): NoPageSearchResult<T> {
     return {
         list: data.map((obj: any) => {
             return mapper(obj);

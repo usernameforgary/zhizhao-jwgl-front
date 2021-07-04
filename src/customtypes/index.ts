@@ -1,4 +1,5 @@
 import { DataNode } from "antd/lib/tree";
+import React from "react";
 
 export type GlobalConfig = {
     moment: any;
@@ -101,9 +102,11 @@ export interface IMainStore extends IStore {
     toggleResetPassword(flag: boolean): void;
 };
 
-export type NonPageableListResponse = {
-    data: any[];
-};
+// export type NonPageableListResponse = {
+//     data: any[];
+// };
+
+export type NonPageableListResponse = [{ [key: string]: any }];
 
 export type PageableListResponse = {
     data: any[];
@@ -222,7 +225,7 @@ export type KeCheng = {
     zaiDuXueYuanShu?: number
     // 启用状态
     qiYongZhuangTai?: boolean
-} & IdValue
+} & IdValue & ReactUninqueKey
 
 // 课程定价标准
 export type DingJiaBiaoZhun = {
@@ -232,3 +235,19 @@ export type DingJiaBiaoZhun = {
     zongJia: number
     keChengDanJia: number
 }
+
+// 上课教室
+export type ShangKeJiaoShi = {
+    mingCheng: string
+} & IdValue & ReactUninqueKey
+
+// 班级分类
+export type BanJiFenLei = {
+    mingCheng: string
+} & IdValue & ReactUninqueKey
+
+// 老师
+export type LaoShi = {
+    xingMing: string,
+    zhangHaoId: number
+} & IdValue & ReactUninqueKey

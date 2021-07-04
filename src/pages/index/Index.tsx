@@ -16,6 +16,8 @@ import Loading from '../../components/loading/Loading';
 import { convertCaiDanList2TreeData } from '../../utils/converter';
 import KeChengLieBiao from '../kecheng/KeChengLieBiao';
 import XinJianKeCheng from '../kecheng/xinzengkecheng/XinJianKeCheng';
+import XueYuanBaoMing from '../xueyuan/XueYuanBaoMing';
+import BanJiLieBiao from '../banji/BanJiLieBiao';
 
 
 const { SubMenu } = Menu;
@@ -120,6 +122,8 @@ const Index = () => {
                                 <PrivateRouter exact key="xueyuanliebiao" path="/sys/xueyuanliebiao" component={XueYuanLieBiao} />
                                 <PrivateRouter exact key="kechengliebiao" path="/sys/kechengliebiao" component={KeChengLieBiao} />
                                 <PrivateRouter exact key="xinjiankecheng" path="/sys/xinjiankecheng" component={XinJianKeCheng} />
+                                <PrivateRouter exact key="xueyuanbaoming" path="/sys/xueyuanbaoming" component={XueYuanBaoMing} />
+                                <PrivateRouter exact key="banjiliebiao" path="/sys/banjiliebiao" component={BanJiLieBiao} />
                                 <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>
                                 <Route path="*" component={Page404} />
                             </Switch>

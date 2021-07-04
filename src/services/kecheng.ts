@@ -1,6 +1,6 @@
 import { post, get } from "../api/customApi"
-import { KeCheng, PageableListResponse, SearchResult, SourceData } from "../customtypes";
-import { convertSearchResult } from "../utils/converter";
+import { KeCheng, NonPageableListResponse, NoPageSearchResult, PageableListResponse, SearchResult, SourceData } from "../customtypes";
+import { convertSearchResult, convertSearchResultNonPageable } from "../utils/converter";
 
 const convertKeCheng = (obj: SourceData): KeCheng => {
     const item: KeCheng = {
@@ -12,7 +12,9 @@ const convertKeCheng = (obj: SourceData): KeCheng => {
         weiDaoKouKeShi: obj.weiDaoKouKeShi,
         beiZhu: obj.beiZhu,
         zaiDuXueYuanShu: obj.zaiDuXueYuanShu,
-        qiYongZhuangTai: obj.qiYongZhuangTai
+        qiYongZhuangTai: obj.qiYongZhuangTai,
+
+        key: obj.id
     };
     return item;
 }
@@ -27,6 +29,14 @@ export const huoQuKeChengLieBiao = async (page: number, pageSize: number): Promi
     const params: SourceData = { pageNum: page, pageSize };
     const res: PageableListResponse = await get('/kecheng/huoQuKeChengLieBiao', params);
     return convertSearchResult<KeCheng>(res, (obj: SourceData) => {
+        return convertKeCheng(obj);
+    });
+}
+
+// 获取所有课程列表
+export const huoQuKeChengAll = async (): Promise<NoPageSearchResult<KeCheng>> => {
+    const res: NonPageableListResponse = await get('/kecheng/huoQuKeChengAll');
+    return convertSearchResultNonPageable<KeCheng>(res, (obj: SourceData) => {
         return convertKeCheng(obj);
     });
 }

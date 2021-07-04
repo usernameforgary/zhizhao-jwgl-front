@@ -15,13 +15,13 @@ const XinJianKeCheng = () => {
 
     // 新建课程handler
     const onXinJianKeCheng = async (keCheng: KeCheng) => {
-        console.log(keCheng)
         setLoading(true);
-        await xinJianKeCheng(keCheng).catch(e => {
-            setLoading(false);
-            return;
-        });
-        history.goBack();
+        try {
+            await xinJianKeCheng(keCheng);
+            history.goBack();
+        } catch (e) {
+        }
+        setLoading(false);
     }
 
     const onFormFinish = (values: any) => {

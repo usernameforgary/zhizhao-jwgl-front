@@ -1,7 +1,6 @@
 import { Layout, Menu, Button, Row, Col, Space, BackTop } from 'antd';
 import { Switch, Route, Link, useHistory } from 'react-router-dom';
 import ContextContainer from './components/ContentContainer';
-import './index.css';
 import XueYuanLieBiao from '../xueyuan/XueYuanLieBiao';
 import YuanGongLieBiao from '../yuangong/YuanGongLieBiao';
 import { getStore } from '../../store/useStore';
@@ -19,6 +18,10 @@ import XinJianKeCheng from '../kecheng/xinzengkecheng/XinJianKeCheng';
 import XueYuanBaoMing from '../xueyuan/XueYuanBaoMing';
 import BanJiLieBiao from '../banji/BanJiLieBiao';
 
+import './index.css';
+
+import logo from '../../images/u128.png'
+import BanJiXiangQing from '../banji/BanJiXiangQing';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -54,7 +57,7 @@ const Index = () => {
                 <Header className="header">
                     <Row align="middle">
                         <Col span={8}>
-                            <div className="logo" />
+                            <img src={logo} style={{ height: 50, width: 100 }} />
                         </Col>
                         {/* <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
                             <Menu.Item key="1">nav 1</Menu.Item>
@@ -124,11 +127,11 @@ const Index = () => {
                                 <PrivateRouter exact key="xinjiankecheng" path="/sys/xinjiankecheng" component={XinJianKeCheng} />
                                 <PrivateRouter exact key="xueyuanbaoming" path="/sys/xueyuanbaoming" component={XueYuanBaoMing} />
                                 <PrivateRouter exact key="banjiliebiao" path="/sys/banjiliebiao" component={BanJiLieBiao} />
+                                <PrivateRouter exact key="banjixiangqing" path="/sys/banjixiangqing/:id/:tab" component={BanJiXiangQing} />
                                 <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>
                                 <Route path="*" component={Page404} />
                             </Switch>
                         </ContextContainer>
-
                     </Layout>
                 </Layout>
             </Layout>

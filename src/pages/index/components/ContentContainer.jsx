@@ -2,19 +2,12 @@ import React, { Component } from 'react';
 import { Layout } from 'antd';
 
 const { Content } = Layout;
-
-export class ContentContainer extends Component {
+class ContentContainer extends Component {
     render() {
         return (
             <>
                 <Content
-                    className="site-layout-background"
-                    style={{
-                        padding: 24,
-                        margin: 0,
-                        minHeight: 480,
-                        backgroundColor: 'white'
-                    }}
+                    style={{ minHeight: "85vh" }}
                 >
                     {this.props.children}
                 </Content>
@@ -23,4 +16,4 @@ export class ContentContainer extends Component {
     }
 }
 
-export default ContentContainer
+export default (ContentContainer)

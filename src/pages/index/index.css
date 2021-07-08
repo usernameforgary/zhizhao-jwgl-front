@@ -9,4 +9,8 @@
 .ant-row-rtl .logo {
   float: right;
   margin: 16px 0 16px 24px;
+}
+
+.content-background {
+  background-color: white;
 }/*# sourceMappingURL=index.css.map */

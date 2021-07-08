@@ -53,10 +53,50 @@ export const huoQuShangKeJiaoShiAll = async (): Promise<NoPageSearchResult<Shang
     });
 }
 
+
+/**
+ * 创建上课教室
+ * @param mingCheng 名称
+ * @returns 
+ */
+export const chuangJianShangKeJiaoShi = async (mingCheng: string): Promise<number> => {
+    const result = await post('/common/chuangJianShangKeJiaoShi', { mingCheng });
+    const { id } = result;
+    return id;
+}
+
+/**
+ * 更新上课教室
+ * @param item 上课教室
+ */
+export const gengXinShangKeJiaoShi = async (item: ShangKeJiaoShi): Promise<void> => {
+    await post('/common/gengXinShangKeJiaoShi', item);
+}
+
+
 // 获取所有班级分类
 export const huoQuBanJiFenLeiAll = async (): Promise<NoPageSearchResult<BanJiFenLei>> => {
     const res: NonPageableListResponse = await get('/common/huoQuBanJiFenLeiAll');
     return convertSearchResultNonPageable<BanJiFenLei>(res, (obj: SourceData) => {
         return convertBanJiFenLei(obj);
     });
+}
+
+/**
+ * 创建班级分类
+ * @param mingCheng 名称
+ * @returns 
+ */
+export const chuangJianBanJiFenLei = async (mingCheng: string): Promise<number> => {
+    const result = await post('/common/chuangJianBanJiFenLei', { mingCheng });
+    const { id } = result;
+    return id;
+}
+
+/**
+ * 更新班级分类
+ * @param item 班级分类
+ */
+export const gengXinBanJiFenLei = async (item: BanJiFenLei): Promise<void> => {
+    await post('/common/gengXinBanJiFenLei', item);
 }

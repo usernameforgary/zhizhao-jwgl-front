@@ -1,5 +1,6 @@
 import { ComponentType } from 'react';
 import BanJiLieBiao from '../pages/banji/BanJiLieBiao';
+import BanJiXiangQing from '../pages/banji/BanJiXiangQing';
 import DashBord from '../pages/dashbord/DashBord';
 import DengLu from '../pages/denglu/DengLu';
 import Index from '../pages/index/Index';
@@ -32,16 +33,17 @@ export enum routeName {
     xinjiankecheng,
     xueyuanbaoming,
     banjiliebiao,
+    banjixiangqing,
 }
 
 //TODO 因为webpack动态路由，不能指定全路径。暂时未找到解决方案
-export const routes: RouteComponent[] = [
+const routes: RouteComponent[] = [
     { name: routeName.denglu, path: "/", component: DengLu, withoutLayout: false, exact: true },
     { name: routeName.page404, path: "/404", component: Page404, withoutLayout: true },
     { name: routeName.zhuYe, path: "/sys", component: Index, withoutLayout: false }
 ];
 
-export const subRoutes: RouteComponent[] = [
+const subRoutes: RouteComponent[] = [
     { name: routeName.yuangongliebiao, path: "/sys/yuangongliebiao", component: YuanGongLieBiao, withoutLayout: false },
     { name: routeName.xinjianyuangong, path: "/sys/xinjianyuangong", component: XinJianYuanGong, withoutLayout: false },
     { name: routeName.xueyuanliebiao, path: "/sys/xueyuanliebiao", component: XueYuanLieBiao, withoutLayout: false },
@@ -49,6 +51,7 @@ export const subRoutes: RouteComponent[] = [
     { name: routeName.xinjiankecheng, path: "/sys/xinjiankecheng", component: XinJianKeCheng, withoutLayout: false },
     { name: routeName.xueyuanbaoming, path: "/sys/xueyuanbaoming", component: XueYuanBaoMing, withoutLayout: false },
     { name: routeName.banjiliebiao, path: "/sys/banjiliebiao", component: BanJiLieBiao, withoutLayout: false },
+    { name: routeName.banjixiangqing, path: "/sys/banjixiangqing", component: BanJiXiangQing, withoutLayout: false },
     { name: routeName.dashboard, path: "/sys", component: DashBord, withoutLayout: false },
 ]
 

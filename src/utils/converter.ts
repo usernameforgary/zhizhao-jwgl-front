@@ -1,4 +1,11 @@
-import { IdValue, NonPageableListResponse, NoPageSearchResult, OrderableDataNode, SearchResult, SourceData, XingBie, XiTongCaiDan } from "../customtypes";
+import {
+    IdValue,
+    NonPageableListResponse,
+    NoPageSearchResult,
+    OrderableDataNode,
+    PaiKeFangShiFenLei, PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei,
+    SearchResult, SourceData, XingBie, XiTongCaiDan
+} from "../customtypes";
 
 // 转换带分页的请求结果
 export function convertSearchResult<T extends IdValue>(data: SourceData, mapper: (itemSrc: SourceData) => T): SearchResult<T> {
@@ -70,5 +77,71 @@ export function convertXingBie2Text(xingBie: XingBie): string {
             return "女";
         default:
             return "其他"
+    }
+}
+
+export function convertPaiKeFangShi2Text(paiKeFangShi: PaiKeFangShiFenLei): string {
+    switch (paiKeFangShi) {
+        case PaiKeFangShiFenLei.GUI_ZE_PAI_KE:
+            return "规则排课";
+        case PaiKeFangShiFenLei.RI_LI_PAI_KE:
+            return "日历排课";
+        default:
+            return "";
+    }
+}
+
+
+export function convertPaiKeFangShi2Enum(paiKeFangShi: string): PaiKeFangShiFenLei {
+    switch (paiKeFangShi) {
+        case PaiKeFangShiFenLei.GUI_ZE_PAI_KE.toString():
+            return PaiKeFangShiFenLei.GUI_ZE_PAI_KE;
+        case PaiKeFangShiFenLei.RI_LI_PAI_KE.toString():
+            return PaiKeFangShiFenLei.RI_LI_PAI_KE
+        default:
+            return PaiKeFangShiFenLei.GUI_ZE_PAI_KE;
+    }
+}
+
+export function convertPaiKeChongFuFangShi2Text(chongFuFangShi: PaiKeChongFuFangShiFenLei): string {
+    switch (chongFuFangShi) {
+        case PaiKeChongFuFangShiFenLei.MEI_TIAN:
+            return "每天重复";
+        case PaiKeChongFuFangShiFenLei.MEI_ZHOU:
+            return "每周重复";
+        default:
+            return "";
+    }
+}
+
+export function convertPaiKeChongFuFangShi2Enum(paiKeChongFuFangShi: string): PaiKeChongFuFangShiFenLei {
+    switch (paiKeChongFuFangShi) {
+        case PaiKeChongFuFangShiFenLei.MEI_TIAN.toString():
+            return PaiKeChongFuFangShiFenLei.MEI_TIAN;
+        case PaiKeChongFuFangShiFenLei.MEI_ZHOU.toString():
+            return PaiKeChongFuFangShiFenLei.MEI_ZHOU;
+        default:
+            return PaiKeChongFuFangShiFenLei.MEI_ZHOU;
+    }
+}
+
+export function convertPaiKeJieShuFangShi2Text(jieShuFangShi: PaiKeJieShuFangShiFenLei): string {
+    switch (jieShuFangShi) {
+        case PaiKeJieShuFangShiFenLei.RI_QI_JIE_SHU:
+            return "按日期结束";
+        case PaiKeJieShuFangShiFenLei.CI_SHU_JIE_SHU:
+            return "按次数结束";
+        default:
+            return "";
+    }
+}
+export function convertPaiKeJieShuShi2Enum(PaiKeJieShuFangFenLei: string): PaiKeJieShuFangShiFenLei {
+    switch (PaiKeJieShuFangFenLei) {
+        case PaiKeJieShuFangShiFenLei.CI_SHU_JIE_SHU.toString():
+            return PaiKeJieShuFangShiFenLei.CI_SHU_JIE_SHU;
+        case PaiKeJieShuFangShiFenLei.RI_QI_JIE_SHU.toString():
+            return PaiKeJieShuFangShiFenLei.RI_QI_JIE_SHU;
+        default:
+            return PaiKeJieShuFangShiFenLei.RI_QI_JIE_SHU;
     }
 }

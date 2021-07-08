@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/loading/Loading';
-import SearchItemInput from '../../components/searchitems/searchiteminput/SearchItemInput';
 import { DingJiaBiaoZhun, KeCheng } from '../../customtypes';
 import { getDefinedRouteByRouteName, routeName } from '../../router';
 import { huoQuKeChengLieBiao } from '../../services/kecheng';
@@ -130,7 +129,14 @@ const KeChengLieBiao: React.FC = () => {
     ];
 
     return (
-        <>
+        <div
+            className={"content-background"}
+            style={{
+                padding: 24,
+                margin: 0,
+                minHeight: "85vh"
+            }}
+        >
             {loading ? <Loading /> : ""}
             <Space direction="vertical" size="large" style={{ width: "100%" }}>
                 <Row style={{ width: '100%' }}>
@@ -162,7 +168,7 @@ const KeChengLieBiao: React.FC = () => {
                     </Col>
                 </Row>
             </Space>
-        </>
+        </div>
     )
 }
 

@@ -46,7 +46,14 @@ const XinJianKeCheng = () => {
     }
 
     return (
-        <>
+        <div
+            className={"content-background"}
+            style={{
+                padding: 24,
+                margin: 0,
+                minHeight: "85vh"
+            }}
+        >
             {loading ? <Loading></Loading> : ""}
             <Form
                 onFinish={onFormFinish}
@@ -133,7 +140,7 @@ const XinJianKeCheng = () => {
 
                 </Row>
             </Form>
-        </>
+        </div>
     )
 }
 

@@ -1,18 +1,18 @@
 import { Modal, Form, Row, Col, Input, Button, Select } from 'antd';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { BanJiFenLei, KeCheng, LaoShi, ShangKeJiaoShi } from '../../../../customtypes';
-import { huoQuBanJiFenLeiAll, huoQuShangKeJiaoShiAll } from '../../../../services/common';
+import { BanJi, BanJiFenLei, KeCheng, LaoShi, ShangKeJiaoShi } from '../../../../customtypes';
+import { chuangJianBanJiFenLei, chuangJianShangKeJiaoShi, gengXinBanJiFenLei, gengXinShangKeJiaoShi, huoQuBanJiFenLeiAll, huoQuShangKeJiaoShiAll } from '../../../../services/common';
 import { huoQuKeChengAll } from '../../../../services/kecheng';
 import { huoQuLaoShiAll } from '../../../../services/laoshi';
-import BanJiFenLeiModal from '../banjifenlei/BanJiFenLeiModal';
+import CommonInfoModal from '../CommonInfoModal';
 
 const { Option } = Select;
 
 export type XinZengBanJiProps = {
     visible: boolean
     modalTitle?: string
-    onFormFinish: () => void | Promise<void>
+    onFormFinish: (item: BanJi) => Promise<number | undefined>
     onClose: () => void
 }
 
@@ -20,11 +20,11 @@ const XinZengBanJi: React.FC<XinZengBanJiProps> = ({ visible, modalTitle, onForm
     const [showShanKeJiaoshi, setShowShanKeJiaoShi] = useState<boolean>(false);
     const [showBanJiFenLei, setShowBanJiFenLei] = useState<boolean>(false);
     const [keChengList, setKeChengList] = useState<KeCheng[]>([]);
-    const [refreshKeCheng, setRefreshKeCheng] = useState<boolean>(false);
+    const [refreshKeCheng] = useState<boolean>(false);
     const [shangKeJiaoShiList, setShangKeJiaoShiList] = useState<ShangKeJiaoShi[]>([]);
     const [refreshShangKeJiaoShi, setRefreshShangKeJiaoShi] = useState<boolean>(false);
     const [laoShiList, setLaoShiList] = useState<LaoShi[]>([]);
-    const [refreshLaoshi, setRefreshLaoShi] = useState<boolean>(false);
+    const [refreshLaoshi] = useState<boolean>(false);
     const [banJiFenLeiList, setBanJiFenLeiList] = useState<BanJiFenLei[]>([]);
     const [refreshBanJiFenLei, setRefreshBanJiFenLei] = useState<boolean>(false);
 
@@ -44,14 +44,19 @@ const XinZengBanJi: React.FC<XinZengBanJiProps> = ({ visible, modalTitle, onForm
         onHuoQuBanJiFenLeiLieBiao();
     }, [refreshBanJiFenLei]);
 
-    // 刷新课程
-    const onKeChengRefresh = () => {
-        setRefreshKeCheng(!refreshKeCheng);
-    }
+    // // 刷新课程
+    // const onKeChengRefresh = () => {
+    //     setRefreshKeCheng(!refreshKeCheng);
+    // }
 
     // 刷新班级分类
     const onBanJiFenLeiRefresh = () => {
         setRefreshBanJiFenLei(!refreshBanJiFenLei)
+    }
+
+    // 刷新上课教室
+    const onShangKeJiaoShiRefresh = () => {
+        setRefreshShangKeJiaoShi(!refreshShangKeJiaoShi);
     }
 
     // 获取课程列表
@@ -67,6 +72,31 @@ const XinZengBanJi: React.FC<XinZengBanJiProps> = ({ visible, modalTitle, onForm
         try {
             const result = await huoQuShangKeJiaoShiAll();
             setShangKeJiaoShiList(result.list);
+        } catch (e) { }
+    }
+
+    /**
+     * 创建上课教室
+     * @param mingCheng 上课教室名称
+     * @returns 
+     */
+    const onChuangJianShangKeJiaoShi = async (mingCheng: string): Promise<number | undefined> => {
+        let id = undefined;
+        try {
+            id = await chuangJianShangKeJiaoShi(mingCheng);
+            onShangKeJiaoShiRefresh();
+        } catch (e) { }
+        return id;
+    }
+
+    /**
+     * 更新上课教室
+     * @param item 
+     */
+    const onUpdateShangKeJiaoShi = async (item: ShangKeJiaoShi): Promise<void> => {
+        try {
+            await gengXinShangKeJiaoShi(item);
+            onShangKeJiaoShiRefresh();
         } catch (e) { }
     }
 
@@ -86,16 +116,43 @@ const XinZengBanJi: React.FC<XinZengBanJiProps> = ({ visible, modalTitle, onForm
         } catch (e) { }
     }
 
+    /**
+     * 创建班级分类
+     * @param mingCheng 班级分类名称
+     * @returns 
+     */
+    const onChuangJianBanJiFenLei = async (mingCheng: string): Promise<number | undefined> => {
+        let id = undefined;
+        try {
+            id = await chuangJianBanJiFenLei(mingCheng);
+            onBanJiFenLeiRefresh();
+        } catch (e) { }
+        return id;
+    }
+
+    /**
+     * 更新班级分类
+     * @param item 
+     */
+    const onUpdateBanJiFenLei = async (item: BanJiFenLei): Promise<void> => {
+        try {
+            await gengXinBanJiFenLei(item);
+            onBanJiFenLeiRefresh();
+        } catch (e) { }
+    }
+
     const toggleShowShangKeJiaoShi = () => {
-        setShowShanKeJiaoShi(!toggleShowShangKeJiaoShi);
+        setShowShanKeJiaoShi(!showShanKeJiaoshi);
     }
 
     const toggleShowBanJiFenLei = () => {
         setShowBanJiFenLei(!showBanJiFenLei);
     }
 
-    const onFormSubmit = (values: any) => {
-        console.log(values);
+    // 新增班级
+    const onFormSubmit = (values: BanJi) => {
+        onFormFinish(values);
+        onClose();
     }
 
     return (
@@ -133,7 +190,7 @@ const XinZengBanJi: React.FC<XinZengBanJiProps> = ({ visible, modalTitle, onForm
 
                     <Row>
                         <Col span={18}>
-                            <Form.Item labelAlign="left" labelCol={{ span: 8 }} name="rongLiang" label="班级容量">
+                            <Form.Item initialValue={1} labelAlign="left" labelCol={{ span: 8 }} name="rongLiang" label="班级容量">
                                 <Input type="number" min={0} />
                             </Form.Item>
                         </Col>
@@ -228,7 +285,29 @@ const XinZengBanJi: React.FC<XinZengBanJiProps> = ({ visible, modalTitle, onForm
                     </Row>
                 </Form>
             </Modal >
-            {showBanJiFenLei ? <BanJiFenLeiModal refresh={onBanJiFenLeiRefresh} list={banJiFenLeiList} modalTitle="班级分类" visible={showBanJiFenLei} onClose={toggleShowBanJiFenLei} /> : ""}
+            {
+                showBanJiFenLei ?
+                    <CommonInfoModal<BanJiFenLei>
+                        onNew={onChuangJianBanJiFenLei}
+                        list={banJiFenLeiList}
+                        modalTitle="班级分类"
+                        visible={showBanJiFenLei}
+                        onClose={toggleShowBanJiFenLei}
+                        onUpdate={onUpdateBanJiFenLei}
+                    /> : ""
+            }
+            {
+                showShanKeJiaoshi ?
+                    <CommonInfoModal<ShangKeJiaoShi>
+                        onNew={onChuangJianShangKeJiaoShi}
+                        list={shangKeJiaoShiList}
+                        modalTitle="上课教室"
+                        visible={showShanKeJiaoshi}
+                        onClose={toggleShowShangKeJiaoShi}
+                        onUpdate={onUpdateShangKeJiaoShi}
+                    />
+                    : ""
+            }
         </>
     )
 }

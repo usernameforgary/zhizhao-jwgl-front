@@ -28,18 +28,20 @@ const DingJianBiaoZhunForm: React.FC<DingJiaBiaoZhunProps> = ({ parentFormFieldN
                         rules={[{ required: true, message: "请输入课时名称" },
                         ({ getFieldValue }) => ({
                             validator(_, value) {
-                                const dingJiaBiaoZhunZu: DingJiaBiaoZhun[] = getFieldValue([parentFormFieldName]);
-                                const otherDingJian: DingJiaBiaoZhun[] = [...dingJiaBiaoZhunZu];
-                                otherDingJian.splice(index);
-                                let nameExist = false;
-                                otherDingJian.forEach(v => {
-                                    if (v.mingCheng === value) {
-                                        nameExist = true;
-                                        return;
+                                if (value) {
+                                    const dingJiaBiaoZhunZu: DingJiaBiaoZhun[] = getFieldValue([parentFormFieldName]);
+                                    const otherDingJian: DingJiaBiaoZhun[] = [...dingJiaBiaoZhunZu];
+                                    otherDingJian.splice(index);
+                                    let nameExist = false;
+                                    otherDingJian.forEach(v => {
+                                        if (v.mingCheng === value) {
+                                            nameExist = true;
+                                            return;
+                                        }
+                                    })
+                                    if (nameExist) {
+                                        return Promise.reject(new Error('名称已存在'));
                                     }
-                                })
-                                if (nameExist) {
-                                    return Promise.reject(new Error('名称已存在'));
                                 }
                                 return Promise.resolve();
                             },

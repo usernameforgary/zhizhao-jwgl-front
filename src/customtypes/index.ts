@@ -238,12 +238,16 @@ export type DingJiaBiaoZhun = {
 
 // 上课教室
 export type ShangKeJiaoShi = {
-    mingCheng: string
-} & IdValue & ReactUninqueKey
+} & CommonType
 
 // 班级分类
 export type BanJiFenLei = {
+} & CommonType
+
+// 通用信息，如上课教室，班级分类等
+export type CommonType = {
     mingCheng: string
+    isDeleted?: boolean
 } & IdValue & ReactUninqueKey
 
 // 老师
@@ -251,3 +255,80 @@ export type LaoShi = {
     xingMing: string,
     zhangHaoId: number
 } & IdValue & ReactUninqueKey
+
+// 班级状态
+export enum BanJiZhuangTai {
+    KAI_KE = "KAI_KE", JIE_KE = "JIE_KE"
+}
+
+// 班级
+export type BanJi = {
+    mingChen: string
+    //所属课程
+    keChengId: number
+    //班级状态
+    banJiZhuangTai: BanJiZhuangTai
+    //班级老师
+    banJiLaoShiId: number
+    //容量
+    rongLiang: number
+    //班级学员
+    //班级分类
+    banJiFenLeiId: number
+    //上课教室
+    shangKeJiaoShiId: number
+    //授课课时
+    shouKeKeShi: number
+    //备注
+    beiZhu?: string
+} & IdValue
+
+// 班级列表展示
+export type BanJiView = {
+    //名称
+    mingCheng: string
+    // 课程名称
+    keChengMingCheng?: string
+    // 课程Id
+    keChengId?: number
+    // 班级老师
+    banJiLaoShiXingMing: string
+    // 班级人数
+    renShu: number | 0
+    // 容量
+    rongLiang: number | 0
+    // 已排课次
+    paiKeCiShu?: number | 0
+    // 已上课次
+    yiShangKeCiShu?: number | 0
+    // 已授课时
+    yiShouKeShi?: number | 0
+    // 班级分类
+    banJiFenLeiMingCheng: string
+    // 默认授课课时
+    moRenShouKeKeShi?: number
+    // 上课教室
+    shangKeJiaoShi?: string
+    // 备注
+    beiZhu?: string
+
+    key: React.Key
+} & IdValue
+
+// 排课方式
+export enum PaiKeFangShiFenLei {
+    GUI_ZE_PAI_KE = "GUI_ZE_PAI_KE",
+    RI_LI_PAI_KE = "RI_LI_PAI_KE"
+}
+
+// 排课重复方式
+export enum PaiKeChongFuFangShiFenLei {
+    MEI_TIAN = "MEI_TIAN",
+    MEI_ZHOU = "MEI_ZHOU"
+}
+
+// 排课结束方式
+export enum PaiKeJieShuFangShiFenLei {
+    RI_QI_JIE_SHU = "RI_QI_JIE_SHU",
+    CI_SHU_JIE_SHU = "CI_SHU_JIE_SHU"
+}

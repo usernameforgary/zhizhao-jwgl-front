@@ -125,7 +125,14 @@ const XinJianYuanGong = () => {
     }
 
     return (
-        <>
+        <div
+            className={"content-background"}
+            style={{
+                padding: 24,
+                margin: 0,
+                minHeight: "85vh"
+            }}
+        >
             <Form
                 form={form}
                 onFinish={onFormSubmit}
@@ -237,7 +244,7 @@ const XinJianYuanGong = () => {
                         addNew={addShanChangKeMu} />
                     : ""
             }
-        </>
+        </div>
     )
 }
 

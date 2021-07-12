@@ -1,0 +1,44 @@
+.selectedDate {
+  background: #40a9ff;
+  color: white;
+}
+
+.calendar-date {
+  text-align: center;
+  width: 35px;
+  height: 35px;
+  font-size: 15px;
+  line-height: 35px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.calendar-today {
+  border-radius: 50%;
+  border: 1px solid #40a9ff;
+}
+
+.calendar {
+  width: 100%;
+  max-width: 440px;
+  border: 1px solid #f0f0f0;
+}
+
+.calendar-header {
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  height: 35px;
+}
+
+.calendar-header-menu:hover {
+  cursor: pointer;
+  background-color: #ececec;
+}
+
+.calendar-header-menu {
+  text-align: center;
+}/*# sourceMappingURL=multiplecalendar.css.map */

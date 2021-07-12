@@ -7,6 +7,7 @@ import { huoQuShangKeJiaoShiAll } from '../../../../services/common';
 import { convertPaiKeFangShi2Enum, convertPaiKeFangShi2Text } from '../../../../utils/converter';
 import { useForm } from 'antd/lib/form/Form';
 import PaiKeFangShiGuiZe from './PaiKeFangShiGuiZe';
+import PaiKeFangShiRiLi from './PaiKeFangShiRiLi';
 
 const { Option } = Select;
 
@@ -142,7 +143,10 @@ const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiId, banJiMingCheng, keChen
                                     parentForm={form}
                                 />
                             )
-                            : ("")
+                            :
+                            (
+                                <PaiKeFangShiRiLi parentForm={form} />
+                            )
                     }
 
                     <Row>

@@ -1,5 +1,7 @@
 import { Row, Col, Form, DatePicker, Radio, Input, RadioChangeEvent, FormInstance, TimePicker, Space, message } from 'antd'
-import React from 'react'
+import { Dayjs } from 'dayjs'
+import { Moment } from 'moment'
+import React, { useState } from 'react'
 import { PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei } from '../../../../customtypes'
 import { convertPaiKeChongFuFangShi2Enum, convertPaiKeChongFuFangShi2Text, convertPaiKeFangShi2Enum, convertPaiKeFangShi2Text, convertPaiKeJieShuFangShi2Text, convertPaiKeJieShuShi2Enum } from '../../../../utils/converter'
 import PaiKeZhouChongFu, { PaiKeChongFuShiJian } from './PaiKeZhouChongFu'
@@ -26,6 +28,9 @@ const PaiKeFangShiGuiZe: React.FC<PaiKeFangShiGuiZeProps> = ({
     parentForm
 }) => {
 
+    // 排课开始日期
+    const [paiKeKaiShiRiQi, setPaiKeKaiShiRiQi] = useState<Moment>();
+
     // 排课重复方式改变
     const onPaiKeChongFuFangShiChange = (e: RadioChangeEvent) => {
         const paiKeChongFuFangshiVal: string = e.target.value;
@@ -48,6 +53,19 @@ const PaiKeFangShiGuiZe: React.FC<PaiKeFangShiGuiZeProps> = ({
         parentForm.setFieldsValue({ guiZeChongFuMeiZhou: chongFuShiJian });
     }
 
+    // TODO 用dayjs替换Moment
+    // 排课开始日期改变
+    const handlePaiKeKaiShiRiQiChange = (date: Moment | null, dateString: string) => {
+        if (date) {
+            setPaiKeKaiShiRiQi(date);
+        }
+    }
+
+    // 结束日期不能小于开始日期的限制
+    const handlePaiKeJiShuRiQiDisabledDate = (currentDate: Moment) => {
+        return currentDate && currentDate.isBefore(paiKeKaiShiRiQi);
+    }
+
     return (
         <>
             <Row>
@@ -57,7 +75,7 @@ const PaiKeFangShiGuiZe: React.FC<PaiKeFangShiGuiZeProps> = ({
                         name="guiZeKaiShiRiQi"
                         rules={[{ required: true, message: "请选择开始日期" }]}
                     >
-                        <DatePicker />
+                        <DatePicker onChange={handlePaiKeKaiShiRiQiChange} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -92,7 +110,7 @@ const PaiKeFangShiGuiZe: React.FC<PaiKeFangShiGuiZeProps> = ({
                                         name={["guiZeChongFuMeiTian", "startTime"]}
                                         rules={[{ required: true, message: "请选择上课开始时间" }]}
                                     >
-                                        <TimePicker placeholder="开始时间" />
+                                        <TimePicker format="HH:mm" placeholder="开始时间" />
                                     </Form.Item>
                                     <span>~</span>
                                     <Form.Item
@@ -100,7 +118,7 @@ const PaiKeFangShiGuiZe: React.FC<PaiKeFangShiGuiZeProps> = ({
                                         name={["guiZeChongFuMeiTian", "stopTime"]}
                                         rules={[{ required: true, message: "请选择上课结束时间" }]}
                                     >
-                                        <TimePicker placeholder="结束时间" />
+                                        <TimePicker format="HH:mm" placeholder="结束时间" />
                                     </Form.Item>
                                 </Space>
                             </Form.Item>
@@ -144,9 +162,23 @@ const PaiKeFangShiGuiZe: React.FC<PaiKeFangShiGuiZeProps> = ({
                                 <Form.Item
                                     labelAlign="left" labelCol={{ span: 8 }} label="结束日期"
                                     name="guiZeJieShuRiQi"
-                                    rules={[{ required: true, message: "请选择结束日期" }]}
+                                    rules={[{ required: true, message: "请选择结束日期" }, ({ getFieldValue }) => ({
+                                        validator(_, value: Dayjs) {
+                                            if (value) {
+                                                const guiZeKaiShiRiQi: Dayjs = getFieldValue(["guiZeKaiShiRiQi"]);
+                                                if (guiZeKaiShiRiQi) {
+                                                    if (value.isBefore(guiZeKaiShiRiQi)) {
+                                                        return Promise.reject("结束日期不能早于开始日期")
+                                                    }
+                                                }
+                                            }
+                                            return Promise.resolve();
+                                        },
+                                    })]}
                                 >
-                                    <DatePicker />
+                                    <DatePicker
+                                        disabledDate={handlePaiKeJiShuRiQiDisabledDate}
+                                    />
                                 </Form.Item>
                             </Col>
                         </Row>

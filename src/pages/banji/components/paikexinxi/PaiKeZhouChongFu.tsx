@@ -49,7 +49,7 @@ const PaiKeZhouChongFu: React.FC<PaiKeZhouChongFuProps> = ({ onSetPaiKeChongFuSh
                     },
                 ],
             },
-            width: '50%',
+            width: '55%',
         },
         {
             title: '开始时间',

@@ -1,27 +1,61 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, Form, Row, Col, Select, Input, Button, Radio, RadioChangeEvent } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
-import { LaoShi, PaiKeFangShiFenLei, PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei, ShangKeJiaoShi } from '../../../../customtypes';
+import {
+    LaoShi,
+    PaiKeFangShiFenLei,
+    PaiKeChongFuFangShiFenLei,
+    PaiKeJieShuFangShiFenLei,
+    ShangKeJiaoShi,
+    BanJiView,
+    PaiKeGuiZe, PaiKeShangKeShiJian, PaiKeShangKeTian, PaiKeXinXi
+} from '../../../../customtypes';
 import { huoQuLaoShiAll } from '../../../../services/laoshi';
 import { huoQuShangKeJiaoShiAll } from '../../../../services/common';
-import { convertPaiKeFangShi2Enum, convertPaiKeFangShi2Text } from '../../../../utils/converter';
+import {
+    convertPaiKeChongFuFangShi2Enum,
+    convertPaiKeFangShi2Enum,
+    convertPaiKeFangShi2Text,
+    convertPaiKeJieShuShi2Enum,
+    convertPaiKeShangKeTian2Enum
+} from '../../../../utils/converter';
 import { useForm } from 'antd/lib/form/Form';
 import PaiKeFangShiGuiZe from './PaiKeFangShiGuiZe';
 import PaiKeFangShiRiLi from './PaiKeFangShiRiLi';
+import moment, { Moment } from 'moment';
+import { PaiKeChongFuShiJian } from './PaiKeZhouChongFu';
+import { chuangJianBanJiPaiKeXinXi } from '../../../../services/banji';
 
 const { Option } = Select;
 
 type PaiKeModalProps = {
-    banJiId: number | string,
-    banJiMingCheng: string,
-    keChengMingCheng: string,
+    banJiXiangQing?: BanJiView
     visible: boolean
     modalTitle?: string
     onCancel: () => void
     onFormSubmit?: () => void
 }
 
-const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiId, banJiMingCheng, keChengMingCheng, visible, modalTitle, onCancel, onFormSubmit }) => {
+// 排课规则form表单提交数据
+export type PaiKeGuiZeFormValue = {
+    keChengMingCheng: string,
+    banJiId: number,
+    paiKeFangShi: string,
+    guiZeKaiShiRiQi?: Moment,
+    guiZeChongFuFangShi?: string,
+    guiZeChongFuMeiZhou?: PaiKeChongFuShiJian[],
+    guiZeJieShuFangShi?: string,
+    guiZeJieShuRiQi?: Moment,
+    guiZeChongFuMeiTian?: PaiKeChongFuShiJian,
+    riLiShangKeRiQi?: number[],
+    riLiPaiKeShiJian: PaiKeChongFuShiJian,
+    guiZeJieShuCiShu?: number
+    shangKeLaoShi?: number,
+    shangKeJiaoShiId?: number,
+    shangKeNeiRong?: string
+}
+
+const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiXiangQing, visible, modalTitle, onCancel, onFormSubmit }) => {
     const [form] = useForm();
     const [shangKeJiaoShiList, setShangKeJiaoShiList] = useState<ShangKeJiaoShi[]>([]);
     const [laoShiList, setLaoShiList] = useState<LaoShi[]>([]);
@@ -72,18 +106,97 @@ const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiId, banJiMingCheng, keChen
         setGuiZeJieShuFangShi(newJieShuFangShi);
     }
 
-    // 表单提交
-    const handleFormSubmit = (values: { [key: string]: any }) => {
-        console.log(values);
+    // 创建班级排课信息
+    const onChuangJianBanJiPaiKeXinXi = async (paiKeXinXi: PaiKeXinXi) => {
+        try {
+            await chuangJianBanJiPaiKeXinXi(paiKeXinXi);
+        } catch (e) { }
+
         if (onFormSubmit) {
             onFormSubmit();
         }
     }
 
-    // // 排课重复时间设置
-    // const handleSetPaiKeChongFuShiJian = (values: PaiKeChongFuFangShi[]) => {
-    //     form.setFieldsValue({})
-    // }
+    // 表单提交
+    const handleFormSubmit = (value: PaiKeGuiZeFormValue) => {
+        // 排课规则
+        let paiKeGuiZe: PaiKeGuiZe = {
+            paiKeFangShi: convertPaiKeFangShi2Enum(value.paiKeFangShi),
+        }
+        // 规则排课 - 开始日期
+        if (value.guiZeKaiShiRiQi) {
+            paiKeGuiZe.guiZeKaiShiRiQi = value.guiZeKaiShiRiQi.valueOf();
+        }
+        // 规则排课 - 结束日期
+        if (value.guiZeJieShuRiQi) {
+            paiKeGuiZe.guiZeJieShuRiQi = value.guiZeJieShuRiQi.valueOf();
+        }
+        // 规则排课【重复方式】
+        if (value.guiZeChongFuFangShi) {
+            paiKeGuiZe.guiZeChongFuFangShi = convertPaiKeChongFuFangShi2Enum(value.guiZeChongFuFangShi || "");
+        }
+        // 规则排课【结束方式】
+        if (value.guiZeJieShuFangShi) {
+            paiKeGuiZe.guiZeJiShuFangShi = convertPaiKeJieShuShi2Enum(value.guiZeJieShuFangShi);
+        }
+        // 规则排课【排课次数】
+        if (value.guiZeJieShuCiShu) {
+            paiKeGuiZe.guiZePaiKeCiShu = value.guiZeJieShuCiShu;
+        }
+        // 日历排课【上课日期】组
+        if (value.riLiShangKeRiQi) {
+            paiKeGuiZe.riLiShangKeRiQi = value.riLiShangKeRiQi;
+        }
+
+        // 排课上课时间组;【日历排课】，或者【规则排课】且【每天重复】时，只有一组数据
+        paiKeGuiZe.paiKeShangKeShiJianZu = [];
+        if (value.paiKeFangShi === PaiKeFangShiFenLei.GUI_ZE_PAI_KE) {
+            if (value.guiZeChongFuFangShi === PaiKeChongFuFangShiFenLei.MEI_TIAN) {
+                if (value.guiZeChongFuMeiTian) {
+                    const paiKeShangKeShiJian: PaiKeShangKeShiJian = {
+                        paiKeShangKeTian: PaiKeShangKeTian.DAILY,
+                        startTime: value.guiZeChongFuMeiTian.startTime?.valueOf(),
+                        stopTime: value.guiZeChongFuMeiTian.stopTime?.valueOf(),
+                    }
+                    paiKeGuiZe.paiKeShangKeShiJianZu.push(paiKeShangKeShiJian);
+                }
+            } else if (value.guiZeChongFuFangShi === PaiKeChongFuFangShiFenLei.MEI_ZHOU) {
+                if (value.guiZeChongFuMeiZhou) {
+                    value.guiZeChongFuMeiZhou.forEach(v => {
+                        const paiKeShangKeShiJian: PaiKeShangKeShiJian = {
+                            paiKeShangKeTian: convertPaiKeShangKeTian2Enum(v.day || ""),
+                            startTime: moment(v.startTime).valueOf(),
+                            stopTime: moment(v.stopTime).valueOf(),
+                        };
+                        paiKeGuiZe.paiKeShangKeShiJianZu?.push(paiKeShangKeShiJian);
+                    })
+                }
+            } else {
+                // do nothing
+            }
+        } else if (value.paiKeFangShi === PaiKeFangShiFenLei.RI_LI_PAI_KE) {
+            if (value.riLiPaiKeShiJian) {
+                const paiKeShangKeShiJian: PaiKeShangKeShiJian = {
+                    paiKeShangKeTian: PaiKeShangKeTian.DAILY,
+                    startTime: value.riLiPaiKeShiJian.startTime?.valueOf(),
+                    stopTime: value.riLiPaiKeShiJian.stopTime?.valueOf(),
+                }
+                paiKeGuiZe.paiKeShangKeShiJianZu.push(paiKeShangKeShiJian);
+            }
+        }
+
+        // 排课信息
+        const paiKeXinXi: PaiKeXinXi = {
+            banJiId: value.banJiId,
+            paiKeGuiZe: paiKeGuiZe,
+            shangKeJiaoShiId: value.shangKeJiaoShiId,
+            shangKeLaoShiId: value.shangKeLaoShi,
+            shangKeNeiRong: value.shangKeNeiRong
+        }
+
+        // 创建班级排课信息
+        onChuangJianBanJiPaiKeXinXi(paiKeXinXi);
+    }
 
     return (
         <>
@@ -101,7 +214,7 @@ const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiId, banJiMingCheng, keChen
                 >
                     <Row>
                         <Col span={18}>
-                            <Form.Item initialValue={keChengMingCheng} labelAlign="left" labelCol={{ span: 8 }} name="keChengMingCheng" label="课程">
+                            <Form.Item initialValue={banJiXiangQing?.keChengMingCheng} labelAlign="left" labelCol={{ span: 8 }} name="keChengMingCheng" label="课程">
                                 <Input disabled={true} />
                             </Form.Item>
                         </Col>
@@ -109,9 +222,9 @@ const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiId, banJiMingCheng, keChen
 
                     <Row>
                         <Col span={18}>
-                            <Form.Item rules={[{ required: true, message: "此项默认值" }]} initialValue={banJiId} labelAlign="left" labelCol={{ span: 8 }} name="banJiId" label="班级">
+                            <Form.Item rules={[{ required: true, message: "此项默认值" }]} initialValue={banJiXiangQing?.id} labelAlign="left" labelCol={{ span: 8 }} name="banJiId" label="班级">
                                 <Select disabled={true}>
-                                    <Option key={banJiId} value={banJiId}>{banJiMingCheng}</Option>
+                                    <Option key={banJiXiangQing?.id} value={banJiXiangQing?.id || ""}>{banJiXiangQing?.mingCheng}</Option>
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -148,17 +261,9 @@ const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiId, banJiMingCheng, keChen
                                 <PaiKeFangShiRiLi parentForm={form} />
                             )
                     }
-
                     <Row>
                         <Col span={18}>
-                            <Form.Item initialValue={1} labelAlign="left" labelCol={{ span: 8 }} name="rongLiang" label="班级容量">
-                                <Input type="number" min={0} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={18}>
-                            <Form.Item labelAlign="left" labelCol={{ span: 8 }} name="shangKeLaoShi" label="上课老师">
+                            <Form.Item initialValue={banJiXiangQing?.banJiLaoShiId} labelAlign="left" labelCol={{ span: 8 }} name="shangKeLaoShi" label="上课老师">
                                 <Select>
                                     {laoShiList?.map(k => {
                                         return (
@@ -173,7 +278,7 @@ const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiId, banJiMingCheng, keChen
                         <Col span={24}>
                             <Row>
                                 <Col span={18}>
-                                    <Form.Item labelAlign="left" labelCol={{ span: 8 }} name="shangKeJiaoShiId" label="上课教室">
+                                    <Form.Item initialValue={banJiXiangQing?.shangKeJiaoShiId} labelAlign="left" labelCol={{ span: 8 }} name="shangKeJiaoShiId" label="上课教室">
                                         <Select>
                                             {shangKeJiaoShiList?.map(k => {
                                                 return (
@@ -184,13 +289,6 @@ const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiId, banJiMingCheng, keChen
                                     </Form.Item>
                                 </Col>
                             </Row>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={18}>
-                            <Form.Item initialValue={1} labelAlign="left" labelCol={{ span: 8 }} name="shouKeKeShi" label="默认授课课时">
-                                <Input type="number" min={0} step={0.5} />
-                            </Form.Item>
                         </Col>
                     </Row>
 

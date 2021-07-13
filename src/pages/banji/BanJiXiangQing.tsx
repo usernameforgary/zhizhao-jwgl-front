@@ -157,7 +157,9 @@ const BanJiXiangQing = () => {
                         <TabPane tab="排课信息" key={TabNamesBanJiXiangQing.paikexinxi}>
                             {
                                 currentTab === TabNamesBanJiXiangQing.paikexinxi ?
-                                    <PaiKeXinXi banJiId={banJiId} banJiMingCheng={banJiXiangQing?.mingCheng || ""} keChengMingCheng={banJiXiangQing?.keChengMingCheng || ""}></PaiKeXinXi>
+                                    <PaiKeXinXi
+                                        banJiXiangQing={banJiXiangQing}
+                                    />
                                     : ""
                             }
                         </TabPane>

@@ -1,6 +1,7 @@
 import { Row, Button } from 'antd';
 import React from 'react';
 import { useState } from 'react';
+import { BanJiView } from '../../../../customtypes';
 import PaiKeModal from './PaiKeModal';
 
 /**
@@ -8,12 +9,10 @@ import PaiKeModal from './PaiKeModal';
  * banJiId（班级Id）和banJiMingCheng（班级名称），由父组件传入，页面上不可编辑
  */
 export type PaiKeXinXiProps = {
-    banJiId: number | string
-    banJiMingCheng: string
-    keChengMingCheng: string
+    banJiXiangQing: BanJiView | undefined
 }
 
-const PaiKeXinXi: React.FC<PaiKeXinXiProps> = ({ banJiId, banJiMingCheng, keChengMingCheng }) => {
+const PaiKeXinXi: React.FC<PaiKeXinXiProps> = ({ banJiXiangQing }) => {
     const [showPaiKeModal, setShowPaiKeModal] = useState<boolean>(false);
 
     const toggleShowPaiKeModal = () => {
@@ -30,9 +29,7 @@ const PaiKeXinXi: React.FC<PaiKeXinXiProps> = ({ banJiId, banJiMingCheng, keChen
             {showPaiKeModal ?
                 <PaiKeModal
                     visible={showPaiKeModal}
-                    banJiId={banJiId}
-                    banJiMingCheng={banJiMingCheng}
-                    keChengMingCheng={keChengMingCheng}
+                    banJiXiangQing={banJiXiangQing}
                     onCancel={toggleShowPaiKeModal} />
                 : ""
             }

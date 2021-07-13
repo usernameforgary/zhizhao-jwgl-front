@@ -291,6 +291,8 @@ export type BanJiView = {
     keChengMingCheng?: string
     // 课程Id
     keChengId?: number
+    // 班级老师id
+    banJiLaoShiId: number
     // 班级老师
     banJiLaoShiXingMing: string
     // 班级人数
@@ -307,6 +309,8 @@ export type BanJiView = {
     banJiFenLeiMingCheng: string
     // 默认授课课时
     moRenShouKeKeShi?: number
+    // 上课教室Id
+    shangKeJiaoShiId?: number
     // 上课教室
     shangKeJiaoShi?: string
     // 备注
@@ -331,4 +335,67 @@ export enum PaiKeChongFuFangShiFenLei {
 export enum PaiKeJieShuFangShiFenLei {
     RI_QI_JIE_SHU = "RI_QI_JIE_SHU",
     CI_SHU_JIE_SHU = "CI_SHU_JIE_SHU"
+}
+
+// 排课上课时间
+export type PaiKeShangKeShiJian = {
+    // 哪天(周几)上课，排课方式为【日历排课】时，或者排课方式为【规则排课】且【重复方式】为【每天重复】时，值为daily
+    paiKeShangKeTian: PaiKeShangKeTian
+    // 上课开始时间
+    startTime?: number
+    // 上课结束时间
+    stopTime?: number
+}
+
+// 排课哪天上课
+export enum PaiKeShangKeTian {
+    ONE = "ONE",
+    TWO = "TWO",
+    THREE = "THREE",
+    FOUR = "FOUR",
+    FIVE = "FIVE",
+    SIX = "SIX",
+    SEVEN = "SEVEN",
+    DAILY = "DAILY"
+}
+
+// 排课规则
+export type PaiKeGuiZe = {
+    // 排课方式
+    paiKeFangShi: PaiKeFangShiFenLei
+
+    // 规则排课【开始日期】
+    guiZeKaiShiRiQi?: number
+
+    // 规则排课【结束日期】
+    guiZeJieShuRiQi?: number
+
+    // 规则排课【重复方式】
+    guiZeChongFuFangShi?: PaiKeChongFuFangShiFenLei
+
+    // 规则排课【结束方式】
+    guiZeJiShuFangShi?: PaiKeJieShuFangShiFenLei
+
+    // 规则排课【排课次数】
+    guiZePaiKeCiShu?: number
+
+    // 日历排课【上课日期】组
+    riLiShangKeRiQi?: number[];
+
+    // 排课上课时间组;【日历排课】，或者【规则排课】且【每天重复】时，只有一组数据
+    paiKeShangKeShiJianZu?: PaiKeShangKeShiJian[]
+}
+
+// 排课信息
+export type PaiKeXinXi = {
+    // 班级Id
+    banJiId: number
+    // 排课规则
+    paiKeGuiZe: PaiKeGuiZe
+    // 上课老师
+    shangKeLaoShiId?: number
+    // 上课教室
+    shangKeJiaoShiId?: number
+    // 上课内容
+    shangKeNeiRong?: string
 }

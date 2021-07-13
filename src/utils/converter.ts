@@ -4,7 +4,7 @@ import {
     NoPageSearchResult,
     OrderableDataNode,
     PaiKeFangShiFenLei, PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei,
-    SearchResult, SourceData, XingBie, XiTongCaiDan
+    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian
 } from "../customtypes";
 
 // 转换带分页的请求结果
@@ -135,13 +135,34 @@ export function convertPaiKeJieShuFangShi2Text(jieShuFangShi: PaiKeJieShuFangShi
             return "";
     }
 }
-export function convertPaiKeJieShuShi2Enum(PaiKeJieShuFangFenLei: string): PaiKeJieShuFangShiFenLei {
-    switch (PaiKeJieShuFangFenLei) {
+export function convertPaiKeJieShuShi2Enum(paiKeJieShuFangFenLei: string): PaiKeJieShuFangShiFenLei {
+    switch (paiKeJieShuFangFenLei) {
         case PaiKeJieShuFangShiFenLei.CI_SHU_JIE_SHU.toString():
             return PaiKeJieShuFangShiFenLei.CI_SHU_JIE_SHU;
         case PaiKeJieShuFangShiFenLei.RI_QI_JIE_SHU.toString():
             return PaiKeJieShuFangShiFenLei.RI_QI_JIE_SHU;
         default:
             return PaiKeJieShuFangShiFenLei.RI_QI_JIE_SHU;
+    }
+}
+
+export function convertPaiKeShangKeTian2Enum(paiKeShangKeTian: string): PaiKeShangKeTian {
+    switch (paiKeShangKeTian) {
+        case PaiKeShangKeTian.ONE.toString():
+            return PaiKeShangKeTian.ONE;
+        case PaiKeShangKeTian.TWO.toString():
+            return PaiKeShangKeTian.TWO;
+        case PaiKeShangKeTian.THREE.toString():
+            return PaiKeShangKeTian.THREE;
+        case PaiKeShangKeTian.FOUR.toString():
+            return PaiKeShangKeTian.FOUR;
+        case PaiKeShangKeTian.FIVE.toString():
+            return PaiKeShangKeTian.FIVE;
+        case PaiKeShangKeTian.SIX.toString():
+            return PaiKeShangKeTian.SIX;
+        case PaiKeShangKeTian.SEVEN.toString():
+            return PaiKeShangKeTian.SEVEN;
+        default:
+            return PaiKeShangKeTian.DAILY;
     }
 }

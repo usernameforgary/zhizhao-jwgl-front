@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { Moment } from 'moment'
 import { ActionType } from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
-import { Form, Space, Row, Col } from 'antd'
+import { Form, Space, Row, Col, TimePicker } from 'antd'
 import { EditableProTable } from '@ant-design/pro-table';
 
 /**
@@ -11,7 +11,7 @@ import { EditableProTable } from '@ant-design/pro-table';
  */
 
 export type PaiKeChongFuShiJian = {
-    id: React.Key,
+    id?: React.Key,
     day?: string,
     startTime?: Moment,
     stopTime?: Moment
@@ -24,7 +24,6 @@ export type PaiKeZhouChongFuProps = {
 const PaiKeZhouChongFu: React.FC<PaiKeZhouChongFuProps> = ({ onSetPaiKeChongFuShiJian }) => {
     const actionRef = useRef<ActionType>();
     const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
-    const [form] = Form.useForm();
     const [list, setList] = useState<PaiKeChongFuShiJian[]>([]);
 
     const columns: ProColumns<PaiKeChongFuShiJian>[] = [
@@ -33,13 +32,13 @@ const PaiKeZhouChongFu: React.FC<PaiKeZhouChongFuProps> = ({ onSetPaiKeChongFuSh
             dataIndex: 'day',
             valueType: "select",
             valueEnum: {
-                one: { text: '星期一' },
-                two: { text: '星期二' },
-                three: { text: '星期三' },
-                four: { text: '星期四' },
-                five: { text: '星期五' },
-                six: { text: '星期六' },
-                seven: { text: '星期日' }
+                ONE: { text: '星期一' },
+                TWO: { text: '星期二' },
+                THREE: { text: '星期三' },
+                FOUR: { text: '星期四' },
+                FIVE: { text: '星期五' },
+                SIX: { text: '星期六' },
+                SEVEN: { text: '星期日' }
             },
             formItemProps: {
                 rules: [
@@ -55,6 +54,7 @@ const PaiKeZhouChongFu: React.FC<PaiKeZhouChongFuProps> = ({ onSetPaiKeChongFuSh
             title: '开始时间',
             dataIndex: 'startTime',
             valueType: "time",
+            renderFormItem: () => <TimePicker format="HH:mm" placeholder="开始时间" />,
             formItemProps: {
                 rules: [
                     {
@@ -69,6 +69,7 @@ const PaiKeZhouChongFu: React.FC<PaiKeZhouChongFuProps> = ({ onSetPaiKeChongFuSh
             title: '结束时间',
             dataIndex: 'stopTime',
             valueType: "time",
+            renderFormItem: () => <TimePicker format="HH:mm" placeholder="结束时间" />,
             formItemProps: {
                 rules: [
                     {

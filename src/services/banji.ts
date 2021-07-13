@@ -1,5 +1,5 @@
 import { get, post } from "../api/customApi";
-import { BanJi, BanJiView, PageableListResponse, SearchResult, SourceData } from "../customtypes";
+import { BanJi, BanJiView, PageableListResponse, PaiKeXinXi, SearchResult, SourceData } from "../customtypes";
 import { convertSearchResult } from "../utils/converter";
 
 const convertBanJiView = (obj: SourceData): BanJiView => {
@@ -9,6 +9,8 @@ const convertBanJiView = (obj: SourceData): BanJiView => {
         mingCheng: obj.mingCheng,
         // 课程名称
         keChengMingCheng: obj.keChengMingCheng,
+        // 班级老师Id
+        banJiLaoShiId: obj.banJiLaoShiId,
         // 班级老师
         banJiLaoShiXingMing: obj.banJiLaoShiXingMing,
         // 班级人数
@@ -68,12 +70,16 @@ export const huoQuBanJiXiangQing = async (id: string): Promise<BanJiView> => {
         keChengId: res.keChengId,
         // 容量
         rongLiang: res.rongLiang,
+        // 班级老师Id
+        banJiLaoShiId: res.banJiLaoShiId,
         // 班级老师
         banJiLaoShiXingMing: res.banJiLaoShiXingMing,
         // 默认授课课时
         moRenShouKeKeShi: res.moRenShouKeKeShi,
         // 班级人数
         renShu: res.renShu,
+        // 上课教室Id
+        shangKeJiaoShiId: res.shangKeJiaoShiId,
         // 上课教室
         shangKeJiaoShi: res.shangKeJiaoShi,
         // 班级分类
@@ -84,4 +90,8 @@ export const huoQuBanJiXiangQing = async (id: string): Promise<BanJiView> => {
         key: res.id
     }
     return item;
+}
+
+export const chuangJianBanJiPaiKeXinXi = async (paiKeXinXi: PaiKeXinXi): Promise<void> => {
+    const res: SourceData = await post('/combine/chuangJianBanJiPaiKeXinXi', paiKeXinXi);
 }

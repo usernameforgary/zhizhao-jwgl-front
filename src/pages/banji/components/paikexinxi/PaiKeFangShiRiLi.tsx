@@ -11,7 +11,6 @@ const PaiKeFangShiRiLi: React.FC<PaiKeFangShiRiLiProps> = ({ parentForm }) => {
 
     const onClendarDatesChange = (dates: number[]) => {
         parentForm.setFieldsValue({ riLiShangKeRiQi: dates });
-        console.log(dates)
     }
 
     return (
@@ -21,7 +20,7 @@ const PaiKeFangShiRiLi: React.FC<PaiKeFangShiRiLiProps> = ({ parentForm }) => {
                     <Form.Item
                         labelAlign="left" labelCol={{ span: 6 }} label="日期"
                         name="riLiShangKeRiQi"
-                        rules={[{ required: true, message: "" }]}
+                        rules={[{ required: true, message: "请指定排课日期" }]}
                     >
                         <MultipleCalendar onDatesChange={onClendarDatesChange} />
                     </Form.Item>
@@ -40,14 +39,14 @@ const PaiKeFangShiRiLi: React.FC<PaiKeFangShiRiLiProps> = ({ parentForm }) => {
                                 name={["riLiPaiKeShiJian", "startTime"]}
                                 rules={[{ required: true, message: "请选择上课开始时间" }]}
                             >
-                                <TimePicker placeholder="开始时间" />
+                                <TimePicker format={"HH:mm"} placeholder="开始时间" />
                             </Form.Item>
                             <Form.Item
                                 style={{ marginBottom: 0 }}
                                 name={["riLiPaiKeShiJian", "stopTime"]}
                                 rules={[{ required: true, message: "请选择上课结束时间" }]}
                             >
-                                <TimePicker placeholder="结束时间" />
+                                <TimePicker format={"HH:mm"} placeholder="结束时间" />
                             </Form.Item>
                         </Space>
                     </Form.Item>

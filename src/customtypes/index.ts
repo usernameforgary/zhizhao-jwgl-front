@@ -394,8 +394,12 @@ export type PaiKeXinXi = {
     paiKeGuiZe: PaiKeGuiZe
     // 上课老师
     shangKeLaoShiId?: number
+    // 上课老师姓名
+    shangKeLaoShiXingMing?: string
     // 上课教室
     shangKeJiaoShiId?: number
+    // 上课教室名称
+    shangKeJiaoShiMingCheng?: string
     // 上课内容
     shangKeNeiRong?: string
-}
+} & IdValue

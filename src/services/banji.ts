@@ -1,6 +1,6 @@
 import { get, post } from "../api/customApi";
-import { BanJi, BanJiView, PageableListResponse, PaiKeXinXi, SearchResult, SourceData } from "../customtypes";
-import { convertSearchResult } from "../utils/converter";
+import { BanJi, BanJiView, NonPageableListResponse, NoPageSearchResult, PageableListResponse, PaiKeXinXi, SearchResult, SourceData } from "../customtypes";
+import { convertSearchResult, convertSearchResultNonPageable } from "../utils/converter";
 
 const convertBanJiView = (obj: SourceData): BanJiView => {
     const item: BanJiView = {
@@ -92,6 +92,36 @@ export const huoQuBanJiXiangQing = async (id: string): Promise<BanJiView> => {
     return item;
 }
 
+/**
+ * 创建班级排课信息
+ * @param paiKeXinXi 排课信息
+ */
 export const chuangJianBanJiPaiKeXinXi = async (paiKeXinXi: PaiKeXinXi): Promise<void> => {
     const res: SourceData = await post('/combine/chuangJianBanJiPaiKeXinXi', paiKeXinXi);
+}
+
+/**
+ * 获取班级排课信息 
+ * @param banJiId 班级Id
+ * @returns 
+ */
+export const huoQuBanJiPaiKeXinXiLieBiao = async (banJiId: number): Promise<NoPageSearchResult<PaiKeXinXi>> => {
+    const res: NonPageableListResponse = await get('/banjipaikexinxi/huoquBanJiPaiKeXinXi', { banJiId });
+    return convertSearchResultNonPageable<PaiKeXinXi>(res, (obj: SourceData) => {
+        return convertPaiKeXinXi(obj);
+    });
+}
+
+const convertPaiKeXinXi = (obj: SourceData): PaiKeXinXi => {
+    const item: PaiKeXinXi = {
+        id: obj.id,
+        banJiId: obj.banJiId,
+        paiKeGuiZe: obj.paiKeGuiZe,
+        shangKeLaoShiId: obj.shangKeLaoShiId,
+        shangKeLaoShiXingMing: obj.shangKeLaoShiXingMing,
+        shangKeJiaoShiId: obj.shangKeJiaoShiId,
+        shangKeJiaoShiMingCheng: obj.shangKeJiaoShiMingCheng,
+        shangKeNeiRong: obj.shangKeNeiRong
+    }
+    return item;
 }

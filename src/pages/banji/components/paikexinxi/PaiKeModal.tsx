@@ -187,6 +187,7 @@ const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiXiangQing, visible, modalT
 
         // 排课信息
         const paiKeXinXi: PaiKeXinXi = {
+            id: undefined,
             banJiId: value.banJiId,
             paiKeGuiZe: paiKeGuiZe,
             shangKeJiaoShiId: value.shangKeJiaoShiId,

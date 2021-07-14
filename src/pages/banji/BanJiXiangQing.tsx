@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 import { useState } from 'react';
 import Loading from '../../components/loading/Loading';
 import { huoQuBanJiXiangQing } from '../../services/banji';
-import PaiKeXinXi from './components/paikexinxi/PaiKeXinXi';
+import PaiKeXinXiTab from './components/paikexinxi/PaiKeXinXiTab';
 
 const { TabPane } = Tabs;
 
@@ -157,7 +157,7 @@ const BanJiXiangQing = () => {
                         <TabPane tab="排课信息" key={TabNamesBanJiXiangQing.paikexinxi}>
                             {
                                 currentTab === TabNamesBanJiXiangQing.paikexinxi ?
-                                    <PaiKeXinXi
+                                    <PaiKeXinXiTab
                                         banJiXiangQing={banJiXiangQing}
                                     />
                                     : ""

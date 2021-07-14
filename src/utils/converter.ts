@@ -166,3 +166,24 @@ export function convertPaiKeShangKeTian2Enum(paiKeShangKeTian: string): PaiKeSha
             return PaiKeShangKeTian.DAILY;
     }
 }
+
+export function convertPaiKeShangKeTian2Text(paiKeShangKeTian: PaiKeShangKeTian): string {
+    switch (paiKeShangKeTian) {
+        case PaiKeShangKeTian.ONE:
+            return "每周一";
+        case PaiKeShangKeTian.TWO:
+            return "每周二";;
+        case PaiKeShangKeTian.THREE:
+            return "每周三";
+        case PaiKeShangKeTian.FOUR:
+            return "每周四";
+        case PaiKeShangKeTian.FIVE:
+            return "每周五"
+        case PaiKeShangKeTian.SIX:
+            return "每周六";
+        case PaiKeShangKeTian.SEVEN:
+            return "每周日";
+        default:
+            return "每天";
+    }
+}

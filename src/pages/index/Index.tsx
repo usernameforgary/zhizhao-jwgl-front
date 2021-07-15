@@ -125,7 +125,7 @@ const Index = () => {
                                 <PrivateRouter exact key="xueyuanliebiao" path="/sys/xueyuanliebiao" component={XueYuanLieBiao} />
                                 <PrivateRouter exact key="kechengliebiao" path="/sys/kechengliebiao" component={KeChengLieBiao} />
                                 <PrivateRouter exact key="xinjiankecheng" path="/sys/xinjiankecheng" component={XinJianKeCheng} />
-                                <PrivateRouter exact key="xueyuanbaoming" path="/sys/xueyuanbaoming" component={XueYuanBaoMing} />
+                                <PrivateRouter exact key="xueyuanbaoming" path="/sys/xueyuanbaoming/:xueYuanId?" component={XueYuanBaoMing} />
                                 <PrivateRouter exact key="banjiliebiao" path="/sys/banjiliebiao" component={BanJiLieBiao} />
                                 <PrivateRouter exact key="banjixiangqing" path="/sys/banjixiangqing/:id/:tab" component={BanJiXiangQing} />
                                 <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>

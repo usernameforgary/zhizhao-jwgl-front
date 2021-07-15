@@ -1,10 +1,11 @@
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 import {
     IdValue,
     NonPageableListResponse,
     NoPageSearchResult,
     OrderableDataNode,
     PaiKeFangShiFenLei, PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei,
-    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian
+    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai
 } from "../customtypes";
 
 // 转换带分页的请求结果
@@ -185,5 +186,18 @@ export function convertPaiKeShangKeTian2Text(paiKeShangKeTian: PaiKeShangKeTian)
             return "每周日";
         default:
             return "每天";
+    }
+}
+
+export function convertXueYuanZhuangTai2Text(xueYuanZhuangTai: XueYuanZhuangTai): string {
+    switch (xueYuanZhuangTai) {
+        case XueYuanZhuangTai.LI_SHI:
+            return "历史";
+        case XueYuanZhuangTai.QIAN_ZAI:
+            return "潜在";
+        case XueYuanZhuangTai.ZAI_DU:
+            return "在读";
+        default:
+            return "";
     }
 }

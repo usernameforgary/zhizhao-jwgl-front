@@ -52,8 +52,6 @@ function CommonInfoModal<T extends CommonType>({ visible, modalTitle, onClose, l
     ];
 
     const onRowSave = async (key: React.Key | React.Key[], value: T & { index?: number | undefined; }): Promise<void> => {
-        console.log("key is: ", key, " index is: ", value.index)
-        console.log("key is: ", key, value)
         if (key === 9999) {
             // 新增
             onNew(value.mingCheng);

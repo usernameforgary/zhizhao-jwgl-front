@@ -403,3 +403,51 @@ export type PaiKeXinXi = {
     // 上课内容
     shangKeNeiRong?: string
 } & IdValue
+
+// 学员状态
+export enum XueYuanZhuangTai {
+    QIAN_ZAI = "QIAN_ZAI",
+    ZAI_DU = "ZAI_DU",
+    LI_SHI = "LI_SHI"
+}
+
+// 学员信息
+export type XueYuanXinXi = {
+    // 所属账号
+    zhangHaoId: number
+    // 所属账号手机
+    zhangHaoShouJi: string
+    // 姓名
+    xingMing: string
+    // 学员状态
+    xueYuanZhuangTai: XueYuanZhuangTai
+    // 头像
+    touXiang: string
+    // 性别
+    xingBie: XingBie
+    // 年龄
+    nanLing: number
+    // 就读学校
+    jiuDuXueXiao: string
+    // 当前年级
+    danqQianNianJi: string
+    // 家庭住址
+    jiaTingZhuZhi: string
+    // 学员来源
+    xueYuanLaiYuan: string
+    // 备注信息
+    beiZhuXinXi: string
+    // 跟进人
+    genJinRenId: number
+    // 跟进人姓名
+    genJinRenXingMing: string
+} & IdValue
+
+/**
+ * 可搜索的Select组件的Option定义
+ */
+export type SearchableSelectOptionDataType = {
+    value: string
+    label: string
+    showValue: string
+}

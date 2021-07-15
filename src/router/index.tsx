@@ -49,7 +49,7 @@ const subRoutes: RouteComponent[] = [
     { name: routeName.xueyuanliebiao, path: "/sys/xueyuanliebiao", component: XueYuanLieBiao, withoutLayout: false },
     { name: routeName.kechengliebiao, path: "/sys/kechengliebiao", component: KeChengLieBiao, withoutLayout: false },
     { name: routeName.xinjiankecheng, path: "/sys/xinjiankecheng", component: XinJianKeCheng, withoutLayout: false },
-    { name: routeName.xueyuanbaoming, path: "/sys/xueyuanbaoming", component: XueYuanBaoMing, withoutLayout: false },
+    { name: routeName.xueyuanbaoming, path: "/sys/xueyuanbaoming/:xueYuanId?", component: XueYuanBaoMing, withoutLayout: false },
     { name: routeName.banjiliebiao, path: "/sys/banjiliebiao", component: BanJiLieBiao, withoutLayout: false },
     { name: routeName.banjixiangqing, path: "/sys/banjixiangqing", component: BanJiXiangQing, withoutLayout: false },
     { name: routeName.dashboard, path: "/sys", component: DashBord, withoutLayout: false },

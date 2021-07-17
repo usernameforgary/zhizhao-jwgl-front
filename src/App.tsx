@@ -31,6 +31,7 @@ configLib(customeService({
     errorHandlers: {
         authorizationFail: (err) => {
             console.log('---unauthorized--')
+            message.error(err || err.toString());
             if (window.location.pathname === "/") {
                 return;
             }

@@ -45,21 +45,21 @@ const BanJiLieBiao = () => {
     const [viewStore] = useState<BanJiLieBiaoStore>(new BanJiLieBiaoStore());
     const [showXinZengBanJiModal, setShowXinZengBanJiModal] = useState<boolean>(false);
     const [listRefresh, setListRefresh] = useState<boolean>(false);
-    const [loading, SetLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { list, pagination } = viewStore;
 
     const listBanJiLieBiao = async () => {
-        SetLoading(true);
+        setLoading(true);
         try {
             await viewStore.search(pagination)
         } catch (e) { }
-        SetLoading(false);
+        setLoading(false);
     }
 
     useEffect(() => {
         listBanJiLieBiao();
-    }, [listRefresh])
+    }, [listRefresh]);
 
     /**
      * 刷新列表
@@ -118,7 +118,7 @@ const BanJiLieBiao = () => {
             dataIndex: 'renShu',
             key: 'renShu',
             render: (value, record) => {
-                return `${record.renShu}/${record.rongLiang || 0}`;
+                return `${(record?.banJiXueYuanZu && record.banJiXueYuanZu.length)}/${record.rongLiang || 0}`;
             }
         },
         {

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { Moment } from 'moment'
 import { ActionType } from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
-import { Form, Space, Row, Col, TimePicker } from 'antd'
+import { Space, Row, Col, TimePicker } from 'antd'
 import { EditableProTable } from '@ant-design/pro-table';
 
 /**

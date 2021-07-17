@@ -283,6 +283,13 @@ export type BanJi = {
     beiZhu?: string
 } & IdValue
 
+/**
+ * 班级学员
+ */
+export type BanJiXueYuan = {
+    xueYuanId: string | number
+}
+
 // 班级列表展示
 export type BanJiView = {
     //名称
@@ -295,8 +302,8 @@ export type BanJiView = {
     banJiLaoShiId: number
     // 班级老师
     banJiLaoShiXingMing: string
-    // 班级人数
-    renShu: number | 0
+    //班级学员组
+    banJiXueYuanZu: BanJiXueYuan[]
     // 容量
     rongLiang: number | 0
     // 已排课次
@@ -318,6 +325,11 @@ export type BanJiView = {
 
     key: React.Key
 } & IdValue
+
+export enum ZhangHaoLeiXing {
+    YUAN_GONG = "YUAN_GONG",
+    XUE_YUAN = "XUE_YUAN"
+}
 
 // 排课方式
 export enum PaiKeFangShiFenLei {
@@ -402,6 +414,9 @@ export type PaiKeXinXi = {
     shangKeJiaoShiMingCheng?: string
     // 上课内容
     shangKeNeiRong?: string
+
+    // 前端列表展示
+    key?: React.Key
 } & IdValue
 
 // 学员状态

@@ -13,8 +13,8 @@ const convertBanJiView = (obj: SourceData): BanJiView => {
         banJiLaoShiId: obj.banJiLaoShiId,
         // 班级老师
         banJiLaoShiXingMing: obj.banJiLaoShiXingMing,
-        // 班级人数
-        renShu: obj.renShu,
+        // 班级学员组
+        banJiXueYuanZu: obj.banJiXueYuanZu,
         // 容量
         rongLiang: obj.rongLiang,
         // 已排课次
@@ -59,37 +59,8 @@ export const huoQuBanJiLieBiao = async (pageNum: number, pageSize: number): Prom
  * @param id 班级Id
  */
 export const huoQuBanJiXiangQing = async (id: string): Promise<BanJiView> => {
-    const res: SourceData = await get('/banji/huoQuBanJiXiangQing', { id });
-    const item: BanJiView = {
-        id: res.id,
-        //名称
-        mingCheng: res.mingCheng,
-        // 课程名称
-        keChengMingCheng: res.keChengMingCheng,
-        // 课程Id
-        keChengId: res.keChengId,
-        // 容量
-        rongLiang: res.rongLiang,
-        // 班级老师Id
-        banJiLaoShiId: res.banJiLaoShiId,
-        // 班级老师
-        banJiLaoShiXingMing: res.banJiLaoShiXingMing,
-        // 默认授课课时
-        moRenShouKeKeShi: res.moRenShouKeKeShi,
-        // 班级人数
-        renShu: res.renShu,
-        // 上课教室Id
-        shangKeJiaoShiId: res.shangKeJiaoShiId,
-        // 上课教室
-        shangKeJiaoShi: res.shangKeJiaoShi,
-        // 班级分类
-        banJiFenLeiMingCheng: res.banJiFenLeiMingCheng,
-        // 备注
-        beiZhu: res.beiZhu,
-
-        key: res.id
-    }
-    return item;
+    const res: BanJiView = await get('/banji/huoQuBanJiXiangQing', { id });
+    return res;
 }
 
 /**
@@ -97,7 +68,7 @@ export const huoQuBanJiXiangQing = async (id: string): Promise<BanJiView> => {
  * @param paiKeXinXi 排课信息
  */
 export const chuangJianBanJiPaiKeXinXi = async (paiKeXinXi: PaiKeXinXi): Promise<void> => {
-    const res: SourceData = await post('/combine/chuangJianBanJiPaiKeXinXi', paiKeXinXi);
+    await post('/combine/chuangJianBanJiPaiKeXinXi', paiKeXinXi);
 }
 
 /**
@@ -105,8 +76,8 @@ export const chuangJianBanJiPaiKeXinXi = async (paiKeXinXi: PaiKeXinXi): Promise
  * @param banJiId 班级Id
  * @returns 
  */
-export const huoQuBanJiPaiKeXinXiLieBiao = async (banJiId: number): Promise<NoPageSearchResult<PaiKeXinXi>> => {
-    const res: NonPageableListResponse = await get('/banjipaikexinxi/huoquBanJiPaiKeXinXi', { banJiId });
+export const huoQuBanJiPaiKeXinXiLieBiao = async (banJiId: string): Promise<NoPageSearchResult<PaiKeXinXi>> => {
+    const res: NonPageableListResponse = await get('/paike/huoquBanJiPaiKeXinXi', { banJiId });
     return convertSearchResultNonPageable<PaiKeXinXi>(res, (obj: SourceData) => {
         return convertPaiKeXinXi(obj);
     });

@@ -1,5 +1,5 @@
 import { post, get } from "../api/customApi";
-import { PageableListResponse, SearchResult, SourceData, User, XiTongCaiDan, YuanGong } from "../customtypes";
+import { PageableListResponse, SearchResult, SourceData, User, XiTongCaiDan, YuanGong, ZhangHaoLeiXing } from "../customtypes";
 import { convertSearchResult } from "../utils/converter";
 import { convertXiTongCaiDan } from "./xintongcaidan";
 
@@ -20,7 +20,7 @@ const convertYuanGong = (obj: SourceData): YuanGong => {
 
 // 登录
 export const login = async (shouJi: string, miMa: string): Promise<string> => {
-    const { token } = await post('/public/dengLu', { shouJi, miMa });
+    const { token } = await post('/public/dengLu', { shouJi, miMa, zhangHaoLeiXing: ZhangHaoLeiXing.YUAN_GONG });
     return token;
 }
 

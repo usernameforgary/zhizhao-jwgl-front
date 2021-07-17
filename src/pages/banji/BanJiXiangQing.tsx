@@ -1,10 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { Tabs, Card, Space, Row, Col, Button } from 'antd';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import { BanJiView } from '../../customtypes';
 import { observer } from 'mobx-react';
-import { useState } from 'react';
 import Loading from '../../components/loading/Loading';
 import { huoQuBanJiXiangQing } from '../../services/banji';
 import PaiKeXinXiTab from './components/paikexinxi/PaiKeXinXiTab';
@@ -47,12 +46,17 @@ class BanJiStore {
     }
 
     @action
+    setBanJiXiangQing = (v: BanJiView) => {
+        this.banJiXiangQing = v;
+    }
+
+    @action
     getBanJiXiangQing = async (): Promise<void> => {
         if (this.banJiId) {
             this.toggleLoading();
             try {
                 const xiangQing: BanJiView = await huoQuBanJiXiangQing(this.banJiId);
-                this.banJiXiangQing = xiangQing;
+                this.setBanJiXiangQing(xiangQing);
             } catch (e) { }
             this.toggleLoading();
         }
@@ -128,7 +132,7 @@ const BanJiXiangQing = () => {
                             <Col offset={2} span={6}>
                                 <Space size="middle" style={{ width: '100%' }}>
                                     <span>在读人数:</span>
-                                    <span>{banJiXiangQing?.renShu}</span>
+                                    <span>{(banJiXiangQing?.banJiXueYuanZu && banJiXiangQing.banJiXueYuanZu.length)}</span>
                                 </Space>
                             </Col>
                             <Col offset={2} span={6}>

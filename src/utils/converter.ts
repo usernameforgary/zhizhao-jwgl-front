@@ -1,4 +1,3 @@
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 import {
     IdValue,
     NonPageableListResponse,

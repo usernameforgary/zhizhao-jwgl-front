@@ -30,7 +30,10 @@ const PaiKeXinXiTab: React.FC<PaiKeXinXiProps> = ({ banJiXiangQing }) => {
     const onHuoQuBanJiPaiKeXinXi = async () => {
         if (banJiXiangQing?.id) {
             try {
-                const result = await huoQuBanJiPaiKeXinXiLieBiao(Number(banJiXiangQing.id));
+                const result = await huoQuBanJiPaiKeXinXiLieBiao((banJiXiangQing.id));
+                result.list.forEach(v => {
+                    v.key = v.key || v.id;
+                })
                 setPaiKeXinXi(result.list);
             } catch (e) { }
         }
@@ -68,13 +71,18 @@ const PaiKeXinXiTab: React.FC<PaiKeXinXiProps> = ({ banJiXiangQing }) => {
                     return <span style={{ whiteSpace: 'pre-line' }}>{res}</span>;
                 }
                 if (value.paiKeFangShi === PaiKeFangShiFenLei.GUI_ZE_PAI_KE) {
-                    let resStartStart = moment(Number(value.guiZeKaiShiRiQi)).format("YYYY-MM-DD");
+                    let resStart = moment(Number(value.guiZeKaiShiRiQi)).format("YYYY-MM-DD");
                     if (value.guiZeJiShuFangShi === PaiKeJieShuFangShiFenLei.CI_SHU_JIE_SHU) {
-                        let res = resStartStart + ` (重复${value.guiZePaiKeCiShu}次)`;
+                        let res = "";
+                        if (value.paiKeShangKeShiJianZu && value.paiKeShangKeShiJianZu.length > 0) {
+                            value.paiKeShangKeShiJianZu.forEach(v => {
+                                res += `从${resStart} (${convertPaiKeShangKeTian2Text(v.paiKeShangKeTian)}) (重复${value.guiZePaiKeCiShu}次)\n`;
+                            })
+                        }
                         return <span style={{ whiteSpace: 'pre-line' }}>{res}</span>;
                     }
                     if (value.guiZeJiShuFangShi === PaiKeJieShuFangShiFenLei.RI_QI_JIE_SHU) {
-                        let resDate = resStartStart + ` ~ ${moment(Number(value.guiZeJieShuRiQi)).format("YYYY-MM-DD")}`;
+                        let resDate = resStart + ` ~ ${moment(Number(value.guiZeJieShuRiQi)).format("YYYY-MM-DD")}`;
                         let res = "";
                         if (value.paiKeShangKeShiJianZu && value.paiKeShangKeShiJianZu.length > 0) {
                             value.paiKeShangKeShiJianZu.forEach(v => {

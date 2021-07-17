@@ -40,6 +40,7 @@ function CommonInfoModal<T extends CommonType>({ visible, modalTitle, onClose, l
             valueType: 'option',
             render: (text, record, _, action) => [
                 <a
+                    href="#"
                     key="editable"
                     onClick={() => {
                         action?.startEditable?.(record.id || "");

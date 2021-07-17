@@ -1,5 +1,5 @@
 import { Steps, Row, Col, Space } from 'antd'
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -41,16 +41,21 @@ class XueYuanBaoMingStore {
         this.xueYuanId = id;
     }
 
+    @action
+    setXueYuanInfo = (xueYuanXinXi: XueYuanXinXi | undefined) => {
+        this.xueYuanXinXi = xueYuanXinXi;
+    }
+
     // 获取学员信息
     @action
     setXueYuanXinXi = async (): Promise<void> => {
         if (this.xueYuanId) {
             try {
                 const xueYuanXinXi: XueYuanXinXi = await huoQuXueYaunXinXi(this.xueYuanId);
-                this.xueYuanXinXi = xueYuanXinXi;
+                this.setXueYuanInfo(xueYuanXinXi);
             } catch (e) { }
         } else {
-            this.xueYuanXinXi = undefined;
+            this.setXueYuanInfo(undefined);
         }
     }
 }

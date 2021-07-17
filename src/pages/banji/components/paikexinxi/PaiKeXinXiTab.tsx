@@ -103,7 +103,7 @@ const PaiKeXinXiTab: React.FC<PaiKeXinXiProps> = ({ banJiXiangQing }) => {
                 let res: string = "";
                 if (value.paiKeShangKeShiJianZu && value.paiKeShangKeShiJianZu.length > 0) {
                     value.paiKeShangKeShiJianZu.forEach(v => {
-                        res += moment(Number(v.startTime)).format("HH:MM") + " ~ " + moment(Number(v.stopTime)).format("HH:MM") + "\n";
+                        res += moment(Number(v.startTime)).format("HH:mm") + " ~ " + moment(Number(v.stopTime)).format("HH:mm") + "\n";
                     });
                     return <span style={{ whiteSpace: 'pre-line' }}>{res}</span>;
                 }

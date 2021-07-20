@@ -214,7 +214,7 @@ export type KeCheng = {
     //单价
     danJia: number
     //定价标准
-    dingJiaBiaoZhunZu?: [{ [key: string]: string | number }]
+    dingJiaBiaoZhunZu?: DingJiaBiaoZhun[]
     //请假扣课时
     qingJiaKouKeShi: boolean
     //未到扣课时
@@ -429,33 +429,33 @@ export enum XueYuanZhuangTai {
 // 学员信息
 export type XueYuanXinXi = {
     // 所属账号
-    zhangHaoId: number
+    zhangHaoId?: number
     // 所属账号手机
-    zhangHaoShouJi: string
+    zhangHaoShouJi?: string
     // 姓名
-    xingMing: string
+    xingMing?: string
     // 学员状态
-    xueYuanZhuangTai: XueYuanZhuangTai
+    xueYuanZhuangTai?: XueYuanZhuangTai
     // 头像
-    touXiang: string
+    touXiang?: string
     // 性别
-    xingBie: XingBie
+    xingBie?: XingBie
     // 年龄
-    nanLing: number
+    nanLing?: number
     // 就读学校
-    jiuDuXueXiao: string
+    jiuDuXueXiao?: string
     // 当前年级
-    danqQianNianJi: string
+    danqQianNianJi?: string
     // 家庭住址
-    jiaTingZhuZhi: string
+    jiaTingZhuZhi?: string
     // 学员来源
-    xueYuanLaiYuan: string
+    xueYuanLaiYuan?: string
     // 备注信息
-    beiZhuXinXi: string
+    beiZhuXinXi?: string
     // 跟进人
-    genJinRenId: number
+    genJinRenId?: number
     // 跟进人姓名
-    genJinRenXingMing: string
+    genJinRenXingMing?: string
 } & IdValue
 
 /**
@@ -466,3 +466,77 @@ export type SearchableSelectOptionDataType = {
     label: string
     showValue: string
 }
+
+
+/**
+ *  学员课程状态
+    待确认:
+        学员有缴费记录,但会计还未确认缴费,该状态下学员不可加入班级
+    待补缴:
+        学员已完成报名,但会计只收到缴费金额的一部分,此时状态为“部分缴费”,状态,该状态下学员可以加入班级上课。不论学员报名了多少课程,在“部分缴费”状态下,所有报名的课程均可加入班级。
+    待排课:
+        会计已确认缴费,但学员没有加入任何班级
+    待上课:
+        学员加入班级,且有剩余课时的情况下,为待上课状态,该状态下老师可进行点名操作
+    待结课:
+        学员加入班级,且剩余课时为0,该状态下显示结课按钮
+    已结课:
+        学员某一课程剩余课时为0,且已点击结课按钮,则该课程的状态为已结课。
+ */
+export enum XueYuanKeChengZhuangTai {
+    DAI_QUE_REN = 'DAI_QUE_REN',
+    DAI_BU_JIAO = 'DAI_BU_JIAO',
+    DAI_PAI_KE = 'DAI_PAI_KE',
+    DAI_SHANG_KE = 'DAI_SHANG_KE',
+    DAI_JIE_KE = 'DAI_JIE_KE',
+    YI_JIE_KE = 'YI_JIE_KE'
+}
+
+// 课程类型
+export enum KeChengLeiXing {
+    XIN_BAO = 'XIN_BAO',
+    KUO_KE = 'KUO_KE',
+    XU_BAO = 'XU_BAO'
+}
+
+
+// 优惠类型
+export enum YouHuiLeiXing {
+    ZHI_JIAN = 'ZHI_JIAN',
+    ZHE_KOU = 'ZHE_KOU'
+}
+
+
+// 学员课程
+export type XueYuanKeCheng = {
+    // 所属学员ID
+    xueYuanId: string
+    //课程ID
+    keChengId: string
+    //课程信息
+    keCheng: KeCheng
+    //定价标准
+    dingJiaBiaoZhun?: DingJiaBiaoZhun
+    //课程状态
+    keChengZhuangTai: XueYuanKeChengZhuangTai
+    //课程类型
+    keChengLeiXing: KeChengLeiXing
+    //单价
+    danJia: number
+    //课程数量
+    keChengShuLiang: number
+    //原价
+    yuanJia: number
+    //赠送课时
+    zengSongKeShi: number
+    //优惠类型
+    youHuiLeiXing: YouHuiLeiXing
+    //优惠数量
+    youHuiShuLiang: number
+    //签约金额
+    qianYueJinE: number
+    // 备注
+    beiZhu: string
+
+    key: React.Key
+} & IdValue

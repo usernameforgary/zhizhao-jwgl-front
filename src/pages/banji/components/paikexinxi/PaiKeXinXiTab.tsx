@@ -19,24 +19,30 @@ export type PaiKeXinXiProps = {
 const PaiKeXinXiTab: React.FC<PaiKeXinXiProps> = ({ banJiXiangQing }) => {
     const [showPaiKeModal, setShowPaiKeModal] = useState<boolean>(false);
     const [paiKeXinXi, setPaiKeXinXi] = useState<PaiKeXinXi[]>([]);
+    const [refreshList, setRefreshList] = useState<boolean>(false);
 
     useEffect(() => {
+        //获取班级排课信息列表
+        const onHuoQuBanJiPaiKeXinXi = async () => {
+            if (banJiXiangQing?.id) {
+                try {
+                    const result = await huoQuBanJiPaiKeXinXiLieBiao((banJiXiangQing.id));
+                    result.list.forEach(v => {
+                        v.key = v.key || v.id;
+                    })
+                    setPaiKeXinXi(result.list);
+                } catch (e) { }
+            }
+        }
+
         onHuoQuBanJiPaiKeXinXi();
-    }, [banJiXiangQing])
+    }, [banJiXiangQing, refreshList])
 
     /**
-     * 获取班级排课信息列表
+     * 刷新列表
      */
-    const onHuoQuBanJiPaiKeXinXi = async () => {
-        if (banJiXiangQing?.id) {
-            try {
-                const result = await huoQuBanJiPaiKeXinXiLieBiao((banJiXiangQing.id));
-                result.list.forEach(v => {
-                    v.key = v.key || v.id;
-                })
-                setPaiKeXinXi(result.list);
-            } catch (e) { }
-        }
+    const onListRefresh = () => {
+        setRefreshList(!refreshList);
     }
 
     const toggleShowPaiKeModal = () => {
@@ -155,13 +161,12 @@ const PaiKeXinXiTab: React.FC<PaiKeXinXiProps> = ({ banJiXiangQing }) => {
                         </Table>
                     </Col>
                 </Row>
-                {showPaiKeModal ?
-                    <PaiKeModal
-                        visible={showPaiKeModal}
-                        banJiXiangQing={banJiXiangQing}
-                        onCancel={toggleShowPaiKeModal} />
-                    : ""
-                }
+                <PaiKeModal
+                    visible={showPaiKeModal}
+                    banJiXiangQing={banJiXiangQing}
+                    onCancel={toggleShowPaiKeModal}
+                    refreshList={onListRefresh}
+                />
             </Space>
         </>
     )

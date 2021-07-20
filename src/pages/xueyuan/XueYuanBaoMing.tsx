@@ -1,12 +1,14 @@
 import { Steps, Row, Col, Space } from 'antd'
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { XueYuanXinXi } from '../../customtypes';
+import { XueYuanKeCheng, XueYuanXinXi } from '../../customtypes';
 import { huoQuXueYaunXinXi } from '../../services/xueyuan';
+import BaoMingGouMaiStep from './xuyuanbaoming/BaoMingGouMaiStep';
 import BaoMingJiBenXinXiStep from './xuyuanbaoming/BaoMingJiBenXinXiStep';
+import BaoMingJieSuanStep from './xuyuanbaoming/BaoMingJieSuanStep';
 
 const { Step } = Steps;
 
@@ -23,18 +25,14 @@ class XueYuanBaoMingStore {
     // 学员Id
     @observable
     xueYuanId: string = "";
+
     // 学员信息
     @observable
     xueYuanXinXi: XueYuanXinXi | undefined = undefined;
 
-    // 临时保存学员名称，因为重新选择不存在的学员后，学员信息会重新刷新，导致页面上学生姓名项取不到刚才输入的值
+    // 学员课程
     @observable
-    tempXueYuanName: string = "";
-
-    @action
-    setTempXueYuanName = (value: string) => {
-        this.tempXueYuanName = value;
-    }
+    xuYuanKeChengList: XueYuanKeCheng[] = [];
 
     @action
     setXueYuanId = (id: string): void => {
@@ -42,20 +40,18 @@ class XueYuanBaoMingStore {
     }
 
     @action
-    setXueYuanInfo = (xueYuanXinXi: XueYuanXinXi | undefined) => {
+    setXueYuanXinXi = (xueYuanXinXi: XueYuanXinXi | undefined) => {
         this.xueYuanXinXi = xueYuanXinXi;
     }
 
     // 获取学员信息
     @action
-    setXueYuanXinXi = async (): Promise<void> => {
+    initialXueYuanXinXi = async (): Promise<void> => {
         if (this.xueYuanId) {
             try {
                 const xueYuanXinXi: XueYuanXinXi = await huoQuXueYaunXinXi(this.xueYuanId);
-                this.setXueYuanInfo(xueYuanXinXi);
+                this.setXueYuanXinXi(xueYuanXinXi);
             } catch (e) { }
-        } else {
-            this.setXueYuanInfo(undefined);
         }
     }
 }
@@ -68,8 +64,13 @@ const XueYuanBaoMing = () => {
     const { xueYuanXinXi } = viewStore;
 
     useEffect(() => {
-        viewStore.setXueYuanXinXi();
+        viewStore.initialXueYuanXinXi();
     }, [viewStore.xueYuanId]);
+
+    // 上一步
+    const onPreviousStep = () => {
+        setCurrentStep(currentStep - 1);
+    }
 
     // 下一步
     const onNextStep = () => {
@@ -77,12 +78,14 @@ const XueYuanBaoMing = () => {
     }
 
     // 学员选择改变
-    const onXueYuanChange = (xueYuanId: string, tempXueYuanName?: string) => {
+    const onXueYuanIdChange = (xueYuanId: string) => {
         viewStore.setXueYuanId(xueYuanId)
+    }
 
-        if (!!tempXueYuanName) {
-            viewStore.setTempXueYuanName(tempXueYuanName);
-        }
+    // 新的学员
+    const onSetNewXueYuanXinXi = (newXueYuanXinXi: XueYuanXinXi) => {
+        viewStore.setXueYuanXinXi(newXueYuanXinXi);
+        viewStore.setXueYuanId("");
     }
 
     return (
@@ -110,9 +113,23 @@ const XueYuanBaoMing = () => {
                         {currentStep === 0 ?
                             <BaoMingJiBenXinXiStep
                                 xueYuanXinXi={xueYuanXinXi}
-                                changeXueYuan={onXueYuanChange}
+                                changeXueYuanById={onXueYuanIdChange}
+                                setNewXueYuanXinXi={onSetNewXueYuanXinXi}
                                 onNextStep={onNextStep}
-                                tempXueYuanName={viewStore.tempXueYuanName}
+                            /> : ""}
+
+                        {currentStep === 1 ?
+                            <BaoMingGouMaiStep
+                                xueYuanXinXi={xueYuanXinXi}
+                                onPreviousStep={onPreviousStep}
+                                onNextStep={onNextStep}
+                                initialXueYuanKeChengList={viewStore.xuYuanKeChengList}
+                            /> : ""}
+                        {currentStep === 2 ?
+                            <BaoMingJieSuanStep
+                                xueYuanXinXi={xueYuanXinXi}
+                                onPreviousStep={onPreviousStep}
+                                onNextStep={onNextStep}
                             /> : ""}
                     </Col>
                 </Row>

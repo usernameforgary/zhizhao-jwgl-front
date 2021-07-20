@@ -11,37 +11,44 @@ const { TextArea } = Input;
 
 type BaoMingJiBenXinXiStepProps = {
     onNextStep: () => void
-    tempXueYuanName?: string
     xueYuanXinXi: XueYuanXinXi | undefined
-    changeXueYuan: (xueYuanId: string, tempXueYuanName?: string) => void
+    setNewXueYuanXinXi: (newXueYuanXinXi: XueYuanXinXi) => void
+    changeXueYuanById: (xueYuanId: string) => void
 }
 
-const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXinXi, tempXueYuanName, changeXueYuan, onNextStep }) => {
+const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXinXi, changeXueYuanById, setNewXueYuanXinXi, onNextStep }) => {
     const [form] = useForm();
     const [xueYuanOptions, setXueYuanOptions] = useState<SearchableSelectOptionDataType[]>([]);
 
-    // 获取所有学员
-    const onHuoQuXueYuanAll = async () => {
-        try {
-            const res: XueYuanXinXi[] = await huoQuXueYuanAll();
-            let xueYuanRecordOption: SearchableSelectOptionDataType[] = [];
-            res.forEach(v => {
-                xueYuanRecordOption.push({
-                    value: v.id || "",
-                    label: v.xingMing,
-                    showValue: `${v.xingMing} 
-                        ${convertXueYuanZhuangTai2Text(v.xueYuanZhuangTai)}
-                        ${v.zhangHaoShouJi}`
-                })
-            })
-            setXueYuanOptions(xueYuanRecordOption);
-        } catch (e) { }
-    }
 
     // props.xueYuanXinXi改变时，重新刷新form
     useEffect(() => {
-        form.resetFields();
+        let isMounted = true;
+
+        // 获取所有学员
+        const onHuoQuXueYuanAll = async () => {
+            try {
+                const res: XueYuanXinXi[] = await huoQuXueYuanAll();
+                let xueYuanRecordOption: SearchableSelectOptionDataType[] = [];
+                res.forEach(v => {
+                    xueYuanRecordOption.push({
+                        value: v.id || "",
+                        label: v.xingMing || "",
+                        showValue: `${v.xingMing} 
+                            ${v.xueYuanZhuangTai && convertXueYuanZhuangTai2Text(v.xueYuanZhuangTai)}
+                            ${v.zhangHaoShouJi}`
+                    })
+                })
+                if (isMounted) {
+                    setXueYuanOptions(xueYuanRecordOption);
+                }
+            } catch (e) { }
+        }
+
         onHuoQuXueYuanAll();
+        form.resetFields();
+
+        return () => { isMounted = false }
     }, [xueYuanXinXi]);
 
     /**
@@ -58,25 +65,37 @@ const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXi
     const handleBaoCunQianZaiXueYuan = async () => {
         try {
             const res: XueYuanXinXi = await form.validateFields();
-            const searchRes: XueYuanXinXi = await huoQuXueYuanByXingMingAndShouJi(res.xingMing, res.zhangHaoShouJi);
+            const searchRes: XueYuanXinXi = await huoQuXueYuanByXingMingAndShouJi(res.xingMing || "", res.zhangHaoShouJi || "");
+
             if (!!searchRes) {
                 // TODO 需要加弹出框进行确认
                 alert("存在重复记录")
             } else {
                 res.xueYuanZhuangTai = XueYuanZhuangTai.QIAN_ZAI;
                 const id: string = await chuangJianXueYuan(res);
-                changeXueYuan(id);
+                changeXueYuanById(id);
             }
         } catch (e) { }
     }
 
+    /**
+     * 下一步按钮点击
+     */
     const handleToNextStep = async () => {
         try {
             const res: XueYuanXinXi = await form.validateFields();
             // 学员信息不为空，代表当前所选的是系统中已经存在的学员
-            if (xueYuanXinXi && xueYuanXinXi.id) {
-                onNextStep();
+            if (!(xueYuanXinXi && xueYuanXinXi.id)) {
+                const searchRes: XueYuanXinXi = await huoQuXueYuanByXingMingAndShouJi(res.xingMing || "", res.zhangHaoShouJi || "");
+                if (!!searchRes) {
+                    // TODO 需要加弹出框进行确认
+                    alert("存在重复记录");
+                    return;
+                } else {
+                    setNewXueYuanXinXi(res);
+                }
             }
+            onNextStep();
         } catch (e) { }
     }
 
@@ -90,10 +109,10 @@ const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXi
             }
         })
         if (!foundKey) {
-            form.setFieldsValue({ xingMing: value });
-            changeXueYuan("", value);
+            const newXueYuan: XueYuanXinXi = { id: undefined, xingMing: value };
+            setNewXueYuanXinXi(newXueYuan);
         } else {
-            changeXueYuan(value);
+            changeXueYuanById(value);
         }
     }
 
@@ -108,13 +127,13 @@ const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXi
                         <Row justify="space-between">
                             <Col span={16}>
                                 <Form.Item
-                                    initialValue={(xueYuanXinXi && xueYuanXinXi.id) || tempXueYuanName}
+                                    initialValue={(xueYuanXinXi && xueYuanXinXi.id) || (xueYuanXinXi && xueYuanXinXi.xingMing)}
                                     labelAlign="left"
                                     labelCol={{ span: 8 }}
                                     label="学生姓名" name="xingMing"
                                     rules={[{ required: true, message: "请输入学生姓名" }]}>
                                     <SearchableSelect
-                                        initialSelected={(xueYuanXinXi && xueYuanXinXi.id) || tempXueYuanName}
+                                        initialSelected={(xueYuanXinXi && xueYuanXinXi.id) || (xueYuanXinXi && xueYuanXinXi.xingMing)}
                                         optionList={xueYuanOptions}
                                         onSelectChanged={onXueYuanXinMingChanged}
                                     />
@@ -232,7 +251,7 @@ const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXi
                             <Form.Item>
                                 <Row gutter={10}>
                                     <Col>
-                                        <Button disabled={!!xueYuanXinXi} onClick={handleBaoCunQianZaiXueYuan}>
+                                        <Button disabled={!!xueYuanXinXi?.id} onClick={handleBaoCunQianZaiXueYuan}>
                                             保存为潜在学员
                                         </Button>
                                     </Col>

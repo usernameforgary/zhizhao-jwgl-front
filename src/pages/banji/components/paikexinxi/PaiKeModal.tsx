@@ -34,6 +34,7 @@ type PaiKeModalProps = {
     modalTitle?: string
     onCancel: () => void
     onFormSubmit?: () => void
+    refreshList?: () => void
 }
 
 // 排课规则form表单提交数据
@@ -55,7 +56,7 @@ export type PaiKeGuiZeFormValue = {
     shangKeNeiRong?: string
 }
 
-const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiXiangQing, visible, modalTitle, onCancel, onFormSubmit }) => {
+const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiXiangQing, visible, modalTitle, onCancel, onFormSubmit, refreshList }) => {
     const [form] = useForm();
     const [shangKeJiaoShiList, setShangKeJiaoShiList] = useState<ShangKeJiaoShi[]>([]);
     const [laoShiList, setLaoShiList] = useState<LaoShi[]>([]);
@@ -110,6 +111,10 @@ const PaiKeModal: React.FC<PaiKeModalProps> = ({ banJiXiangQing, visible, modalT
     const onChuangJianBanJiPaiKeXinXi = async (paiKeXinXi: PaiKeXinXi) => {
         try {
             await chuangJianBanJiPaiKeXinXi(paiKeXinXi);
+            onCancel();
+            if (refreshList) {
+                refreshList();
+            }
         } catch (e) { }
 
         if (onFormSubmit) {

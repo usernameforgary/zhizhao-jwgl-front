@@ -40,3 +40,11 @@ export const huoQuKeChengAll = async (): Promise<NoPageSearchResult<KeCheng>> =>
         return convertKeCheng(obj);
     });
 }
+
+// 根据学员Id，获取学员未选择的课程；如果学员Id为空，则返回所有课程kecheng
+export const getWeiXuanZeKeChengByXueYuanId = async (xueYuanId: string): Promise<NoPageSearchResult<KeCheng>> => {
+    const res: NonPageableListResponse = await get('/kecheng/getWeiXuanZeKeChengByXueYuanId', { xueYuanId });
+    return convertSearchResultNonPageable<KeCheng>(res, (obj: SourceData) => {
+        return convertKeCheng(obj);
+    });
+}

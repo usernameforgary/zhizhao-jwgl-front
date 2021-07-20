@@ -1,6 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Row, Col, Spin } from 'antd';
-import { useState } from 'react';
+import { Form, Input, Button, Row, Col } from 'antd';
 import { getStore } from '../../store/useStore';
 import { IMainStore } from '../../customtypes';
 
@@ -12,27 +11,24 @@ const layout = {
     wrapperCol: { span: 16 },
 };
 
-const DengLu = (): JSX.Element => {
+const DengLu = () => {
     const store = getStore() as IMainStore;
-    const [loading, setLoading] = useState<boolean>(false);
     const history = useHistory();
 
     const doLogin = async (shouJi: string, miMa: string) => {
         try {
-            setLoading(true);
             const token = await login(shouJi, miMa);
             if (token) {
                 store.login(token);
                 history.push('/sys');
             }
         } catch (err) {
+        } finally {
         }
-        setLoading(false);
     }
 
     return (
         <div className="dengLuForm">
-            {loading ?? <Spin tip="加载中..." />}
             <Row>
                 <Col span={8} offset={8}>
                     <Form

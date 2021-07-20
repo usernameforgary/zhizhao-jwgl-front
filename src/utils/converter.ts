@@ -4,8 +4,9 @@ import {
     NoPageSearchResult,
     OrderableDataNode,
     PaiKeFangShiFenLei, PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei,
-    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai
+    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai, XueYuanKeCheng, DingJiaBiaoZhun
 } from "../customtypes";
+import { xueYuanKeChengFormValueType } from "../pages/xueyuan/xuyuanbaoming/BaoMingGouMaiStep";
 
 // 转换带分页的请求结果
 export function convertSearchResult<T extends IdValue>(data: SourceData, mapper: (itemSrc: SourceData) => T): SearchResult<T> {
@@ -199,4 +200,50 @@ export function convertXueYuanZhuangTai2Text(xueYuanZhuangTai: XueYuanZhuangTai)
         default:
             return "";
     }
+}
+
+/**
+ * 
+ * @param xuYuanKeChengFormData 学员课程form表单数据
+ * @param xueYuanKeChengList 当前学员课程列表
+ * @param index 需要更新的位置
+ */
+export function getNewListWithXueYuanKeChengFormData(xueYuanKeChengFormData: xueYuanKeChengFormValueType, xueYuanKeChengList: XueYuanKeCheng[], index: number): XueYuanKeCheng[] {
+    if (!xueYuanKeChengList || xueYuanKeChengList.length < index) {
+        console.error("can not convert")
+        return [];
+    }
+    const targetXueYuanKeCheng: XueYuanKeCheng = { ...xueYuanKeChengList[index] }
+
+    const selectedDingJianBiaoZhuMingCheng: string | undefined = xueYuanKeChengFormData.dingJiaBiaoZhunMingCheng
+    const dingJiaBiaoZhunSelected: DingJiaBiaoZhun | undefined = targetXueYuanKeCheng.keCheng.dingJiaBiaoZhunZu?.find(v => v.mingCheng === selectedDingJianBiaoZhuMingCheng);
+
+    //定价标准
+    if (dingJiaBiaoZhunSelected) {
+        targetXueYuanKeCheng.dingJiaBiaoZhun = dingJiaBiaoZhunSelected;
+    } else {
+        targetXueYuanKeCheng.dingJiaBiaoZhun = undefined;
+    }
+
+    //课程类型
+    targetXueYuanKeCheng.keChengLeiXing = xueYuanKeChengFormData.keChengLeiXing;
+    //单价
+    targetXueYuanKeCheng.danJia = xueYuanKeChengFormData.danJia;
+    //课程数量
+    targetXueYuanKeCheng.keChengShuLiang = xueYuanKeChengFormData.keChengShuLiang;
+    //赠送课时
+    targetXueYuanKeCheng.zengSongKeShi = xueYuanKeChengFormData.zengSongKeShi;
+    //优惠类型
+    targetXueYuanKeCheng.youHuiLeiXing = xueYuanKeChengFormData.youHuiLeiXing;
+    //优惠数量
+    targetXueYuanKeCheng.youHuiShuLiang = xueYuanKeChengFormData.youHuiShuLiang;
+    //备注
+    targetXueYuanKeCheng.beiZhu = xueYuanKeChengFormData.beiZhu || "";
+
+    const newList = [...xueYuanKeChengList] || [];
+    if (newList && newList.length > index) {
+        newList[index] = targetXueYuanKeCheng;
+    }
+
+    return newList;
 }

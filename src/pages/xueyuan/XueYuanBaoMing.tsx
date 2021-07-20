@@ -32,16 +32,30 @@ class XueYuanBaoMingStore {
 
     // 学员课程
     @observable
-    xuYuanKeChengList: XueYuanKeCheng[] = [];
+    xueYuanKeChengList: XueYuanKeCheng[] = [];
+
+    // 学员课时有效期（多个学员课时公用一个有效期）
+    @observable
+    keChengYouXiaoQi: number | null = null;
 
     @action
     setXueYuanId = (id: string): void => {
         this.xueYuanId = id;
     }
 
+    @observable
+    setXueYuanKeChengList = (list: XueYuanKeCheng[]) => {
+        this.xueYuanKeChengList = list;
+    }
+
     @action
     setXueYuanXinXi = (xueYuanXinXi: XueYuanXinXi | undefined) => {
         this.xueYuanXinXi = xueYuanXinXi;
+    }
+
+    @action
+    setKeChengYouXiaoQi = (v: number | null) => {
+        this.keChengYouXiaoQi = v;
     }
 
     // 获取学员信息
@@ -88,6 +102,11 @@ const XueYuanBaoMing = () => {
         viewStore.setXueYuanId("");
     }
 
+    // 设置有效期
+    const onSetKeChengYouXiaoQi = (value: number | null) => {
+        viewStore.setKeChengYouXiaoQi(value)
+    }
+
     return (
         <div
             className={"content-background"}
@@ -123,13 +142,17 @@ const XueYuanBaoMing = () => {
                                 xueYuanXinXi={xueYuanXinXi}
                                 onPreviousStep={onPreviousStep}
                                 onNextStep={onNextStep}
-                                initialXueYuanKeChengList={viewStore.xuYuanKeChengList}
+                                initialXueYuanKeChengList={viewStore.xueYuanKeChengList}
+                                keChengYouXiaoQi={viewStore.keChengYouXiaoQi}
+                                getKeChengYouXiaoQi={onSetKeChengYouXiaoQi}
+                                getSelectedYuanKeChengList={viewStore.setXueYuanKeChengList}
                             /> : ""}
                         {currentStep === 2 ?
                             <BaoMingJieSuanStep
                                 xueYuanXinXi={xueYuanXinXi}
                                 onPreviousStep={onPreviousStep}
                                 onNextStep={onNextStep}
+
                             /> : ""}
                     </Col>
                 </Row>

@@ -506,6 +506,24 @@ export enum YouHuiLeiXing {
     ZHE_KOU = 'ZHE_KOU'
 }
 
+// 缴费记录收款方式
+export enum ShouKuanFangShi {
+    ZHI_FU_BAO = "ZHI_FU_BAO",
+    WEI_XIN = "WEI_XIN",
+    XIAN_JIN = "XIAN_JIN"
+}
+
+/**
+ * 缴费记录状态
+ * 未交费：学员已完成报名，但会计未确认收费，此时状态为“未交费”状态，该状态下学员不能加入班级上课。
+ * 部分缴费：学员已完成报名，但会计只收到缴费金额的一部分，此时状态为“部分缴费”，状态，该状态下学员可以加入班级上课。不论学员报名了多少课程，在“部分缴费”状态下，所有报名的课程均可加入班级。
+ * 全部已缴：学员已完成报名，会计确认收到全部缴费金额，此时学员可加入对应报名的课程班级上课。
+ */
+export enum JiaoFeiJiLuZhuangTai {
+    WEI_JIAO_FEI = "WEI_JIAO_FEI",
+    BU_FEN_JIAO_FEI = "BU_FEN_JIAO_FEI",
+    QUAN_BU_YI_JIAO = "QUAN_BU_YI_JIAO"
+}
 
 // 学员课程
 export type XueYuanKeCheng = {
@@ -525,16 +543,12 @@ export type XueYuanKeCheng = {
     danJia: number
     //课程数量
     keChengShuLiang: number
-    //原价
-    yuanJia: number
     //赠送课时
     zengSongKeShi: number
     //优惠类型
     youHuiLeiXing: YouHuiLeiXing
     //优惠数量
     youHuiShuLiang: number
-    //签约金额
-    qianYueJinE: number
     // 备注
     beiZhu: string
 

@@ -82,8 +82,16 @@ const XinJianYuanGong = () => {
     const { shanChangKeMuList, jueSeDatas } = viewStore;
 
     useEffect(() => {
-        viewStore.getJueSeLieBiao();
-        viewStore.getShanChangKeMuLieBiao();
+        let isMounted = true;
+
+        const initial = async () => {
+            viewStore.getJueSeLieBiao();
+            viewStore.getShanChangKeMuLieBiao();
+        }
+
+        initial();
+
+        return () => { isMounted = false }
     }, []);
 
     // 擅长科目窗口显示

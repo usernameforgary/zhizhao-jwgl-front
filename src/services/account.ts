@@ -57,3 +57,9 @@ export const houQuYuanGongLieBiao = async (page: number, pageSize: number): Prom
 export const chuangJianYuanGong = async (xingMing: string, shouJi: string, jueSeZu: number[], xingBie: string, isLaoShi: boolean, beiZhu?: string, shanChangKeMu?: string[]): Promise<void> => {
     await post("/combine/tianjiaYuanGong", { xingMing, shouJi, jueSeZu, xingBie, isLaoShi, beiZhu, shanChangKeMuZu: shanChangKeMu });
 }
+
+// 获取系统里所有员工（基本信息）
+export const huoQuYuanGongLieBiaoAll = async (zhangHaoLeiXing: ZhangHaoLeiXing): Promise<YuanGong[]> => {
+    const res: YuanGong[] = await get('/zhanghao/getZhangHaoLeiBiaoByZhangHaoLeiXing', { zhangHaoLeiXing });
+    return res;
+}

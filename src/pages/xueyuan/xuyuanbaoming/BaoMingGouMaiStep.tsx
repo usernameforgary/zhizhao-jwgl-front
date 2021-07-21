@@ -294,8 +294,8 @@ const BaoMingGouMaiStep: React.FC<BaoMingGouMaiStepProps> = ({ onPreviousStep, o
         },
         {
             title: '课程单价',
-            dataIndex: ['keCheng', 'danJia'],
-            key: 'keCheng.danJia',
+            dataIndex: "danJia",
+            key: 'danJia',
             render: (text, record, index) => {
                 return (
                     <Form.Item initialValue={text}
@@ -311,6 +311,7 @@ const BaoMingGouMaiStep: React.FC<BaoMingGouMaiStepProps> = ({ onPreviousStep, o
             title: '购买数量',
             dataIndex: 'keChengShuLiang',
             key: 'keChengShuLiang',
+            width: '11%',
             render: (text, record, index) => {
                 return (
                     <Form.Item initialValue={text}
@@ -325,7 +326,7 @@ const BaoMingGouMaiStep: React.FC<BaoMingGouMaiStepProps> = ({ onPreviousStep, o
                         })]}
                         name={[xueYuanKeChengFormFieldName, index, "keChengShuLiang"]} style={{ marginBottom: 0 }}
                     >
-                        <Input onChange={(e) => { onComonInputChange(index) }} type="number" suffix="课时" min={1} />
+                        <Input onChange={(e) => { onComonInputChange(index) }} type="number" addonAfter={<span>课时</span>} min={1} />
                     </Form.Item>
                 );
             }
@@ -334,6 +335,7 @@ const BaoMingGouMaiStep: React.FC<BaoMingGouMaiStepProps> = ({ onPreviousStep, o
             title: '原价',
             dataIndex: 'yuanJia',
             key: 'yuanJia',
+            width: 100,
             render: (text, record) => {
                 return (
                     <span>￥ {record.danJia * record.keChengShuLiang}</span>
@@ -344,13 +346,15 @@ const BaoMingGouMaiStep: React.FC<BaoMingGouMaiStepProps> = ({ onPreviousStep, o
             title: '赠送课时',
             dataIndex: 'zengSongKeShi',
             key: 'zengSongKeShi',
+            width: '10%',
             render: (text, record, index) => {
                 return (
                     <Form.Item initialValue={text}
                         rules={[{ required: true, message: "赠送课时不能为空" }]}
-                        name={[xueYuanKeChengFormFieldName, index, "zengSongKeShi"]} style={{ marginBottom: 0 }}
+                        name={[xueYuanKeChengFormFieldName, index, "zengSongKeShi"]}
+                        style={{ marginBottom: 0 }}
                     >
-                        <Input onChange={(e) => { onComonInputChange(index) }} type="number" suffix="课时" min={0} />
+                        <Input onChange={(e) => { onComonInputChange(index) }} type="number" addonAfter={<span>课时</span>} min={0} />
                     </Form.Item>
                 );
             }
@@ -359,6 +363,7 @@ const BaoMingGouMaiStep: React.FC<BaoMingGouMaiStepProps> = ({ onPreviousStep, o
             title: '优惠/折扣',
             dataIndex: 'youHuiShuLiang',
             key: 'youHuiShuLiang',
+            width: '15%',
             render: (text, record, index) => {
                 return (
                     <Row>
@@ -489,7 +494,7 @@ const BaoMingGouMaiStep: React.FC<BaoMingGouMaiStepProps> = ({ onPreviousStep, o
                                     <Form.Item>
                                         <Row gutter={10}>
                                             <Col>
-                                                <Button disabled={!!xueYuanXinXi?.id} onClick={handleToPreviousStep}>
+                                                <Button onClick={handleToPreviousStep}>
                                                     上一步
                                                 </Button>
                                             </Col>
@@ -506,13 +511,14 @@ const BaoMingGouMaiStep: React.FC<BaoMingGouMaiStepProps> = ({ onPreviousStep, o
                     </Space>
                 </Form>
             </Space>
-            <KeChengModal
+            {showKeChengModal ? <KeChengModal
                 visible={showKeChengModal}
                 onClose={onToggleShowKeChengModel}
                 initialDatas={selectedKeCheng}
                 onSearch={onGetKeChengList}
                 setSelected={onSelectedKeChengChange}
-            />
+            /> : ""}
+
         </>
     )
 }

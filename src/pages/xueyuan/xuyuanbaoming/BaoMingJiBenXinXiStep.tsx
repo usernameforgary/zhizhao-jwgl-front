@@ -20,11 +20,8 @@ const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXi
     const [form] = useForm();
     const [xueYuanOptions, setXueYuanOptions] = useState<SearchableSelectOptionDataType[]>([]);
 
-
-    // props.xueYuanXinXi改变时，重新刷新form
     useEffect(() => {
         let isMounted = true;
-
         // 获取所有学员
         const onHuoQuXueYuanAll = async () => {
             try {
@@ -46,9 +43,13 @@ const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXi
         }
 
         onHuoQuXueYuanAll();
-        form.resetFields();
 
         return () => { isMounted = false }
+    }, [])
+
+    // props.xueYuanXinXi改变时，重置from表单
+    useEffect(() => {
+        form.resetFields();
     }, [xueYuanXinXi]);
 
     /**

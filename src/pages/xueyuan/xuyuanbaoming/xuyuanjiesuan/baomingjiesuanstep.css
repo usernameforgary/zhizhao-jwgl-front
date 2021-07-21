@@ -1,0 +1,19 @@
+.item-title {
+  font-weight: bold;
+}
+
+.item-content-table-tile {
+  background: #f7f7f7;
+  height: 50px;
+  align-content: center;
+}
+
+.item-content-row {
+  margin-bottom: 24px;
+}
+
+.item-content-table-row {
+  height: 50px;
+  align-content: center;
+  border-top: 2px solid #EEEEEE;
+}/*# sourceMappingURL=baomingjiesuanstep.css.map */

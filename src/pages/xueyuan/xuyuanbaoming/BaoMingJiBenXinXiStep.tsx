@@ -128,13 +128,13 @@ const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXi
                         <Row justify="space-between">
                             <Col span={16}>
                                 <Form.Item
-                                    initialValue={(xueYuanXinXi && xueYuanXinXi.id) || (xueYuanXinXi && xueYuanXinXi.xingMing)}
+                                    initialValue={(xueYuanXinXi && xueYuanXinXi.xingMing) || (xueYuanXinXi && xueYuanXinXi.id)}
                                     labelAlign="left"
                                     labelCol={{ span: 8 }}
                                     label="学生姓名" name="xingMing"
                                     rules={[{ required: true, message: "请输入学生姓名" }]}>
                                     <SearchableSelect
-                                        initialSelected={(xueYuanXinXi && xueYuanXinXi.id) || (xueYuanXinXi && xueYuanXinXi.xingMing)}
+                                        initialSelected={(xueYuanXinXi && xueYuanXinXi.xingMing) || (xueYuanXinXi && xueYuanXinXi.id)}
                                         optionList={xueYuanOptions}
                                         onSelectChanged={onXueYuanXinMingChanged}
                                     />

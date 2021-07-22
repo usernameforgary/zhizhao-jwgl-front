@@ -512,6 +512,8 @@ export type XueYuanKeCheng = {
     xueYuanId: string
     //课程ID
     keChengId: string
+    // 课程名称
+    keChengMingCheng?: string
     //课程信息
     keCheng: KeCheng
     //定价标准
@@ -576,3 +578,21 @@ export type JiaoFeiLiShi = {
     // 流水类型
     liuShuiLieXing?: LiuShuiLieXing
 }
+
+// 缴费记录列表显示
+export type JiaoFeiJiLuTableViewData = {
+    // 学员id
+    xueYuanId: string
+    // 学员姓名
+    xueYuanXingMing: string
+    // 学员课程组
+    xueYuanKeChengZu: XueYuanKeCheng[]
+    // 缴费历史组
+    jiaoFeiLiShiZu: JiaoFeiLiShi[]
+    // 跟进人id
+    genJinRenId: string
+    // 跟进人姓名
+    genJinRenXingMing: string
+    // 缴费记录状态
+    jiaoFeiJiLuZhuangTai: JiaoFeiJiLuZhuangTai
+} & IdValue & ReactUninqueKey

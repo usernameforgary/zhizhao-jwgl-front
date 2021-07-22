@@ -4,7 +4,7 @@ import {
     NoPageSearchResult,
     OrderableDataNode,
     PaiKeFangShiFenLei, PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei,
-    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai, XueYuanKeCheng, DingJiaBiaoZhun
+    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai, XueYuanKeCheng, DingJiaBiaoZhun, KeChengLeiXing
 } from "../customtypes";
 import { xueYuanKeChengFormValueType } from "../pages/xueyuan/xuyuanbaoming/BaoMingGouMaiStep";
 
@@ -197,6 +197,24 @@ export function convertXueYuanZhuangTai2Text(xueYuanZhuangTai: XueYuanZhuangTai)
             return "潜在";
         case XueYuanZhuangTai.ZAI_DU:
             return "在读";
+        default:
+            return "";
+    }
+}
+
+/**
+ * 转换课程类型
+ * @param keChengLeiXing 课程类型
+ * @returns 
+ */
+export function convertKeChengLeiXing2Text(keChengLeiXing: KeChengLeiXing): string {
+    switch (keChengLeiXing) {
+        case KeChengLeiXing.XIN_BAO:
+            return "新报";
+        case KeChengLeiXing.KUO_KE:
+            return "扩科";
+        case KeChengLeiXing.XU_BAO:
+            return "续报";
         default:
             return "";
     }

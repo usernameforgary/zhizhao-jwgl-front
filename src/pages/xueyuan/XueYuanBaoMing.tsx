@@ -3,8 +3,9 @@ import { action, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { JiaoFeiLiShi, XueYuanKeCheng, XueYuanXinXi } from '../../customtypes';
+import { getDefinedRouteByRouteName, routeName } from '../../router';
 import { xueYuanBaoMing } from '../../services/combine';
 import { huoQuXueYaunXinXi } from '../../services/xueyuan';
 import BaoMingGouMaiStep from './xuyuanbaoming/BaoMingGouMaiStep';
@@ -117,6 +118,7 @@ class XueYuanBaoMingStore {
  * @returns 
  */
 const XueYuanBaoMing = () => {
+    const history = useHistory();
     const { xueYuanId } = useParams<XueYuanBaoMingParamType>();
     const [currentStep, setCurrentStep] = useState<number>(0);
     const [viewStore] = useState<XueYuanBaoMingStore>(new XueYuanBaoMingStore(xueYuanId));
@@ -167,14 +169,10 @@ const XueYuanBaoMing = () => {
      * 报名提交，从viewStore中获取所有信息（学员信息 && 购买项目 && 费用结算三个页面中的信息都存储到viewStore中），提交到后端接口
      */
     const onBaoMingSubmit = async () => {
-        console.log("xueYuanXinXi: ", viewStore.xueYuanXinXi);
-        console.log("xueYuanKeChengList: ", viewStore.xueYuanKeChengList);
-        console.log("keChengYouXiaoQi: ", viewStore.keChengYouXiaoQi);
-        console.log("jiaoFeiLiShi: ", viewStore.jiaoFeiLiShi);
-        console.log("genJinRenId: ", viewStore.genJinRenId);
         if (viewStore.xueYuanXinXi && viewStore.jiaoFeiLiShi) {
             try {
                 await xueYuanBaoMing(viewStore.xueYuanXinXi, viewStore.xueYuanKeChengList, viewStore.jiaoFeiLiShi, viewStore.genJinRenId, viewStore.keChengYouXiaoQi);
+                history.push(getDefinedRouteByRouteName(routeName.jiaofeijilu)?.path || '');
             } catch (e) { }
         }
 

@@ -1,5 +1,5 @@
 import { Button, Row, Col, Space, TablePaginationConfig, TableColumnType, Switch, Table, Input } from 'antd';
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -33,9 +33,11 @@ class KeChengLieBiaoStore {
         const { current, pageSize } = pagination;
         const result = await huoQuKeChengLieBiao(current || 0, pageSize || 10)
         if (result) {
-            const { list, total } = result;
-            this.list = list;
-            this.pagination = { ...this.pagination, total, current, pageSize };
+            runInAction(() => {
+                const { list, total } = result;
+                this.list = list;
+                this.pagination = { ...this.pagination, total, current, pageSize };
+            });
         }
     }
 

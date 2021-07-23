@@ -4,6 +4,7 @@ import BanJiXiangQing from '../pages/banji/BanJiXiangQing';
 import DashBord from '../pages/dashbord/DashBord';
 import DengLu from '../pages/denglu/DengLu';
 import Index from '../pages/index/Index';
+import JiaoFeiJiLuXiangQing from '../pages/jiaofeijilu/jiaofeijiluxiangqing/JiaoFeiJiLuXiangQing';
 import JiaoFenJiLu from '../pages/jiaofeijilu/JiaoFenJiLu';
 import KeChengLieBiao from '../pages/kecheng/KeChengLieBiao';
 import XinJianKeCheng from '../pages/kecheng/xinzengkecheng/XinJianKeCheng';
@@ -35,7 +36,8 @@ export enum routeName {
     xueyuanbaoming,
     banjiliebiao,
     banjixiangqing,
-    jiaofeijilu
+    jiaofeijilu,
+    jiaofeijiluxiangqing,
 }
 
 //TODO 因为webpack动态路由，不能指定全路径。暂时未找到解决方案
@@ -55,6 +57,7 @@ const subRoutes: RouteComponent[] = [
     { name: routeName.banjiliebiao, path: "/sys/banjiliebiao", component: BanJiLieBiao, withoutLayout: false },
     { name: routeName.banjixiangqing, path: "/sys/banjixiangqing", component: BanJiXiangQing, withoutLayout: false },
     { name: routeName.jiaofeijilu, path: "/sys/jiaofeijilu", component: JiaoFenJiLu, withoutLayout: false },
+    { name: routeName.jiaofeijiluxiangqing, path: "/sys/jiaofeijiluxiangqing/:id", component: JiaoFeiJiLuXiangQing, withoutLayout: false },
     { name: routeName.dashboard, path: "/sys", component: DashBord, withoutLayout: false },
 ]
 

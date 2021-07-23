@@ -7,6 +7,8 @@ import { huoQuJiaoFeiJiLuLieBiao } from '../../services/jiaofeijilu';
 import Loading from '../../components/loading/Loading';
 import { convertKeChengLeiXing2Text } from '../../utils/converter';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
+import { getDefinedRouteByRouteName, routeName } from '../../router';
 
 class JiaoFenJiLuStore {
     constructor() {
@@ -36,7 +38,6 @@ class JiaoFenJiLuStore {
                 runInAction(() => {
                     const { list, total } = result;
                     this.list = list;
-                    console.log(list)
                     this.pagination = { ...this.pagination, total, current, pageSize };
                 });
             }
@@ -113,6 +114,13 @@ const JiaoFenJiLu = () => {
             title: '收据号',
             dataIndex: 'id',
             key: 'id',
+            render: (value) => {
+                let routePath = getDefinedRouteByRouteName(routeName.jiaofeijiluxiangqing)?.path;
+                if (routePath) {
+                    routePath = routePath.substring(0, routePath.lastIndexOf(":"));
+                }
+                return (<Link to={routePath + value} >{value}</Link >)
+            }
         },
         {
             title: '学生姓名',

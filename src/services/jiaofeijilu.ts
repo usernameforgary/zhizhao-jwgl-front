@@ -29,7 +29,6 @@ const convertJiaoFeiJiLu = (obj: SourceData): JiaoFeiJiLuTableViewData => {
 export const huoQuJiaoFeiJiLuLieBiao = async (page: number, pageSize: number): Promise<SearchResult<JiaoFeiJiLuTableViewData>> => {
     const params: SourceData = { pageNum: page, pageSize };
     const res: PageableListResponse = await get('/jiaofeijilu/huoQuJiaoFeiJiLuLieBiao', params);
-    console.log("res: ", res)
     return convertSearchResult<JiaoFeiJiLuTableViewData>(res, (obj: SourceData) => {
         return convertJiaoFeiJiLu(obj);
     });

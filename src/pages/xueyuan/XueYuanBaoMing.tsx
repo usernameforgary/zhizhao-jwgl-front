@@ -172,7 +172,7 @@ const XueYuanBaoMing = () => {
         if (viewStore.xueYuanXinXi && viewStore.jiaoFeiLiShi) {
             try {
                 await xueYuanBaoMing(viewStore.xueYuanXinXi, viewStore.xueYuanKeChengList, viewStore.jiaoFeiLiShi, viewStore.genJinRenId, viewStore.keChengYouXiaoQi);
-                history.push(getDefinedRouteByRouteName(routeName.jiaofeijilu)?.path || '');
+                history.push(getDefinedRouteByRouteName(routeName.xueyuanliebiao)?.path || '');
             } catch (e) { }
         }
 
@@ -192,7 +192,7 @@ const XueYuanBaoMing = () => {
                     <Steps current={currentStep}>
                         <Step key={"学员信息"} title="学员信息">
                         </Step>
-                        <Step key={"购买项目"} title="购买项目">
+                        <Step key={"选择课程"} title="选择课程">
                         </Step>
                         <Step key={"费用结算"} title="费用结算">
                         </Step>

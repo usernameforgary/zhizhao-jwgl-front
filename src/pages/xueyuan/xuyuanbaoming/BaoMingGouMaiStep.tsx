@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Space, Row, Col, Button, Form, Table, TableColumnType, Select, Input, InputNumber, DatePicker } from 'antd'
 import { DingJiaBiaoZhun, KeCheng, KeChengLeiXing, XueYuanKeCheng, XueYuanKeChengZhuangTai, XueYuanXinXi, YouHuiLeiXing } from '../../../customtypes'
 import { useState } from 'react'

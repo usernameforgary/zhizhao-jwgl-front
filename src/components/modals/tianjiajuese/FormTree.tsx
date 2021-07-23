@@ -2,18 +2,32 @@ import React from 'react'
 import { Tree } from 'antd'
 import { } from './TianJiaJueSeModal'
 import { OrderableDataNode } from '../../../customtypes'
+import { Key } from 'antd/lib/table/interface'
 
 type FormTreeProps = {
     treeData: OrderableDataNode[]
     onChange?: (checkedVals: any) => void
 }
 const FormTree: React.FC<FormTreeProps> = ({ treeData, onChange }) => {
+    const onTreeCheck = (checked: any, info: any) => {
+        let result = [];
+        if (checked) {
+            result.push(...checked);
+        }
+        if (info.halfCheckedKeys) {
+            result.push(...(info.halfCheckedKeys));
+        }
+        if (onChange) {
+            onChange(result);
+        }
+    }
+
     return (
         <>
             <Tree
                 checkable
                 treeData={treeData}
-                onCheck={onChange}
+                onCheck={onTreeCheck}
             >
                 {/* {treeData.map(data => {
                             return (

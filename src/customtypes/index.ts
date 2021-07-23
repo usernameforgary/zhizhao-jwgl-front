@@ -433,7 +433,7 @@ export type XueYuanXinXi = {
     // 所属账号手机
     zhangHaoShouJi?: string
     // 姓名
-    xingMing?: string
+    xingMing?: XingBie
     // 学员状态
     xueYuanZhuangTai?: XueYuanZhuangTai
     // 头像
@@ -456,7 +456,15 @@ export type XueYuanXinXi = {
     genJinRenId?: string
     // 跟进人姓名
     genJinRenXingMing?: string
-} & IdValue
+    // 购买课时
+    gouMaiKeShi?: number
+    // 赠送课时
+    zengSongKeShi?: number
+    // 剩余课时
+    shengYuKeShi?: number
+    // 消课金额
+    xiaoKeJinE?: number
+} & IdValue & ReactUninqueKey
 
 /**
  * 可搜索的Select组件的Option定义

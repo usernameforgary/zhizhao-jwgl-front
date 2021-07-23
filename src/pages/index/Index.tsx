@@ -23,6 +23,7 @@ import './index.css';
 import logo from '../../images/u128.png'
 import BanJiXiangQing from '../banji/BanJiXiangQing';
 import JiaoFenJiLu from '../jiaofeijilu/JiaoFenJiLu';
+import JiaoFeiJiLuXiangQing from '../jiaofeijilu/jiaofeijiluxiangqing/JiaoFeiJiLuXiangQing';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -130,6 +131,7 @@ const Index = () => {
                                 <PrivateRouter exact key="banjiliebiao" path="/sys/banjiliebiao" component={BanJiLieBiao} />
                                 <PrivateRouter exact key="banjixiangqing" path="/sys/banjixiangqing/:id/:tab" component={BanJiXiangQing} />
                                 <PrivateRouter exact key="jiaofeijilu" path="/sys/jiaofeijilu" component={JiaoFenJiLu} />
+                                <PrivateRouter exact key="jiaofeijiluxiangqing" path="/sys/jiaofeijiluxiangqing/:id" component={JiaoFeiJiLuXiangQing} />
                                 <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>
                                 <Route path="*" component={Page404} />
                             </Switch>

@@ -72,27 +72,13 @@ export const chuangJianBanJiPaiKeXinXi = async (paiKeXinXi: PaiKeXinXi): Promise
 }
 
 /**
- * 获取班级排课信息 
- * @param banJiId 班级Id
+ * 根据课程Id，获取所有选择了该课程的班级
+ * @param keChengId 课程Id
  * @returns 
  */
-export const huoQuBanJiPaiKeXinXiLieBiao = async (banJiId: string): Promise<NoPageSearchResult<PaiKeXinXi>> => {
-    const res: NonPageableListResponse = await get('/paike/huoquBanJiPaiKeXinXi', { banJiId });
-    return convertSearchResultNonPageable<PaiKeXinXi>(res, (obj: SourceData) => {
-        return convertPaiKeXinXi(obj);
+export const huoQuBanJiLieBiaoByKeChengId = async (keChengId: string): Promise<NoPageSearchResult<BanJiView>> => {
+    const res: NonPageableListResponse = await get("/banji/huoQuBanJiLieBiaoByKeChengId", { keChengId });
+    return convertSearchResultNonPageable<BanJiView>(res, (obj: SourceData) => {
+        return convertBanJiView(obj);
     });
-}
-
-const convertPaiKeXinXi = (obj: SourceData): PaiKeXinXi => {
-    const item: PaiKeXinXi = {
-        id: obj.id,
-        banJiId: obj.banJiId,
-        paiKeGuiZe: obj.paiKeGuiZe,
-        shangKeLaoShiId: obj.shangKeLaoShiId,
-        shangKeLaoShiXingMing: obj.shangKeLaoShiXingMing,
-        shangKeJiaoShiId: obj.shangKeJiaoShiId,
-        shangKeJiaoShiMingCheng: obj.shangKeJiaoShiMingCheng,
-        shangKeNeiRong: obj.shangKeNeiRong
-    }
-    return item;
 }

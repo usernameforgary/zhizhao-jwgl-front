@@ -6,7 +6,7 @@ import {
     PaiKeFangShiFenLei, PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei,
     SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai, XueYuanKeCheng, DingJiaBiaoZhun, KeChengLeiXing
 } from "../customtypes";
-import { xueYuanKeChengFormValueType } from "../pages/xueyuan/xuyuanbaoming/BaoMingGouMaiStep";
+import { xueYuanKeChengFormValueType } from "../pages/xueyuan/xueyuanbaoming/BaoMingGouMaiStep";
 
 // 转换带分页的请求结果
 export function convertSearchResult<T extends IdValue>(data: SourceData, mapper: (itemSrc: SourceData) => T): SearchResult<T> {

@@ -7,6 +7,8 @@ import Loading from '../../components/loading/Loading';
 import { Link } from 'react-router-dom';
 import { huoQuXueYuanLieBiao } from '../../services/xueyuan';
 import { ManOutlined, WomanOutlined } from '@ant-design/icons';
+import { getDefinedRouteByRouteName, routeName } from '../../router';
+import { TabNamesXueYuanXiangQing } from './XueYuanXiangQing';
 
 class XueYuanLieBiaoStore {
     constructor() {
@@ -75,12 +77,19 @@ const XueYuanLieBiao = () => {
             title: '学生姓名',
             dataIndex: 'xingMing',
             key: 'xingMing',
-            render: (value, record) => {
+            render: (value, record: XueYuanXinXi) => {
                 let genderIcon = <ManOutlined />;
                 if (record.xingBie === XingBie.NV) {
                     genderIcon = <WomanOutlined />;
                 }
-                return (<span>{value} {genderIcon}</span>)
+                let xueYuanXiangQingPath = getDefinedRouteByRouteName(routeName.xueyuanxiangqing)?.path || "";
+                xueYuanXiangQingPath = xueYuanXiangQingPath?.substring(0, xueYuanXiangQingPath.indexOf(":"));
+                return (
+                    <span>
+                        <Link to={xueYuanXiangQingPath + record.id + "/" + TabNamesXueYuanXiangQing.xiaofeijilu}>{value}</Link>
+                        {genderIcon}
+                    </span>
+                )
             }
         },
         {
@@ -130,8 +139,10 @@ const XueYuanLieBiao = () => {
         {
             title: '操作',
             key: 'id',
-            render: (value) => {
-                return <Link to="">选班</Link>
+            render: (value, record: XueYuanXinXi) => {
+                let xueYuanXuanBanPath = getDefinedRouteByRouteName(routeName.xueyuanxuanban)?.path || "";
+                xueYuanXuanBanPath = xueYuanXuanBanPath.substring(0, xueYuanXuanBanPath.lastIndexOf(":"));
+                return (<Link to={xueYuanXuanBanPath + record.id}>选班</Link>)
             }
         },
     ];

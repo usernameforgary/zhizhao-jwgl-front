@@ -168,7 +168,9 @@ const XinZengBanJi: React.FC<XinZengBanJiProps> = ({ visible, modalTitle, onForm
                 >
                     <Row>
                         <Col span={18}>
-                            <Form.Item labelAlign="left" labelCol={{ span: 8 }} name="keChengId" label="所属课程" rules={[{ required: true, message: "请选择所属课程" }]}>
+                            <Form.Item labelAlign="left" labelCol={{ span: 8 }} name="keChengId" label="所属课程"
+                                rules={[{ required: true, message: "请选择所属课程" }]}
+                            >
                                 <Select>
                                     {keChengList?.map(k => {
                                         return (
@@ -200,7 +202,13 @@ const XinZengBanJi: React.FC<XinZengBanJiProps> = ({ visible, modalTitle, onForm
                         <Col span={24}>
                             <Row>
                                 <Col span={18}>
-                                    <Form.Item labelAlign="left" labelCol={{ span: 8 }} name="shangKeJiaoShiId" label="上课教室">
+                                    <Form.Item
+                                        labelAlign="left"
+                                        labelCol={{ span: 8 }}
+                                        name="shangKeJiaoShiId"
+                                        label="上课教室"
+                                        rules={[{ required: true, message: "请选择上课教室" }]}
+                                    >
                                         <Select>
                                             {shangKeJiaoShiList?.map(k => {
                                                 return (
@@ -219,7 +227,10 @@ const XinZengBanJi: React.FC<XinZengBanJiProps> = ({ visible, modalTitle, onForm
 
                     <Row>
                         <Col span={18}>
-                            <Form.Item labelAlign="left" labelCol={{ span: 8 }} name="banJiLaoShiId" label="班级老师">
+                            <Form.Item
+                                labelAlign="left" labelCol={{ span: 8 }} name="banJiLaoShiId" label="班级老师"
+                                rules={[{ required: true, message: "请选择班级老师" }]}
+                            >
                                 <Select>
                                     {laoShiList?.map(k => {
                                         return (

@@ -4,7 +4,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { BanJiView, PaiKeFangShiFenLei, PaiKeGuiZe, PaiKeJieShuFangShiFenLei, PaiKeXinXi } from '../../../../customtypes';
-import { huoQuBanJiPaiKeXinXiLieBiao } from '../../../../services/banji';
+import { huoQuBanJiPaiKeXinXiLieBiao } from '../../../../services/paikexinxi';
 import { convertPaiKeChongFuFangShi2Text, convertPaiKeFangShi2Text, convertPaiKeShangKeTian2Text } from '../../../../utils/converter';
 import PaiKeModal from './PaiKeModal';
 

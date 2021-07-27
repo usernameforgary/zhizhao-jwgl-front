@@ -433,7 +433,7 @@ export type XueYuanXinXi = {
     // 所属账号手机
     zhangHaoShouJi?: string
     // 姓名
-    xingMing?: XingBie
+    xingMing?: string
     // 学员状态
     xueYuanZhuangTai?: XueYuanZhuangTai
     // 头像
@@ -518,12 +518,20 @@ export enum YouHuiLeiXing {
 export type XueYuanKeCheng = {
     // 所属学员ID
     xueYuanId: string
+    // 学员姓名
+    xueYuanXingMing?: string
     //课程ID
     keChengId: string
     // 课程名称
     keChengMingCheng?: string
     //课程信息
     keCheng: KeCheng
+    // 班级名称 (简单查询，如mybatis直接join返回【班级姓名】）
+    banJiMingCheng?: string
+    // 班级老师 (简单查询，如mybatis直接join返回【班级老师】）
+    banJiLaoShiXingMing?: string
+    // 班级信息 (复杂查询时，或前端form表单提交，用到)
+    banJi?: BanJiView;
     //定价标准
     dingJiaBiaoZhun?: DingJiaBiaoZhun
     //课程状态
@@ -542,6 +550,8 @@ export type XueYuanKeCheng = {
     youHuiShuLiang: number
     // 备注
     beiZhu: string
+    // 剩余课时
+    shengYuKeShi?: number
 
     key: React.Key
 } & IdValue

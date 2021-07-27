@@ -11,6 +11,8 @@ import XinJianKeCheng from '../pages/kecheng/xinzengkecheng/XinJianKeCheng';
 import Page404 from '../pages/page404/Page404';
 import XueYuanBaoMing from '../pages/xueyuan/XueYuanBaoMing';
 import XueYuanLieBiao from '../pages/xueyuan/XueYuanLieBiao';
+import XueYuanXiangQing from '../pages/xueyuan/XueYuanXiangQing';
+import XueYuanXuanBan from '../pages/xueyuan/xueyuanxuanban/XueYuanXuanBan';
 import XinJianYuanGong from '../pages/yuangong/xinjianyuangong/XinJianYuanGong';
 import YuanGongLieBiao from '../pages/yuangong/YuanGongLieBiao';
 
@@ -31,6 +33,8 @@ export enum routeName {
     yuangongliebiao,
     xinjianyuangong,
     xueyuanliebiao,
+    xueyuanxiangqing,
+    xueyuanxuanban,
     kechengliebiao,
     xinjiankecheng,
     xueyuanbaoming,
@@ -51,6 +55,8 @@ const subRoutes: RouteComponent[] = [
     { name: routeName.yuangongliebiao, path: "/sys/yuangongliebiao", component: YuanGongLieBiao, withoutLayout: false },
     { name: routeName.xinjianyuangong, path: "/sys/xinjianyuangong", component: XinJianYuanGong, withoutLayout: false },
     { name: routeName.xueyuanliebiao, path: "/sys/xueyuanliebiao", component: XueYuanLieBiao, withoutLayout: false },
+    { name: routeName.xueyuanxiangqing, path: "/sys/xueyuanxiangqing/:id/:tab", component: XueYuanXiangQing, withoutLayout: false },
+    { name: routeName.xueyuanxuanban, path: "/sys/xueyuanxuanban/:id", component: XueYuanXuanBan, withoutLayout: false },
     { name: routeName.kechengliebiao, path: "/sys/kechengliebiao", component: KeChengLieBiao, withoutLayout: false },
     { name: routeName.xinjiankecheng, path: "/sys/xinjiankecheng", component: XinJianKeCheng, withoutLayout: false },
     { name: routeName.xueyuanbaoming, path: "/sys/xueyuanbaoming/:xueYuanId?", component: XueYuanBaoMing, withoutLayout: false },

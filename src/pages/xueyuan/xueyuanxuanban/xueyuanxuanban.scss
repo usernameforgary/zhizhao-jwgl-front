@@ -1,0 +1,16 @@
+.ant-table-tbody > tr.table-row-highlight {
+    background-color: #E6F7FF;
+}
+
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
+    background-color: #E6F7FF; 
+}
+
+.ant-table-tbody > tr:not(.ant-table-expanded-row) > td.no-background {
+	// background-color: #F1F6FD!important;
+	background-color: white!important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

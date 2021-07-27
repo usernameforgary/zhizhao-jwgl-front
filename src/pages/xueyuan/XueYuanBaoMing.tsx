@@ -8,9 +8,9 @@ import { JiaoFeiLiShi, XueYuanKeCheng, XueYuanXinXi } from '../../customtypes';
 import { getDefinedRouteByRouteName, routeName } from '../../router';
 import { xueYuanBaoMing } from '../../services/combine';
 import { huoQuXueYaunXinXi } from '../../services/xueyuan';
-import BaoMingGouMaiStep from './xuyuanbaoming/BaoMingGouMaiStep';
-import BaoMingJiBenXinXiStep from './xuyuanbaoming/BaoMingJiBenXinXiStep';
-import BaoMingJieSuanStep from './xuyuanbaoming/xuyuanjiesuan/BaoMingJieSuanStep';
+import BaoMingGouMaiStep from './xueyuanbaoming/BaoMingGouMaiStep';
+import BaoMingJiBenXinXiStep from './xueyuanbaoming/BaoMingJiBenXinXiStep';
+import BaoMingJieSuanStep from './xueyuanbaoming/xueyuanjiesuan/BaoMingJieSuanStep';
 
 const { Step } = Steps;
 

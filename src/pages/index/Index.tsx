@@ -24,6 +24,8 @@ import logo from '../../images/u128.png'
 import BanJiXiangQing from '../banji/BanJiXiangQing';
 import JiaoFenJiLu from '../jiaofeijilu/JiaoFenJiLu';
 import JiaoFeiJiLuXiangQing from '../jiaofeijilu/jiaofeijiluxiangqing/JiaoFeiJiLuXiangQing';
+import XueYuanXiangQing from '../xueyuan/XueYuanXiangQing';
+import XueYuanXuanBan from '../xueyuan/xueyuanxuanban/XueYuanXuanBan';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -125,6 +127,8 @@ const Index = () => {
                                 <PrivateRouter exact key="yuangongliebiao" path="/sys/yuangongliebiao" component={YuanGongLieBiao} />
                                 <PrivateRouter exact key="xinjianyuangong" path="/sys/xinjianyuangong" component={XinJianYuanGong} />
                                 <PrivateRouter exact key="xueyuanliebiao" path="/sys/xueyuanliebiao" component={XueYuanLieBiao} />
+                                <PrivateRouter exact key="xueyuanxiangqing" path="/sys/xueyuanxiangqing/:id/:tab" component={XueYuanXiangQing} />
+                                <PrivateRouter exact key="xueyuanxuanban" path="/sys/xueyuanxuanban/:id" component={XueYuanXuanBan} />
                                 <PrivateRouter exact key="kechengliebiao" path="/sys/kechengliebiao" component={KeChengLieBiao} />
                                 <PrivateRouter exact key="xinjiankecheng" path="/sys/xinjiankecheng" component={XinJianKeCheng} />
                                 <PrivateRouter exact key="xueyuanbaoming" path="/sys/xueyuanbaoming/:xueYuanId?" component={XueYuanBaoMing} />

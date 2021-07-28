@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Table, TableColumnType, TablePaginationConfig, Button } from 'antd'
+import { Row, Col, Table, TableColumnType, TablePaginationConfig, Button, message } from 'antd'
 import { JiaoFeiJiLuTableViewData, JiaoFeiJiLuZhuangTai, JiaoFeiLiShi, XueYuanKeCheng, YouHuiLeiXing } from '../../customtypes';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -9,6 +9,9 @@ import { convertKeChengLeiXing2Text } from '../../utils/converter';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { getDefinedRouteByRouteName, routeName } from '../../router';
+import JiaoFenQueRenModal from './JiaoFenQueRenModal';
+import { jiaoFeiJiLuQueRen } from '../../services/combine';
+import LinkButton from '../../components/linkbutton';
 
 class JiaoFenJiLuStore {
     constructor() {
@@ -19,6 +22,9 @@ class JiaoFenJiLuStore {
     list: JiaoFeiJiLuTableViewData[] = [];
 
     @observable
+    currentSelectedRecord: JiaoFeiJiLuTableViewData | undefined = undefined;
+
+    @observable
     keyword: string = "";
 
     @observable
@@ -27,6 +33,11 @@ class JiaoFenJiLuStore {
     @action
     updateKeyword(val: string) {
         this.keyword = val;
+    }
+
+    @action
+    setCurrentSelectedRecord = (selcted: JiaoFeiJiLuTableViewData) => {
+        this.currentSelectedRecord = selcted;
     }
 
     @action
@@ -53,7 +64,8 @@ class JiaoFenJiLuStore {
 const JiaoFenJiLu = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [viewStore] = useState<JiaoFenJiLuStore>(new JiaoFenJiLuStore());
-    const { list, pagination } = viewStore;
+    const [showQueRenJiaoFeiModal, setShowQueRenJiaoFenModal] = useState<boolean>(false);
+    const { list, pagination, currentSelectedRecord } = viewStore;
 
     useEffect(() => {
         let isMounted = true;
@@ -107,6 +119,35 @@ const JiaoFenJiLu = () => {
             jinETotal += v.jiaoFeiJinE;
         })
         return jinETotal;
+    }
+
+    // 点击确认缴费事件
+    const handleQueRenJiaoFenClick = (selected: JiaoFeiJiLuTableViewData) => {
+        viewStore.setCurrentSelectedRecord(selected);
+        toggelShowQueRenJiaoFeiModal();
+    }
+
+    // 确认缴费modal显示
+    const toggelShowQueRenJiaoFeiModal = () => {
+        setShowQueRenJiaoFenModal(!showQueRenJiaoFeiModal);
+    }
+
+    // 缴费确认点击事件
+    const handleJiaoFeiQueRen = async (result: string) => {
+        if (!result) {
+            message.error("请选择缴费状态");
+            return;
+        }
+        if (!currentSelectedRecord?.id) {
+            message.error("请选择要确认的缴费记录");
+            return;
+        }
+
+        try {
+            await jiaoFeiJiLuQueRen(currentSelectedRecord.id, result);
+            toggelShowQueRenJiaoFeiModal();
+            viewStore.search(pagination);
+        } catch (e) { }
     }
 
     const columns: TableColumnType<JiaoFeiJiLuTableViewData>[] = [
@@ -216,10 +257,10 @@ const JiaoFenJiLu = () => {
             key: 'action',
             render: (value, record) => {
                 if (record.jiaoFeiJiLuZhuangTai === JiaoFeiJiLuZhuangTai.WEI_JIAO_FEI) {
-                    return <Button type="link">确认缴费</Button>
+                    return <Button type="link" style={{ borderColor: "#1890FF" }} onClick={(e) => handleQueRenJiaoFenClick(record)}>确认缴费</Button>
                 }
                 if (record.jiaoFeiJiLuZhuangTai === JiaoFeiJiLuZhuangTai.BU_FEN_JIAO_FEI) {
-                    return <Button type="link">补缴</Button>
+                    return <Button type="link" style={{ borderColor: "#1890FF" }}>补缴</Button>
                 }
                 if (record.jiaoFeiJiLuZhuangTai === JiaoFeiJiLuZhuangTai.QUAN_BU_YI_JIAO) {
                     return <span style={{ color: 'green' }}>已缴费</span>
@@ -250,6 +291,14 @@ const JiaoFenJiLu = () => {
                     </Table>
                 </Col>
             </Row>
+            {
+                showQueRenJiaoFeiModal ?
+                    <JiaoFenQueRenModal
+                        visible={showQueRenJiaoFeiModal}
+                        onClose={toggelShowQueRenJiaoFeiModal}
+                        onJiaoFeiQueRen={handleJiaoFeiQueRen}
+                    /> : ""
+            }
         </div>
     )
 }

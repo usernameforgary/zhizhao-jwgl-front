@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Card, TableColumnType, Space, Radio, RadioChangeEvent } from 'antd';
+import { Button, Card, TableColumnType, Space, Radio, RadioChangeEvent, message } from 'antd';
 import { action, makeObservable, observable, runInAction } from 'mobx'
 import { observer } from 'mobx-react';
 import { useParams } from 'react-router-dom';
@@ -125,18 +125,13 @@ const XueYuanXuanBan = () => {
 
     // 选择班级保存事件
     const handleXuanZeBanJi = async () => {
-        if (xueYuanId !== currentSelectedXueYuanKeCheng?.banJi?.id) {
-            console.log("xue yuan id: ", xueYuanId)
-            console.log("newSelectedBanJiId: ", newSelectedBanJiId)
-            console.log("xue yuan ke cheng id: ", currentSelectedXueYuanKeCheng?.id)
-            try {
-                if (xueYuanId && currentSelectedXueYuanKeCheng?.id && newSelectedBanJiId) {
-                    await xueYuanXuanZeBanJi(xueYuanId, currentSelectedXueYuanKeCheng.id, newSelectedBanJiId, currentSelectedXueYuanKeCheng.banJi?.id || "");
-                }
-            } catch (e) {
-
+        try {
+            if (xueYuanId && currentSelectedXueYuanKeCheng?.id && newSelectedBanJiId) {
+                await xueYuanXuanZeBanJi(xueYuanId, currentSelectedXueYuanKeCheng.id, newSelectedBanJiId);
+                await getXuYuanKeChengList();
+                message.success("保存成功");
             }
-            await getXuYuanKeChengList();
+        } catch (e) {
         }
     }
 
@@ -238,10 +233,9 @@ const XueYuanXuanBan = () => {
                     >
                         <Radio.Group
                             onChange={onBanJiSelected}
-                            value={currentSelectedXueYuanKeCheng?.banJi && currentSelectedXueYuanKeCheng.banJi.id || newSelectedBanJiId}>
+                            value={newSelectedBanJiId || currentSelectedXueYuanKeCheng?.banJi && currentSelectedXueYuanKeCheng.banJi.id}>
                             <Space direction="vertical">
                                 {banJiList.map((v) => {
-                                    console.log(currentSelectedXueYuanKeCheng)
                                     return (
                                         <Radio key={v.id} value={v.id}>{v.mingCheng}</Radio>
                                     );

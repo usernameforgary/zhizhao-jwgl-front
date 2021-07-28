@@ -18,6 +18,15 @@ export const xueYuanBaoMing = async (
  * @param xueYuanKeChengId 学员课程id
  * @param banJiId 班级Id
  */
-export const xueYuanXuanZeBanJi = async (xueYuanId: string, xueYuanKeChengId: string, banJiId: string, previousBanJiId: string): Promise<void> => {
-    await get("/combine/xueYuanXuanBan", { xueYuanId, xueYuanKeChengId, banJiId, previousBanJiId });
+export const xueYuanXuanZeBanJi = async (xueYuanId: string, xueYuanKeChengId: string, banJiId: string): Promise<void> => {
+    await get("/combine/xueYuanXuanBan", { xueYuanId, xueYuanKeChengId, banJiId });
+}
+
+/**
+ * 缴费记录确认
+ * @param id 缴费记录id
+ * @param jiaoFeiJiLuZhuangTai 缴费记录状态
+ */
+export const jiaoFeiJiLuQueRen = async (id: string, jiaoFeiJiLuZhuangTai: string): Promise<void> => {
+    await get('/combine/jiaoFeiJiLuQueRen', { id, jiaoFeiJiLuZhuangTai });
 }

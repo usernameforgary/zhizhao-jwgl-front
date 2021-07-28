@@ -1,4 +1,4 @@
-import { Form, Row, Col, Input, Button, Radio, Upload, Avatar, Space } from 'antd'
+import { Form, Row, Col, Input, Button, Radio, Upload, Avatar, Space, Tooltip } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
 import { SearchableSelectOptionDataType, XingBie, XueYuanXinXi, XueYuanZhuangTai } from '../../../customtypes';
 import { convertXingBie2Text, convertXueYuanZhuangTai2Text } from '../../../utils/converter';
@@ -252,14 +252,18 @@ const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXi
                             <Form.Item>
                                 <Row gutter={10}>
                                     <Col>
-                                        <Button disabled={!!xueYuanXinXi?.id} onClick={handleBaoCunQianZaiXueYuan}>
-                                            保存为潜在学员
-                                        </Button>
+                                        <Tooltip title="点击后，将直接保存为【潜在学员】" color={"orange"}>
+                                            <Button disabled={!!xueYuanXinXi?.id} onClick={handleBaoCunQianZaiXueYuan}>
+                                                保存为潜在学员
+                                            </Button>
+                                        </Tooltip>
                                     </Col>
                                     <Col>
-                                        <Button type="primary" onClick={handleToNextStep}>
-                                            下一步
-                                        </Button>
+                                        <Tooltip title="点击下一步，至完成报名步骤后。学员将保存为【在读学员】" color={"orange"}>
+                                            <Button type="primary" onClick={handleToNextStep}>
+                                                下一步
+                                            </Button>
+                                        </Tooltip>
                                     </Col>
                                 </Row>
                             </Form.Item>

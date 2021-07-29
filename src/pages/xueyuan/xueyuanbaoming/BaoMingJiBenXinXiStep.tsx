@@ -1,11 +1,11 @@
-import { Form, Row, Col, Input, Button, Radio, Upload, Avatar, Space, Tooltip } from 'antd'
-import { UserOutlined } from '@ant-design/icons';
+import { Form, Row, Col, Input, Button, Radio, Upload, Space, Tooltip } from 'antd'
 import { SearchableSelectOptionDataType, XingBie, XueYuanXinXi, XueYuanZhuangTai } from '../../../customtypes';
 import { convertXingBie2Text, convertXueYuanZhuangTai2Text } from '../../../utils/converter';
 import { useForm } from 'antd/lib/form/Form';
 import { useEffect, useState } from 'react';
 import { chuangJianXueYuan, huoQuXueYuanAll, huoQuXueYuanByXingMingAndShouJi } from '../../../services/xueyuan';
 import SearchableSelect from '../../../components/searchableselect/SearchableSelect';
+import MyAvatar from '../../../components/customicons/avatar/MyAvatar';
 
 const { TextArea } = Input;
 
@@ -227,7 +227,7 @@ const BaoMingJiBenXinXiStep: React.FC<BaoMingJiBenXinXiStepProps> = ({ xueYuanXi
                     <Col span={4}>
                         <Space direction="vertical" style={{ width: "100%" }}>
                             <Row justify="center">
-                                <Avatar size={64} icon={<UserOutlined />} />
+                                <MyAvatar size={64} url={xueYuanXinXi?.touXiang} />
                             </Row>
                             <Row justify="center">
                                 <Form.Item

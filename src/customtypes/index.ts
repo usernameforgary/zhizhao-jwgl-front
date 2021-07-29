@@ -552,6 +552,8 @@ export type XueYuanKeCheng = {
     beiZhu: string
     // 剩余课时
     shengYuKeShi?: number
+    // 学员课程有效期限
+    keChengYouXiaoQi?: number
 
     key: React.Key
 } & IdValue

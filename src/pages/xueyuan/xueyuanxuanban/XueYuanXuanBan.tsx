@@ -63,7 +63,7 @@ class XueYuanXuanBanStore {
     @action
     getXuYuanKeChengList = async () => {
         try {
-            const res: NoPageSearchResult<XueYuanKeCheng> = await huoQuXueYuanKeChengByXueYuanId(this.xueYuanId);
+            const res: NoPageSearchResult<XueYuanKeCheng> = await huoQuXueYuanKeChengByXueYuanId(this.xueYuanId, false);
             runInAction(() => {
                 this.setXueYuanKeCheng(res.list);
             });

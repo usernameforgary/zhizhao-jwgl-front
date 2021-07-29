@@ -6,9 +6,10 @@ import { XingBie, XueYuanXinXi } from '../../customtypes';
 import Loading from '../../components/loading/Loading';
 import { Link } from 'react-router-dom';
 import { huoQuXueYuanLieBiao } from '../../services/xueyuan';
-import { ManOutlined, WomanOutlined } from '@ant-design/icons';
 import { getDefinedRouteByRouteName, routeName } from '../../router';
 import { TabNamesXueYuanXiangQing } from './XueYuanXiangQing';
+import IconMan from '../../components/customicons/gender/IconMan';
+import IconWoman from '../../components/customicons/gender/IconWonman';
 
 class XueYuanLieBiaoStore {
     constructor() {
@@ -78,15 +79,16 @@ const XueYuanLieBiao = () => {
             dataIndex: 'xingMing',
             key: 'xingMing',
             render: (value, record: XueYuanXinXi) => {
-                let genderIcon = <ManOutlined />;
+                let genderIcon = <IconMan />;
                 if (record.xingBie === XingBie.NV) {
-                    genderIcon = <WomanOutlined />;
+                    genderIcon = <IconWoman />
                 }
                 let xueYuanXiangQingPath = getDefinedRouteByRouteName(routeName.xueyuanxiangqing)?.path || "";
                 xueYuanXiangQingPath = xueYuanXiangQingPath?.substring(0, xueYuanXiangQingPath.indexOf(":"));
                 return (
                     <span>
                         <Link to={xueYuanXiangQingPath + record.id + "/" + TabNamesXueYuanXiangQing.xiaofeijilu}>{value}</Link>
+                        &nbsp;
                         {genderIcon}
                     </span>
                 )

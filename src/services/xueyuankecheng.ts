@@ -41,6 +41,8 @@ export const ConvertXueYuanKeCheng = (obj: SourceData): XueYuanKeCheng => {
         beiZhu: obj.beiZhu,
         // 剩余课时
         shengYuKeShi: obj.shengYuKeShi,
+        // 学员课程有效期限
+        keChengYouXiaoQi: obj.keChengYouXiaoQi,
 
         key: obj.id
     }
@@ -49,9 +51,10 @@ export const ConvertXueYuanKeCheng = (obj: SourceData): XueYuanKeCheng => {
 /**
  * 根据学员Id获取学员课程
  * @param xueYuanId 学员Id
+ * @param isLiShi 是否是历史课程（课程状态为已结课)
  */
-export const huoQuXueYuanKeChengByXueYuanId = async (xueYuanId: string): Promise<NoPageSearchResult<XueYuanKeCheng>> => {
-    const res: NonPageableListResponse = await get("/xueyuankecheng/getXueYuanKeChengByXueYuanId", { xueYuanId });
+export const huoQuXueYuanKeChengByXueYuanId = async (xueYuanId: string, isLiShi: boolean | undefined): Promise<NoPageSearchResult<XueYuanKeCheng>> => {
+    const res: NonPageableListResponse = await get("/xueyuankecheng/getXueYuanKeChengByXueYuanId", { xueYuanId, isLiShi });
     return convertSearchResultNonPageable<XueYuanKeCheng>(res, (obj: SourceData) => {
         return ConvertXueYuanKeCheng(obj);
     });

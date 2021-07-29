@@ -1,0 +1,21 @@
+.tag-xueyuanzhuangtai {
+  border: 1px solid;
+  font-size: x-small;
+  font-weight: normal;
+  padding: 3px;
+}
+
+.tag-xueyuanzhuangtai-zaidu {
+  color: #3bbdaa;
+  border-color: #3bbdaa;
+}
+
+.tag-xueyuanzhuangtai-qianzai {
+  color: #ffa200;
+  border-color: #ffa200;
+}
+
+.tag-xueyuanzhuangtai-lishi {
+  color: #5d98e0;
+  border-color: #5d98e0;
+}/*# sourceMappingURL=tagxueyuanzhuangtai.css.map */

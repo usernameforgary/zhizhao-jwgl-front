@@ -87,7 +87,7 @@ const XueYuanLieBiao = () => {
                 xueYuanXiangQingPath = xueYuanXiangQingPath?.substring(0, xueYuanXiangQingPath.indexOf(":"));
                 return (
                     <span>
-                        <Link to={xueYuanXiangQingPath + record.id + "/" + TabNamesXueYuanXiangQing.xiaofeijilu}>{value}</Link>
+                        <Link to={xueYuanXiangQingPath + record.id + "/" + TabNamesXueYuanXiangQing.baodubanji}>{value}</Link>
                         &nbsp;
                         {genderIcon}
                     </span>

@@ -4,11 +4,9 @@ import { useParams } from 'react-router-dom';
 import { Tabs, Card, Space, Row, Col, Button } from 'antd'
 import { action, makeObservable, observable } from 'mobx'
 import { observer } from 'mobx-react';
-import { XingBie, XueYuanXinXi } from '../../customtypes';
+import { XueYuanXinXi } from '../../customtypes';
 import Loading from '../../components/loading/Loading';
 import { huoQuXueYaunXinXi } from '../../services/xueyuan';
-import IconMan from '../../components/customicons/gender/IconMan';
-import IconWoman from '../../components/customicons/gender/IconWonman';
 import MyAvatar from '../../components/customicons/avatar/MyAvatar';
 import TagXueYuanZhuangTai from '../../components/tagxuyuanzhuangtai/TagXueYuanZhuangTai';
 import MyGender from '../../components/customicons/gender/MyGender';
@@ -198,7 +196,9 @@ const XueYuanXiangQing = () => {
                             <Col offset={2} span={6}>
                                 <Space size="middle" style={{ width: '100%' }}>
                                     <span>标签:</span>
-                                    <span>{["aaa", "bbb"]}</span>
+                                    {xueYuanXinXi?.xueYuanBiaoQianZu?.map(v => {
+                                        return <span key={v.id}>{v.mingCheng}</span>
+                                    })}
                                 </Space>
                             </Col>
                             <Col offset={2} span={6}>

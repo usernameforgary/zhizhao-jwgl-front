@@ -464,6 +464,9 @@ export type XueYuanXinXi = {
     shengYuKeShi?: number
     // 消课金额
     xiaoKeJinE?: number
+    // 学员标签组
+    xueYuanBiaoQianZu?: CommonType[]
+
 } & IdValue & ReactUninqueKey
 
 /**

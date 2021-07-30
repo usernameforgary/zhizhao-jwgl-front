@@ -231,14 +231,14 @@ const JiaoFenJiLu = () => {
             },
         },
         {
-            title: '报名课程',
+            title: '报名课程 / 备注',
             dataIndex: 'xueYuanKeChengZu',
             key: 'xueYuanKeChengZu',
             render: (values: XueYuanKeCheng[]) => {
                 let res: string = "";
                 if (values) {
                     values.forEach(v => {
-                        res += `${v.keChengMingCheng}\n`;
+                        res += `${v.keChengMingCheng}  ${v.beiZhu}\n`;
                     })
                 }
                 return <span style={{ whiteSpace: 'pre-line' }}>{res}</span>;

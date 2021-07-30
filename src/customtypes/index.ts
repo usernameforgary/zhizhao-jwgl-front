@@ -290,6 +290,23 @@ export type BanJiXueYuan = {
     xueYuanId: string | number
 }
 
+/**
+ * 班级，班级学员列表展示
+ */
+export type BanJiXueYuanView = {
+    // 学员id
+    xueYuanId: string
+    // 班级Id
+    banJiId: string
+    // 学员名称
+    xueYuanXingMing: string
+    // 学员性别
+    xingBie: XingBie
+    //手机号
+    shouJi: string
+    xueYuanKeCheng: XueYuanKeCheng
+} & ReactUninqueKey
+
 // 班级列表展示
 export type BanJiView = {
     //名称

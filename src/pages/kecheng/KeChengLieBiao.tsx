@@ -123,7 +123,8 @@ const KeChengLieBiao: React.FC = () => {
             key: 'action',
             render: (value, record) => (
                 <>
-                    <a href={"/" + record.id}>编辑</a> |
+                    <a href={"/" + record.id}>编辑</a>&nbsp;
+                    <span style={{ color: '#1890ff' }}>|</span>&nbsp;
                     <a href={"/" + record.id}>删除</a>
                 </>
             ),

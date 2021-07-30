@@ -7,6 +7,7 @@ import { observer } from 'mobx-react';
 import Loading from '../../components/loading/Loading';
 import { huoQuBanJiXiangQing } from '../../services/banji';
 import PaiKeXinXiTab from './components/paikexinxi/PaiKeXinXiTab';
+import BanJiXueYuanTab from './components/banjixueyuan/BanJiXueYuanTab';
 
 const { TabPane } = Tabs;
 
@@ -168,7 +169,11 @@ const BanJiXiangQing = () => {
                             }
                         </TabPane>
                         <TabPane tab="班级学员" key={TabNamesBanJiXiangQing.banjixueyuan}>
-                            {currentTab === TabNamesBanJiXiangQing.banjixueyuan ? <>班级学员i</> : ""}
+                            {
+                                currentTab === TabNamesBanJiXiangQing.banjixueyuan ?
+                                    <BanJiXueYuanTab banJiXiangQing={banJiXiangQing} />
+                                    : ""
+                            }
                         </TabPane>
                         <TabPane tab="点名情况" key={TabNamesBanJiXiangQing.dianmingqingkuang}>
                             {currentTab === TabNamesBanJiXiangQing.dianmingqingkuang ? <>点名情况</> : ""}

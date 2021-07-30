@@ -254,7 +254,10 @@ const XinZengBanJi: React.FC<XinZengBanJiProps> = ({ visible, modalTitle, onForm
                         <Col span={24}>
                             <Row>
                                 <Col span={18}>
-                                    <Form.Item labelAlign="left" labelCol={{ span: 8 }} name="banJiFenLeiId" label="班级分类">
+                                    <Form.Item labelAlign="left" labelCol={{ span: 8 }}
+                                        name="banJiFenLeiId" label="班级分类"
+                                        rules={[{ required: true, message: "请选择班级分类" }]}
+                                    >
                                         <Select>
                                             {banJiFenLeiList?.map(k => {
                                                 return (

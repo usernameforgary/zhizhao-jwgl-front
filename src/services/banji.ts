@@ -1,5 +1,5 @@
 import { get, post } from "../api/customApi";
-import { BanJi, BanJiView, NonPageableListResponse, NoPageSearchResult, PageableListResponse, PaiKeXinXi, SearchResult, SourceData } from "../customtypes";
+import { BanJi, BanJiView, BanJiXueYuan, BanJiXueYuanView, NonPageableListResponse, NoPageSearchResult, PageableListResponse, PaiKeXinXi, SearchResult, SourceData } from "../customtypes";
 import { convertSearchResult, convertSearchResultNonPageable } from "../utils/converter";
 
 const convertBanJiView = (obj: SourceData): BanJiView => {
@@ -81,4 +81,15 @@ export const huoQuBanJiLieBiaoByKeChengId = async (keChengId: string): Promise<N
     return convertSearchResultNonPageable<BanJiView>(res, (obj: SourceData) => {
         return convertBanJiView(obj);
     });
+}
+
+
+/**
+* 根据班级id，获取班级学员
+* @param banJiId 班级Id
+* @return
+*/
+export const huoQuBanJiXueYuanByBanJiId = async (banJiId: string): Promise<BanJiXueYuanView[]> => {
+    const res: BanJiXueYuanView[] = await get("/banji/houQuBanJiXueYuanByBanJiId", { banJiId });
+    return res;
 }

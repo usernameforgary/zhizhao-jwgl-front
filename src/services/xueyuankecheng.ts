@@ -1,5 +1,5 @@
 import { get } from "../api/customApi"
-import { BanJiXueYuan, NonPageableListResponse, NoPageSearchResult, SourceData, XueYuanKeCheng } from "../customtypes";
+import { NonPageableListResponse, NoPageSearchResult, SourceData, XueYuanKeCheng } from "../customtypes";
 import { convertSearchResultNonPageable } from "../utils/converter";
 
 export const ConvertXueYuanKeCheng = (obj: SourceData): XueYuanKeCheng => {

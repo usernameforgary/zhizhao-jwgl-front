@@ -61,7 +61,7 @@ const BaoDuBanJiTab: React.FC<BaoDuBanJiTabProps> = ({ xueYuanXinXi }) => {
                 return (
                     <Row>
                         <Col span={24}><span>{row.keChengMingCheng}</span></Col>
-                        <Col span={24}><span>{row.banJi?.banJiFenLeiMingCheng}</span></Col>
+                        <Col offset={1} span={23}><span>{row.banJi?.banJiFenLeiMingCheng}</span></Col>
                         <Col offset={2} span={22}>
                             {row.banJi &&
                                 <Space>
@@ -168,7 +168,7 @@ const BaoDuBanJiTab: React.FC<BaoDuBanJiTabProps> = ({ xueYuanXinXi }) => {
 
     return (
         <>
-            <Space direction="vertical" style={{ width: '100%' }}>
+            <Space direction="vertical" style={{ width: '100%' }} size="large">
                 <Row justify="space-between">
                     <Col>
                         <Button onClick={e => toggleSelect(false)} style={isLiShi ? {} : { borderColor: '#40a9ff', color: '#40a9ff' }}>当前报读班级</Button>

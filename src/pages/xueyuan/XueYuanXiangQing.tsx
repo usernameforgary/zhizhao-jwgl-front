@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Tabs, Card, Space, Row, Col, Button } from 'antd'
+import { Tabs, Card, Space, Row, Col, Button, Tag } from 'antd'
 import { action, makeObservable, observable } from 'mobx'
 import { observer } from 'mobx-react';
 import { XueYuanXinXi } from '../../customtypes';
@@ -196,9 +196,11 @@ const XueYuanXiangQing = () => {
                             <Col offset={2} span={6}>
                                 <Space size="middle" style={{ width: '100%' }}>
                                     <span>标签:</span>
-                                    {xueYuanXinXi?.xueYuanBiaoQianZu?.map(v => {
-                                        return <span key={v.id}>{v.mingCheng}</span>
-                                    })}
+                                    <Space>
+                                        {xueYuanXinXi?.xueYuanBiaoQianZu?.map(v => {
+                                            return <Tag style={{ margin: '0px' }} color="geekblue" key={v.id}>{v.mingCheng}</Tag>
+                                        })}
+                                    </Space>
                                 </Space>
                             </Col>
                             <Col offset={2} span={6}>

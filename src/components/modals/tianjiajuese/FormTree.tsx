@@ -2,7 +2,6 @@ import React from 'react'
 import { Tree } from 'antd'
 import { } from './TianJiaJueSeModal'
 import { OrderableDataNode } from '../../../customtypes'
-import { Key } from 'antd/lib/table/interface'
 
 type FormTreeProps = {
     treeData: OrderableDataNode[]

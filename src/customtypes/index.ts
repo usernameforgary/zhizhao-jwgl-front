@@ -636,3 +636,80 @@ export type JiaoFeiJiLuTableViewData = {
     // 缴费记录状态
     jiaoFeiJiLuZhuangTai: JiaoFeiJiLuZhuangTai
 } & IdValue & ReactUninqueKey
+
+/**
+ * 排课记录状态，待点名 | 已点名
+ */
+export enum PaiKeJiLuZhuangTai {
+    DAI_DIAN_MING = "DAI_DIAN_MING",
+    YI_DIAN_MING = "YI_DIAN_MING",
+}
+
+// 排课记录里，上课学员的类型
+export enum ShangKeXueYuanLeiXing {
+    BEN_BAN = "BEN_BAN",
+    SHI_TING = "SHI_TING",
+    BU_KE = "BU_KE",
+    LIN_SHI = "LIN_SHI",
+}
+
+// 学员到课状态
+export enum XueYuanDaoKeZhuangTai {
+    DAO_KE = "DAO_KE",
+    CHI_DAO = "CHI_DAO",
+    QING_JIA = "QING_JIA",
+    WEI_DAO = "WEI_DAO",
+}
+
+
+// 排课记录，上课学员
+export type ShanKeXueYuan = {
+    // 排课记录Id
+    paiKeJiLuId: string
+    // 学员id
+    xueYuanId: string
+    // 学员姓名
+    xueYuanXingMing: string
+    // 删除
+    isDeleted: boolean
+    // 上课学员类型
+    shangKeXueYuanLeiXing: ShangKeXueYuanLeiXing
+    // 学员到课状态
+    xueYuanDaoKeZhuangTai: XueYuanDaoKeZhuangTai
+    // 扣除课时
+    kouChuKeShi: number
+    // 备注
+    beiZhu: string
+}
+
+// 排课记录
+export type PaiKeJiLu = {
+    // 班级排课信息Id
+    banJiPaiKeXinXiId: string
+    // 排课规则
+    paiKeGuiZe: PaiKeGuiZe
+    // 上课日期
+    shangKeRiQi: number
+    // 上课老师
+    shangKeLaoShiId: string
+    // 上课老师姓名
+    shangKeLaoShiXingMing: string
+    // 上课教室Id
+    shangKeJiaoShiId: string
+    // 上课教室名称
+    shangKeJiaoShiMingCheng: string
+    // 上课开始时间
+    shangKeShiJianStart: number
+    // 上课结束时间
+    shangKeShiJianEnd: number
+    // 授课课时
+    shouKeKeShi: number
+    // 上课内容
+    shangKeNeiRong: string
+    // 排课记录状态
+    paiKeJiLuZhuangTai: PaiKeJiLuZhuangTai
+    // 上课学员
+    shangKeXueYuanZu: ShanKeXueYuan[] | []
+    // 点名时间
+    dianMingShiJian: number
+} & IdValue & ReactUninqueKey

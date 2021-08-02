@@ -233,7 +233,7 @@ const XueYuanXuanBan = () => {
                     >
                         <Radio.Group
                             onChange={onBanJiSelected}
-                            value={newSelectedBanJiId || currentSelectedXueYuanKeCheng?.banJi && currentSelectedXueYuanKeCheng.banJi.id}>
+                            value={newSelectedBanJiId || (currentSelectedXueYuanKeCheng?.banJi && currentSelectedXueYuanKeCheng.banJi.id)}>
                             <Space direction="vertical">
                                 {banJiList.map((v) => {
                                     return (

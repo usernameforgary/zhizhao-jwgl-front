@@ -1,5 +1,5 @@
 import { get, post } from "../api/customApi";
-import { BanJi, BanJiView, BanJiXueYuan, BanJiXueYuanView, NonPageableListResponse, NoPageSearchResult, PageableListResponse, PaiKeXinXi, SearchResult, SourceData } from "../customtypes";
+import { BanJi, BanJiView, BanJiXueYuanView, NonPageableListResponse, NoPageSearchResult, PageableListResponse, PaiKeXinXi, SearchResult, SourceData } from "../customtypes";
 import { convertSearchResult, convertSearchResultNonPageable } from "../utils/converter";
 
 const convertBanJiView = (obj: SourceData): BanJiView => {

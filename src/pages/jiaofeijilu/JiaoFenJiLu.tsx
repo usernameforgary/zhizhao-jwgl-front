@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import { getDefinedRouteByRouteName, routeName } from '../../router';
 import JiaoFenQueRenModal from './JiaoFenQueRenModal';
 import { jiaoFeiJiLuQueRen } from '../../services/combine';
-import LinkButton from '../../components/linkbutton';
 
 class JiaoFenJiLuStore {
     constructor() {

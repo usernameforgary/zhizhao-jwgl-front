@@ -8,6 +8,7 @@ import Loading from '../../components/loading/Loading';
 import { huoQuBanJiXiangQing } from '../../services/banji';
 import PaiKeXinXiTab from './components/paikexinxi/PaiKeXinXiTab';
 import BanJiXueYuanTab from './components/banjixueyuan/BanJiXueYuanTab';
+import DianMingQingKuang from './components/dianmingqingkuang/DianMingQingKuang';
 
 const { TabPane } = Tabs;
 
@@ -176,7 +177,8 @@ const BanJiXiangQing = () => {
                             }
                         </TabPane>
                         <TabPane tab="点名情况" key={TabNamesBanJiXiangQing.dianmingqingkuang}>
-                            {currentTab === TabNamesBanJiXiangQing.dianmingqingkuang ? <>点名情况</> : ""}
+                            {currentTab === TabNamesBanJiXiangQing.dianmingqingkuang ?
+                                <DianMingQingKuang banJiXiangQing={banJiXiangQing} /> : ""}
                         </TabPane>
                     </Tabs>
                 </Card>

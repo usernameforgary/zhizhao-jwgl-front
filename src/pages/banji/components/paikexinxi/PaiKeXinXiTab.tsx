@@ -161,12 +161,15 @@ const PaiKeXinXiTab: React.FC<PaiKeXinXiProps> = ({ banJiXiangQing }) => {
                         </Table>
                     </Col>
                 </Row>
-                <PaiKeModal
-                    visible={showPaiKeModal}
-                    banJiXiangQing={banJiXiangQing}
-                    onCancel={toggleShowPaiKeModal}
-                    refreshList={onListRefresh}
-                />
+                {
+                    showPaiKeModal ? <PaiKeModal
+                        visible={showPaiKeModal}
+                        banJiXiangQing={banJiXiangQing}
+                        onCancel={toggleShowPaiKeModal}
+                        refreshList={onListRefresh}
+                    /> : ""
+                }
+
             </Space>
         </>
     )

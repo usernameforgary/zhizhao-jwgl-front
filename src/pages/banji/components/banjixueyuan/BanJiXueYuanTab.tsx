@@ -60,7 +60,13 @@ const BanJiXueYuanTab: React.FC<BanJiXueYuanTabProps> = ({ banJiXiangQing }) => 
         },
         {
             title: '操作',
-            key: 'action'
+            key: 'action',
+            render: (value, record) => {
+                return (<>
+                    <Button type="link">调至其他班</Button>
+                    <Button type="link">移出本班</Button>
+                </>);
+            }
         },
     ]
     return (

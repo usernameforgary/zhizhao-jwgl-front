@@ -4,7 +4,7 @@ import {
     NoPageSearchResult,
     OrderableDataNode,
     PaiKeFangShiFenLei, PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei,
-    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai, XueYuanKeCheng, DingJiaBiaoZhun, KeChengLeiXing
+    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai, XueYuanKeCheng, DingJiaBiaoZhun, KeChengLeiXing, ShangKeXueYuanLeiXing, XueYuanDaoKeZhuangTai
 } from "../customtypes";
 import { xueYuanKeChengFormValueType } from "../pages/xueyuan/xueyuanbaoming/BaoMingGouMaiStep";
 
@@ -189,6 +189,29 @@ export function convertPaiKeShangKeTian2Text(paiKeShangKeTian: PaiKeShangKeTian)
     }
 }
 
+// 转换moment iso星期几
+export function convertMomentIsoWeekDay2Text(dayNumber: number): string {
+    switch (dayNumber) {
+        case 1:
+            return "周一";
+        case 2:
+            return "周二";;
+        case 3:
+            return "周三";
+        case 4:
+            return "周四";
+        case 5:
+            return "周五"
+        case 6:
+            return "周六";
+        case 7:
+            return "周日";
+        default:
+            return "未知";
+    }
+}
+
+
 export function convertXueYuanZhuangTai2Text(xueYuanZhuangTai: XueYuanZhuangTai): string {
     switch (xueYuanZhuangTai) {
         case XueYuanZhuangTai.LI_SHI:
@@ -264,4 +287,45 @@ export function getNewListWithXueYuanKeChengFormData(xueYuanKeChengFormData: xue
     }
 
     return newList;
+}
+
+/**
+ * 转换排课记录里，上课学员的类型
+ * @param shangKeXueYuanLeiXing 排课记录里上课学员的类型
+ * @returns 
+ */
+export function convertShangKeXueYuanLeiXing2Text(shangKeXueYuanLeiXing: ShangKeXueYuanLeiXing): string {
+    switch (shangKeXueYuanLeiXing) {
+        case ShangKeXueYuanLeiXing.BEN_BAN:
+            return "";
+        case ShangKeXueYuanLeiXing.BU_KE:
+            return "补课";
+        case ShangKeXueYuanLeiXing.LIN_SHI:
+            return "临时";
+        case ShangKeXueYuanLeiXing.SHI_TING:
+            return "试听";
+        default:
+            return "未知";
+    }
+}
+
+
+/**
+ * 转换学员的到课状态
+ * @param daoKeZhuangTai 学员到课状态
+ * @returns 
+ */
+export function convertXueYuanDaoKeZhuangTai2Text(daoKeZhuangTai: XueYuanDaoKeZhuangTai): string {
+    switch (daoKeZhuangTai) {
+        case XueYuanDaoKeZhuangTai.CHI_DAO:
+            return "迟到";
+        case XueYuanDaoKeZhuangTai.DAO_KE:
+            return "到课";
+        case XueYuanDaoKeZhuangTai.QING_JIA:
+            return "请假";
+        case XueYuanDaoKeZhuangTai.WEI_DAO:
+            return "未到";
+        default:
+            return "未知";
+    }
 }

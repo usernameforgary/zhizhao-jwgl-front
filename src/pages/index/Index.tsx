@@ -26,6 +26,7 @@ import JiaoFenJiLu from '../jiaofeijilu/JiaoFenJiLu';
 import JiaoFeiJiLuXiangQing from '../jiaofeijilu/jiaofeijiluxiangqing/JiaoFeiJiLuXiangQing';
 import XueYuanXiangQing from '../xueyuan/XueYuanXiangQing';
 import XueYuanXuanBan from '../xueyuan/xueyuanxuanban/XueYuanXuanBan';
+import ShangKeJiLuLieBiao from '../shangkejilu/ShangKeJiLuLieBiao';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -184,6 +185,7 @@ const Index = () => {
                                 <PrivateRouter exact key="banjixiangqing" path="/sys/banjixiangqing/:id/:tab" component={BanJiXiangQing} />
                                 <PrivateRouter exact key="jiaofeijilu" path="/sys/jiaofeijilu" component={JiaoFenJiLu} />
                                 <PrivateRouter exact key="jiaofeijiluxiangqing" path="/sys/jiaofeijiluxiangqing/:id" component={JiaoFeiJiLuXiangQing} />
+                                <PrivateRouter exact key="shangkejiluliebiao" path="/sys/shangkejiluliebiao" component={ShangKeJiLuLieBiao} />
                                 <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>
                                 <Route path="*" component={Page404} />
                             </Switch>

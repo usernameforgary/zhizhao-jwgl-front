@@ -339,6 +339,10 @@ export type BanJiView = {
     shangKeJiaoShi?: string
     // 备注
     beiZhu?: string
+    // 请假扣课时
+    qingJiaKouKeShi?: boolean
+    // 未到扣课时
+    weiDaoKouKeShi?: boolean
 
     key: React.Key
 } & IdValue
@@ -676,16 +680,24 @@ export type ShanKeXueYuan = {
     shangKeXueYuanLeiXing: ShangKeXueYuanLeiXing
     // 学员到课状态
     xueYuanDaoKeZhuangTai: XueYuanDaoKeZhuangTai
+    // 补课学员的补课记录Id，上课学员类型为补课学员时需要提供补课记录Id
+    buKeJiLuId?: string
+    // 试听学员的试听记录Id, 上课学员类型为试听学员时需要提供试听记录Id
+    shiTingJiLuId?: string
     // 扣除课时
     kouChuKeShi: number
     // 备注
     beiZhu: string
-}
+    // 剩余课时
+    shengYuKeShi: number
+    // 手机号
+    shouJi: string
+} & ReactUninqueKey
 
 // 排课记录
 export type PaiKeJiLu = {
     // 班级排课信息Id
-    banJiPaiKeXinXiId: string
+    banJiPaiKeXinXiId?: string
     // 排课规则
     paiKeGuiZe: PaiKeGuiZe
     // 上课日期
@@ -712,4 +724,41 @@ export type PaiKeJiLu = {
     shangKeXueYuanZu: ShanKeXueYuan[] | []
     // 点名时间
     dianMingShiJian: number
+    // 班级所属课程id
+    keChengId: string
+    // 班级Id
+    banJiId: string
+} & IdValue & ReactUninqueKey
+
+// 点名记录
+export type DianMingJiLu = {
+    // 排课记录Id
+    paiKeJiLuId: string
+    // 学员Id
+    xueYuanId: string
+    // 上课学员类型
+    shangKeXueYuanLeiXing: ShangKeXueYuanLeiXing
+    // 学员到课状态
+    xueYuanDaoKeZhuangTai: XueYuanDaoKeZhuangTai
+    // 扣除课时
+    kouChuKeShi: number
+    // 课消金额 (赠送课时，课消金额为0)
+    keXiaoJinE: number
+    // 备注
+    beiZhu: string
+
+    // 点名时间
+    dianMingShiJian: number
+    // 班级名称
+    banJiMingCheng: string
+    // 班级Id
+    banJiId: string
+    // 上课开始时间
+    shangKeShiJianStart: number
+    // 上课结束时间
+    shangKeShiJianEnd: number
+    // 上课老师Id
+    shangKeLaoShiId: string
+    // 上课老师姓名
+    shangKeLaoShiXingMing: string
 } & IdValue & ReactUninqueKey

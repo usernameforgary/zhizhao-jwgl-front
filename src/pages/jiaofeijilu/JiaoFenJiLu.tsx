@@ -35,8 +35,8 @@ class JiaoFenJiLuStore {
     }
 
     @action
-    setCurrentSelectedRecord = (selcted: JiaoFeiJiLuTableViewData) => {
-        this.currentSelectedRecord = selcted;
+    setCurrentSelectedRecord = (selected: JiaoFeiJiLuTableViewData) => {
+        this.currentSelectedRecord = selected;
     }
 
     @action

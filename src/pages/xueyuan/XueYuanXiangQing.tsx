@@ -11,6 +11,7 @@ import MyAvatar from '../../components/customicons/avatar/MyAvatar';
 import TagXueYuanZhuangTai from '../../components/tagxuyuanzhuangtai/TagXueYuanZhuangTai';
 import MyGender from '../../components/customicons/gender/MyGender';
 import BaoDuBanJiTab from './xueyuanxiangqing/BaoDuBanJiTab';
+import ShangKeJiLuTab from './xueyuanxiangqing/shangkejilu/ShangKeJiLuTab';
 
 const { TabPane } = Tabs;
 
@@ -256,7 +257,7 @@ const XueYuanXiangQing = () => {
                         <TabPane tab="上课记录" key={TabNamesXueYuanXiangQing.shangkejilu}>
                             {
                                 currentTab === TabNamesXueYuanXiangQing.shangkejilu ?
-                                    <span>上课记录</span>
+                                    <ShangKeJiLuTab xueYuanXinXi={xueYuanXinXi} />
                                     : ""
                             }
                         </TabPane>

@@ -1,4 +1,4 @@
-import { get } from "../api/customApi";
+import { get, post } from "../api/customApi";
 import { SearchResult, PageableListResponse, SourceData, PaiKeJiLu, PaiKeJiLuZhuangTai } from "../customtypes";
 import { convertSearchResult } from "../utils/converter";
 
@@ -33,9 +33,17 @@ const convertPaiKeJiLu = (obj: SourceData): PaiKeJiLu => {
         shangKeXueYuanZu: obj.shangKeXueYuanZu,
         // 点名时间
         dianMingShiJian: obj.dianMingShiJian,
+        // 班级所属课程Id
+        keChengId: obj.keChengId,
+        // 班级id
+        banJiId: obj.banJiId,
 
         key: obj.id
     }
+    // 点名情况列表显示学员时，react需要key
+    item.shangKeXueYuanZu.forEach(v => {
+        v.key = v.xueYuanId
+    })
     return item;
 }
 
@@ -50,15 +58,18 @@ const convertPaiKeJiLu = (obj: SourceData): PaiKeJiLu => {
     * @param paiKeJiLuZhuangTai 排课记录状态（待点名 | 已点名）
     * @return
     */
-export const huoQuXueYuanLieBiao = async (
+export const huoQuPaiKeJiLuLieBiao = async (
     pageNum: number,
     pageSize: number,
-    shangKeRiQiBegin: number | undefined,
-    shangKeRiQiEnd: number | undefined,
+    shangKeRiQiBegin: number | undefined | "",
+    shangKeRiQiEnd: number | undefined | "",
     banJiId: string | undefined,
     shangKeLaoShiId: string | undefined,
     paiKeJiLuZhuangTai: PaiKeJiLuZhuangTai | undefined
 ): Promise<SearchResult<PaiKeJiLu>> => {
+    if (!shangKeLaoShiId) { shangKeLaoShiId = "" };
+    if (!shangKeRiQiBegin) { shangKeRiQiBegin = "" };
+    if (!shangKeRiQiEnd) { shangKeRiQiEnd = "" };
     const res: PageableListResponse = await get('/paikejilu/huoQuPaiKeJiLu', { pageNum, pageSize, shangKeRiQiBegin, shangKeRiQiEnd, banJiId, shangKeLaoShiId, paiKeJiLuZhuangTai });
     return convertSearchResult<PaiKeJiLu>(res, (obj: SourceData) => {
         return convertPaiKeJiLu(obj);

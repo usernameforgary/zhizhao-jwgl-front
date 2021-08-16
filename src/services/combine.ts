@@ -1,5 +1,5 @@
 import { post, get } from "../api/customApi";
-import { JiaoFeiLiShi, XueYuanKeCheng, XueYuanXinXi } from "../customtypes";
+import { JiaoFeiLiShi, PaiKeJiLu, XueYuanKeCheng, XueYuanXinXi } from "../customtypes";
 
 // 学员报名
 export const xueYuanBaoMing = async (
@@ -29,4 +29,12 @@ export const xueYuanXuanZeBanJi = async (xueYuanId: string, xueYuanKeChengId: st
  */
 export const jiaoFeiJiLuQueRen = async (id: string, jiaoFeiJiLuZhuangTai: string): Promise<void> => {
     await get('/combine/jiaoFeiJiLuQueRen', { id, jiaoFeiJiLuZhuangTai });
+}
+
+/**
+ * 排课记录点名
+ * @param paiKeJiLu 排课记录点名信息
+ */
+export const paiKeJiLuDianMing = async (paiKeJiLu: PaiKeJiLu): Promise<void> => {
+    await post('/combine/paiKeJiLuDianMing', { ...paiKeJiLu });
 }

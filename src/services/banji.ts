@@ -93,3 +93,15 @@ export const huoQuBanJiXueYuanByBanJiId = async (banJiId: string): Promise<BanJi
     const res: BanJiXueYuanView[] = await get("/banji/houQuBanJiXueYuanByBanJiId", { banJiId });
     return res;
 }
+
+/**
+ * 根据学员Id，获取班级列表
+ * @param xueYuanId 学员Id
+ * @returns 
+ */
+export const huoQuBanJiLieBiaoByXueYuanId = async (xueYuanId: string): Promise<NoPageSearchResult<BanJiView>> => {
+    const res: NonPageableListResponse = await get("/banji/huoQuBanJiLieBiaoByXueYuanId", { xueYuanId });
+    return convertSearchResultNonPageable<BanJiView>(res, (obj: SourceData) => {
+        return convertBanJiView(obj);
+    });
+}

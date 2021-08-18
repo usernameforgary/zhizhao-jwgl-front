@@ -94,12 +94,15 @@ export interface IMainStore extends IStore {
     readonly hiddenRegister: boolean;
     readonly hiddenLogin: boolean;
     readonly hiddenResetPassword: boolean;
+    daiXiaZaiWenJianShu: number;
     login(token: string): void;
     logout(): void;
     loadProfile(): Promise<void>;
     toggleRegister(flag: boolean): void;
     toggleLogin(flag: boolean): void;
     toggleResetPassword(flag: boolean): void;
+    // 获取待下载文件数
+    huoQuDaiXiaZaiWenJianShu(): Promise<void>;
 };
 
 // export type NonPageableListResponse = {
@@ -642,11 +645,12 @@ export type JiaoFeiJiLuTableViewData = {
 } & IdValue & ReactUninqueKey
 
 /**
- * 排课记录状态，待点名 | 已点名
+ * 排课记录状态，待点名 | 已点名 | 已点评
  */
 export enum PaiKeJiLuZhuangTai {
     DAI_DIAN_MING = "DAI_DIAN_MING",
     YI_DIAN_MING = "YI_DIAN_MING",
+    YI_DIAN_PING = "YI_DIAN_PING"
 }
 
 // 排课记录里，上课学员的类型
@@ -686,6 +690,8 @@ export type ShanKeXueYuan = {
     shiTingJiLuId?: string
     // 扣除课时
     kouChuKeShi: number
+    // 课消金额
+    keXiaoJinE: number
     // 备注
     beiZhu: string
     // 剩余课时
@@ -726,8 +732,12 @@ export type PaiKeJiLu = {
     dianMingShiJian: number
     // 班级所属课程id
     keChengId: string
+    // 课程名称
+    keChengMingCheng: string
     // 班级Id
     banJiId: string
+    // 班级名称
+    banJiMingCheng: string
 } & IdValue & ReactUninqueKey
 
 // 点名记录
@@ -753,6 +763,8 @@ export type DianMingJiLu = {
     banJiMingCheng: string
     // 班级Id
     banJiId: string
+    // 上课日期
+    shangKeRiQi: number
     // 上课开始时间
     shangKeShiJianStart: number
     // 上课结束时间
@@ -761,4 +773,12 @@ export type DianMingJiLu = {
     shangKeLaoShiId: string
     // 上课老师姓名
     shangKeLaoShiXingMing: string
+    // 学员姓名
+    xueXueYuanXingMing: string
+    // 联系电话
+    shouJi: string
+    // 课程名称
+    keChengMingCheng: string
+    // 点评内容
+    dianPingNeiRong: string
 } & IdValue & ReactUninqueKey

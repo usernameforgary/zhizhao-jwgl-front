@@ -27,6 +27,8 @@ const convertDianMingJiLu = (obj: SourceData): DianMingJiLu => {
         banJiMingCheng: obj.banJiMingCheng,
         // 班级Id
         banJiId: obj.banJiId,
+        // 上课日期
+        shangKeRiQi: obj.shangKeRiQi,
         // 上课开始时间
         shangKeShiJianStart: obj.shangKeShiJianStart,
         // 上课结束时间
@@ -35,6 +37,14 @@ const convertDianMingJiLu = (obj: SourceData): DianMingJiLu => {
         shangKeLaoShiId: obj.shangKeLaoShiId,
         // 上课老师姓名
         shangKeLaoShiXingMing: obj.shangKeLaoShiXingMing,
+        // 学员姓名
+        xueXueYuanXingMing: obj.xueXueYuanXingMing,
+        // 联系电话
+        shouJi: obj.shouJi,
+        // 课程名称
+        keChengMingCheng: obj.keChengMingCheng,
+        // 点评内容
+        dianPingNeiRong: obj.dianPingNeiRong,
 
         key: obj.id
     }

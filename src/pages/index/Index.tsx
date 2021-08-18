@@ -1,4 +1,4 @@
-import { Layout, Menu, Button, Row, Col, Space, BackTop } from 'antd';
+import { Layout, Menu, Button, Row, Col, Space, BackTop, Badge } from 'antd';
 import { Switch, Route, Link, useHistory } from 'react-router-dom';
 import ContextContainer from './components/ContentContainer';
 import XueYuanLieBiao from '../xueyuan/XueYuanLieBiao';
@@ -27,6 +27,7 @@ import JiaoFeiJiLuXiangQing from '../jiaofeijilu/jiaofeijiluxiangqing/JiaoFeiJiL
 import XueYuanXiangQing from '../xueyuan/XueYuanXiangQing';
 import XueYuanXuanBan from '../xueyuan/xueyuanxuanban/XueYuanXuanBan';
 import ShangKeJiLuLieBiao from '../shangkejilu/ShangKeJiLuLieBiao';
+import { CloudServerOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -73,7 +74,6 @@ const Index = () => {
         }
     }, [window.location.pathname]);
 
-
     /**
      * 父级菜单点击
      * @param key 选中的key
@@ -82,17 +82,20 @@ const Index = () => {
         setParentMenuKeySelected([key])
     }
 
-
-    const loadProfile = async () => {
+    /**
+     * 初始化页面信息。用户信息、用户待下载文件数等
+     */
+    const initialize = async () => {
         setLoading(true);
         await userStore.loadProfile();
+        await userStore.huoQuDaiXiaZaiWenJianShu();
         setLoading(false);
         const nodes = convertCaiDanList2TreeData(userStore.user.xiTongCaiDanZu ?? []);
         setMenuNodes(nodes);
     }
 
     useEffect(() => {
-        loadProfile();
+        initialize();
     }, []);
 
     const logout = () => {
@@ -116,8 +119,14 @@ const Index = () => {
                         </Menu> */}
                         <Col span={16} >
                             <Row justify="end">
-                                <Space>
-                                    <Button type="primary">导入导出</Button>
+                                <Space size={50}>
+                                    <Col>
+                                        <a href="#">
+                                            <Badge count={userStore.daiXiaZaiWenJianShu} showZero={true}>
+                                                <CloudServerOutlined style={{ fontSize: '200%', color: 'white' }} />
+                                            </Badge>
+                                        </a>
+                                    </Col>
                                     <Button type="primary">帮助</Button>
                                     <Button type="primary">修改密码</Button>
                                     <Button onClick={logout} type="primary">退出登录</Button>
@@ -170,6 +179,7 @@ const Index = () => {
                                 <Breadcrumb.Item>List</Breadcrumb.Item>
                                 <Breadcrumb.Item>App</Breadcrumb.Item>
                                 </Breadcrumb> */}
+
                         <ContextContainer>
                             <Switch>
                                 {/* 生成路由, 临时方案 */}

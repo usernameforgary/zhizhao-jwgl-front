@@ -2,6 +2,7 @@
 import { action, makeObservable, observable } from 'mobx';
 import { IMainStore, User } from '../customtypes';
 import { huoQuZhangHaoXinXi } from '../services/account';
+import { huoQuDaiXiaZaiWenJianShuByZhangHaoId } from '../services/downloaduploadfile';
 
 const defaultUser: User = {
     id: undefined,
@@ -26,6 +27,9 @@ class Store implements IMainStore {
 
     @observable
     hiddenResetPassword: boolean = true;
+
+    @observable
+    daiXiaZaiWenJianShu: number = 0;
 
     constructor() {
         const token = localStorage.getItem('token');
@@ -107,6 +111,17 @@ class Store implements IMainStore {
     dispose(): void {
         localStorage.removeItem('token');
         this.user = { ...defaultUser };
+    }
+
+    // 获取当前登录用户，待下载文件数
+    @action
+    async huoQuDaiXiaZaiWenJianShu() {
+        if (this.user.id) {
+            try {
+                const result: number = await huoQuDaiXiaZaiWenJianShuByZhangHaoId(this.user.id);
+                this.daiXiaZaiWenJianShu = result;
+            } catch (e) { }
+        }
     }
 }
 

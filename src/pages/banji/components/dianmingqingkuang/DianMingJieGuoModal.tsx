@@ -3,13 +3,12 @@ import { Modal, Row, Col, Table, TableColumnType, Space } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import { BanJiView, PaiKeJiLu, ShanKeXueYuan } from '../../../../customtypes'
 import { convertMomentIsoWeekDay2Text, convertShangKeXueYuanLeiXing2Text, convertXueYuanDaoKeZhuangTai2Text } from '../../../../utils/converter'
-import { paiKeJiLuDianMing } from '../../../../services/combine'
 import moment from 'moment'
 
 
 type DianMingJieGuoModalProps = {
     visible: boolean
-    banJiXiangQing: BanJiView | undefined
+    banJiXiangQing?: BanJiView
     paiKeJiLu: PaiKeJiLu
     onClose: () => void
 }
@@ -74,10 +73,17 @@ const DianMingJieGuoModal: React.FC<DianMingJieGuoModalProps> = ({ visible, banJ
                 <Row>
                     <Space>
 
-                        <span>签到名单</span>
-                        <span>{banJiXiangQing?.mingCheng}</span>
-                        <span> {convertMomentIsoWeekDay2Text(moment(Number(paiKeJiLu.shangKeRiQi)).isoWeekday())}</span>
-                        <span>{moment(Number(paiKeJiLu.shangKeShiJianStart)).format('HH:mm') + "-" + moment(Number(paiKeJiLu.shangKeShiJianEnd)).format('HH:mm')}</span>
+
+                        {
+                            banJiXiangQing ? <>
+                                <span>签到名单</span>
+                                <span>{banJiXiangQing?.mingCheng}</span>
+                                <span> {convertMomentIsoWeekDay2Text(moment(Number(paiKeJiLu.shangKeRiQi)).isoWeekday())}</span>
+                                <span>{moment(Number(paiKeJiLu.shangKeShiJianStart)).format('HH:mm') + "-" + moment(Number(paiKeJiLu.shangKeShiJianEnd)).format('HH:mm')}</span>
+                            </> : <>
+                                <span>{paiKeJiLu.keChengMingCheng}</span>
+                            </>
+                        }
                     </Space>
                 </Row>
 

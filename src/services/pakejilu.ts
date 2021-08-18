@@ -37,6 +37,10 @@ const convertPaiKeJiLu = (obj: SourceData): PaiKeJiLu => {
         keChengId: obj.keChengId,
         // 班级id
         banJiId: obj.banJiId,
+        // 班级名称
+        banJiMingCheng: obj.banJiMingCheng,
+        // 课程名称
+        keChengMingCheng: obj.keChengMingCheng,
 
         key: obj.id
     }
@@ -65,12 +69,13 @@ export const huoQuPaiKeJiLuLieBiao = async (
     shangKeRiQiEnd: number | undefined | "",
     banJiId: string | undefined,
     shangKeLaoShiId: string | undefined,
-    paiKeJiLuZhuangTai: PaiKeJiLuZhuangTai | undefined
+    paiKeJiLuZhuangTaiZu: PaiKeJiLuZhuangTai[] | []
 ): Promise<SearchResult<PaiKeJiLu>> => {
     if (!shangKeLaoShiId) { shangKeLaoShiId = "" };
     if (!shangKeRiQiBegin) { shangKeRiQiBegin = "" };
     if (!shangKeRiQiEnd) { shangKeRiQiEnd = "" };
-    const res: PageableListResponse = await get('/paikejilu/huoQuPaiKeJiLu', { pageNum, pageSize, shangKeRiQiBegin, shangKeRiQiEnd, banJiId, shangKeLaoShiId, paiKeJiLuZhuangTai });
+    if (!banJiId) { banJiId = "" };
+    const res: PageableListResponse = await get('/paikejilu/huoQuPaiKeJiLu', { pageNum, pageSize, shangKeRiQiBegin, shangKeRiQiEnd, banJiId, shangKeLaoShiId, paiKeJiLuZhuangTaiZu });
     return convertSearchResult<PaiKeJiLu>(res, (obj: SourceData) => {
         return convertPaiKeJiLu(obj);
     });

@@ -1,4 +1,4 @@
-import { Col, Row, Select, DatePicker, TablePaginationConfig, TableColumnType, Table } from 'antd'
+import { Col, Row, Select, DatePicker, TablePaginationConfig, TableColumnType, Table, Space } from 'antd'
 import { action, makeObservable, observable, runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import moment, { Moment } from 'moment'
@@ -183,7 +183,7 @@ const YiShanKeJiLu: React.FC<YiShanKeJiLuProps> = ({ xueYuanXinXi }) => {
             render: (value, record) => {
                 let result = "";
 
-                result += moment(Number(record.shangKeShiJianStart)).format('YYYY-MM-DD') + " " + moment(Number(record.shangKeShiJianStart)).format('HH:mm') + "-" + moment(Number(record.shangKeShiJianEnd)).format('HH:mm');
+                result += moment(Number(record.shangKeRiQi)).format('YYYY-MM-DD') + " " + moment(Number(record.shangKeShiJianStart)).format('HH:mm') + "-" + moment(Number(record.shangKeShiJianEnd)).format('HH:mm');
                 return <span style={{ whiteSpace: 'pre-line' }}>{result}</span>;
             }
         },
@@ -224,51 +224,53 @@ const YiShanKeJiLu: React.FC<YiShanKeJiLuProps> = ({ xueYuanXinXi }) => {
 
     return (
         <>
-            <Row>
-                <Col span={8}>
-                    <span>上课日期：</span>
-                    <DatePicker defaultValue={shangKeRiQiBegin} onChange={(m) => handleShangKeRiQiBeginChange(m)} />
-                    &nbsp; ~ &nbsp;
-                    <DatePicker defaultValue={shangKeRiQiEnd} onChange={(m) => handleShangKeRiQiEndChange(m)} />
-                </Col>
-                <Col span={8}>
-                    <span>所在班级：</span>
-                    <Select style={{ width: '10rem' }} defaultValue={banJiId} onChange={handleBanJiChange}>
-                        {banJiList?.map(k => {
-                            return (
-                                <Option key={k.id} value={k.id || ""}>{k.mingCheng}</Option>
-                            );
-                        })}
-                    </Select>
-                </Col>
-                <Col span={8}>
-                    <span>上课老师：</span>
-                    <Select style={{ width: '10rem' }} defaultValue={shangKeLaoShiId} onChange={handleShangKeLaoShiChange}>
-                        {laoShiList?.map(k => {
-                            return (
-                                <Option key={k.id} value={k.id || ""}>{k.xingMing}</Option>
-                            );
-                        })}
-                    </Select>
-                </Col>
-            </Row>
-            <Row>
+            <Space direction="vertical" style={{ width: '100%' }} size="small">
+                <Row>
+                    <Col span={8}>
+                        <span>上课日期：</span>
+                        <DatePicker defaultValue={shangKeRiQiBegin} onChange={(m) => handleShangKeRiQiBeginChange(m)} />
+                        &nbsp; ~ &nbsp;
+                        <DatePicker defaultValue={shangKeRiQiEnd} onChange={(m) => handleShangKeRiQiEndChange(m)} />
+                    </Col>
+                    <Col span={8}>
+                        <span>所在班级：</span>
+                        <Select style={{ width: '10rem' }} defaultValue={banJiId} onChange={handleBanJiChange}>
+                            {banJiList?.map(k => {
+                                return (
+                                    <Option key={k.id} value={k.id || ""}>{k.mingCheng}</Option>
+                                );
+                            })}
+                        </Select>
+                    </Col>
+                    <Col span={8}>
+                        <span>上课老师：</span>
+                        <Select style={{ width: '10rem' }} defaultValue={shangKeLaoShiId} onChange={handleShangKeLaoShiChange}>
+                            {laoShiList?.map(k => {
+                                return (
+                                    <Option key={k.id} value={k.id || ""}>{k.xingMing}</Option>
+                                );
+                            })}
+                        </Select>
+                    </Col>
+                </Row>
+                <Row>
 
-            </Row>
-            <Row>
+                </Row>
+                <Row>
 
-            </Row>
-            <Row>
-                <Col span={24}>
-                    <Table
-                        pagination={pagination}
-                        dataSource={dianMingJiLuList}
-                        columns={columns}
-                        onChange={onTableChange}
-                    >
-                    </Table>
-                </Col>
-            </Row>
+                </Row>
+                <Row>
+                    <Col span={24}>
+                        <Table
+                            pagination={pagination}
+                            dataSource={dianMingJiLuList}
+                            columns={columns}
+                            onChange={onTableChange}
+                        >
+                        </Table>
+                    </Col>
+                </Row>
+            </Space>
         </>
     )
 }

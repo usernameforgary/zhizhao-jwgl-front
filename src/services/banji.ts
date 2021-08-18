@@ -105,3 +105,14 @@ export const huoQuBanJiLieBiaoByXueYuanId = async (xueYuanId: string): Promise<N
         return convertBanJiView(obj);
     });
 }
+
+/**
+ * 获取所有班级
+ * @returns 所有班级
+ */
+export const huoQuBanJiAll = async (): Promise<NoPageSearchResult<BanJiView>> => {
+    const res: NonPageableListResponse = await get("/banji/huoQuBanJiAll");
+    return convertSearchResultNonPageable<BanJiView>(res, (obj: SourceData) => {
+        return convertBanJiView(obj);
+    });
+}

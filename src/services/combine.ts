@@ -1,5 +1,5 @@
 import { post, get } from "../api/customApi";
-import { JiaoFeiLiShi, PaiKeJiLu, XueYuanKeCheng, XueYuanXinXi } from "../customtypes";
+import { JiaoFeiLiShi, PaiKeJiLu, PaiKeJiLuZhuangTai, XueYuanKeCheng, XueYuanXinXi } from "../customtypes";
 
 // 学员报名
 export const xueYuanBaoMing = async (
@@ -37,4 +37,56 @@ export const jiaoFeiJiLuQueRen = async (id: string, jiaoFeiJiLuZhuangTai: string
  */
 export const paiKeJiLuDianMing = async (paiKeJiLu: PaiKeJiLu): Promise<void> => {
     await post('/combine/paiKeJiLuDianMing', { ...paiKeJiLu });
+}
+
+
+/**
+    * 导出班级排课记录列表
+    * @param shangKeRiQiBegin 上课日期 开始
+    * @param shangKeRiQiEnd 上课日期 结束
+    * @param banJiId 班级Id
+    * @param shangKeLaoShiId 上课老师Id
+    * @param paiKeJiLuZhuangTai 排课记录状态（待点名 | 已点名）
+    * @return
+    */
+export const daoChuBanJiPaiKeJiLu = async (
+    zhangHaoId: string,
+    shangKeRiQiBegin: number | undefined | "",
+    shangKeRiQiEnd: number | undefined | "",
+    banJiId: string | undefined,
+    shangKeLaoShiId: string | undefined,
+    paiKeJiLuZhuangTaiZu: PaiKeJiLuZhuangTai[] | []
+): Promise<void> => {
+    if (!shangKeLaoShiId) { shangKeLaoShiId = "" };
+    if (!shangKeRiQiBegin) { shangKeRiQiBegin = "" };
+    if (!shangKeRiQiEnd) { shangKeRiQiEnd = "" };
+    if (!banJiId) { banJiId = "" };
+    await get('/combine/daoChuBanJiPaiKeJiLu', { zhangHaoId, shangKeRiQiBegin, shangKeRiQiEnd, banJiId, shangKeLaoShiId, paiKeJiLuZhuangTaiZu });
+}
+
+
+/**
+    * 导出学员点名记录列表
+    * @param xueYuanId 学员Id
+    * @param shangKeRiQiBegin 上课日期 开始
+    * @param shangKeRiQiEnd 上课日期 结束
+    * @param banJiId 班级Id
+    * @param shangKeLaoShiId 上课老师Id
+    * @param paiKeJiLuZhuangTai 排课记录状态（待点名 | 已点名）
+    * @return
+    */
+export const daoChuXueYuanDianMingJiLu = async (
+    zhangHaoId: string,
+    xueYuanId: string | undefined | "",
+    shangKeRiQiBegin: number | undefined | "",
+    shangKeRiQiEnd: number | undefined | "",
+    banJiId: string | undefined,
+    shangKeLaoShiId: string | undefined
+): Promise<void> => {
+    if (!xueYuanId) { xueYuanId = "" };
+    if (!shangKeLaoShiId) { shangKeLaoShiId = "" };
+    if (!shangKeRiQiBegin) { shangKeRiQiBegin = "" };
+    if (!shangKeRiQiEnd) { shangKeRiQiEnd = "" };
+    if (!banJiId) { banJiId = "" };
+    await get('/combine/daoChuXueYuanDianMingJiLu', { zhangHaoId, xueYuanId, shangKeRiQiBegin, shangKeRiQiEnd, banJiId, shangKeLaoShiId });
 }

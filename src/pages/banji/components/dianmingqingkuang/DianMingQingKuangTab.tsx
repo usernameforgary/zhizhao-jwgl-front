@@ -50,7 +50,7 @@ class DiangMingQingKuangStore {
         const { current, pageSize } = this.yiZhouPagination;
         try {
             if (this.banJiXiangQing) {
-                const result = await huoQuPaiKeJiLuLieBiao(current || 0, pageSize || 10, weekStart, weekEnd, this.banJiXiangQing.id, undefined, PaiKeJiLuZhuangTai.DAI_DIAN_MING);
+                const result = await huoQuPaiKeJiLuLieBiao(current || 0, pageSize || 10, weekStart, weekEnd, this.banJiXiangQing.id, undefined, [PaiKeJiLuZhuangTai.DAI_DIAN_MING]);
                 if (result) {
                     runInAction(() => {
                         const { list, total } = result;
@@ -81,7 +81,15 @@ class DiangMingQingKuangStore {
         const { current, pageSize } = this.liShiPagination;
         try {
             if (this.banJiXiangQing) {
-                const result = await huoQuPaiKeJiLuLieBiao(current || 0, pageSize || 10, undefined, undefined, this.banJiXiangQing.id, undefined, PaiKeJiLuZhuangTai.YI_DIAN_MING);
+                const result = await huoQuPaiKeJiLuLieBiao(
+                    current || 0,
+                    pageSize || 10,
+                    undefined,
+                    undefined,
+                    this.banJiXiangQing.id,
+                    undefined,
+                    [PaiKeJiLuZhuangTai.YI_DIAN_MING, PaiKeJiLuZhuangTai.YI_DIAN_PING]
+                );
                 if (result) {
                     runInAction(() => {
                         const { list, total } = result;

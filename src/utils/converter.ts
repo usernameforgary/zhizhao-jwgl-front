@@ -1,10 +1,11 @@
+import React from "react";
 import {
     IdValue,
     NonPageableListResponse,
     NoPageSearchResult,
     OrderableDataNode,
     PaiKeFangShiFenLei, PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei,
-    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai, XueYuanKeCheng, DingJiaBiaoZhun, KeChengLeiXing, ShangKeXueYuanLeiXing, XueYuanDaoKeZhuangTai
+    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai, XueYuanKeCheng, DingJiaBiaoZhun, KeChengLeiXing, ShangKeXueYuanLeiXing, XueYuanDaoKeZhuangTai, WenJianZhuangTai
 } from "../customtypes";
 import { xueYuanKeChengFormValueType } from "../pages/xueyuan/xueyuanbaoming/BaoMingGouMaiStep";
 
@@ -325,6 +326,22 @@ export function convertXueYuanDaoKeZhuangTai2Text(daoKeZhuangTai: XueYuanDaoKeZh
             return "请假";
         case XueYuanDaoKeZhuangTai.WEI_DAO:
             return "未到";
+        default:
+            return "未知";
+    }
+}
+
+/**
+ * 转换文件状态
+ * @param wenJianZhuangTai 文件状态
+ * @returns 
+ */
+export function convertWenJianZhuangTai2Text(wenJianZhuangTai: WenJianZhuangTai): string {
+    switch (wenJianZhuangTai) {
+        case WenJianZhuangTai.WEI_XIA_ZAI:
+            return "待下载";
+        case WenJianZhuangTai.YI_XIA_ZAI:
+            return "已下载";
         default:
             return "未知";
     }

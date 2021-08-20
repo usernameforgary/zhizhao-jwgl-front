@@ -28,6 +28,9 @@ import XueYuanXiangQing from '../xueyuan/XueYuanXiangQing';
 import XueYuanXuanBan from '../xueyuan/xueyuanxuanban/XueYuanXuanBan';
 import ShangKeJiLuLieBiao from '../shangkejilu/ShangKeJiLuLieBiao';
 import { CloudServerOutlined } from '@ant-design/icons';
+import { observer } from 'mobx-react';
+import { getDefinedRouteByRouteName, routeName } from '../../router';
+import PaiKeJiLuDianPing from '../shangkejilu/dianping/PaiKeJiLuDianPing';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -119,13 +122,14 @@ const Index = () => {
                         </Menu> */}
                         <Col span={16} >
                             <Row justify="end">
-                                <Space size={50}>
+                                <Space size={30}>
                                     <Col>
-                                        <a href="#">
-                                            <Badge count={userStore.daiXiaZaiWenJianShu} showZero={true}>
-                                                <CloudServerOutlined style={{ fontSize: '200%', color: 'white' }} />
+                                        <Link to={getDefinedRouteByRouteName(routeName.dashboard)?.path || "#"}>
+                                            <Badge count={userStore.daiXiaZaiWenJianShu}>
+                                                <CloudServerOutlined style={{ fontSize: '200%', color: 'white', verticalAlign: "middle" }} />
+                                                &nbsp;<span style={{ color: 'white', verticalAlign: "middle" }} >导入导出</span>
                                             </Badge>
-                                        </a>
+                                        </Link>
                                     </Col>
                                     <Button type="primary">帮助</Button>
                                     <Button type="primary">修改密码</Button>
@@ -196,6 +200,7 @@ const Index = () => {
                                 <PrivateRouter exact key="jiaofeijilu" path="/sys/jiaofeijilu" component={JiaoFenJiLu} />
                                 <PrivateRouter exact key="jiaofeijiluxiangqing" path="/sys/jiaofeijiluxiangqing/:id" component={JiaoFeiJiLuXiangQing} />
                                 <PrivateRouter exact key="shangkejiluliebiao" path="/sys/shangkejiluliebiao" component={ShangKeJiLuLieBiao} />
+                                <PrivateRouter exact key="paikejiludianping" path="/sys/paikejiludianping/:paiKeJiLuId" component={PaiKeJiLuDianPing} />
                                 <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>
                                 <Route path="*" component={Page404} />
                             </Switch>
@@ -209,4 +214,4 @@ const Index = () => {
     )
 }
 
-export default Index;
+export default observer(Index);

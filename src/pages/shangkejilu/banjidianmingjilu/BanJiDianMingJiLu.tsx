@@ -4,7 +4,9 @@ import { observer } from 'mobx-react';
 import moment, { Moment } from 'moment';
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import DaoChuWenJianJieGuoModal from '../../../components/modals/daochuwenjian/DaoChuWenJianJieGuoModal';
 import { BanJiView, IMainStore, LaoShi, PaiKeJiLu, PaiKeJiLuZhuangTai, ShanKeXueYuan, XueYuanDaoKeZhuangTai } from '../../../customtypes';
+import { getDefinedRouteByRouteName, routeName } from '../../../router';
 import { huoQuBanJiAll } from '../../../services/banji';
 import { daoChuBanJiPaiKeJiLu } from '../../../services/combine';
 import { huoQuLaoShiAll } from '../../../services/laoshi';
@@ -106,6 +108,10 @@ const BanJiDianMingJiLu = () => {
     const [laoShiList, setLaoShiList] = useState<LaoShi[]>([]);
     const [showDianMingJiGuo, setShowDianMingJieGuo] = useState<boolean>(false);
     const [selectedPaiKeJiLu, setSelectedPaiKeJiLu] = useState<PaiKeJiLu>();
+    // 展示导出结果窗口
+    const [showDaoChuJieGuoModal, setShowDaoChuJieGuoModal] = useState<boolean>(false);
+    // 导出时错误信息
+    const [daoChuError, setDaoChuError] = useState<string>("");
 
     const { shangKeRiQiBegin, shangKeRiQiEnd, banJiId, shangKeLaoShiId, pagination, paiKeJiLuList } = viewStore
 
@@ -186,8 +192,22 @@ const BanJiDianMingJiLu = () => {
                     shangKeLaoShiId,
                     [PaiKeJiLuZhuangTai.YI_DIAN_MING, PaiKeJiLuZhuangTai.YI_DIAN_PING]
                 );
+
+                // 获取未下载文件数量
+                await userStore.huoQuDaiXiaZaiWenJianShu();
+                // 显示导出结果窗口
+                handleShowDaoChuModal();
             }
-        } catch (e) { }
+        } catch (e) {
+            setDaoChuError(e.toString());
+            // 显示导出结果窗口
+            handleShowDaoChuModal();
+        }
+    }
+
+    // 导出窗口显示
+    const handleShowDaoChuModal = () => {
+        setShowDaoChuJieGuoModal(!showDaoChuJieGuoModal);
     }
 
     const columns: TableColumnType<PaiKeJiLu>[] = [
@@ -265,7 +285,7 @@ const BanJiDianMingJiLu = () => {
             dataIndex: 'action',
             render: (values, record) => {
                 if (record.paiKeJiLuZhuangTai === PaiKeJiLuZhuangTai.YI_DIAN_MING) {
-                    return <Link to={"#"}>写点评</Link>
+                    return <Link to={`${getDefinedRouteByRouteName(routeName.shangkejiludianping)?.path}/${record.id}`}>写点评</Link>
                 } else if (record.paiKeJiLuZhuangTai === PaiKeJiLuZhuangTai.YI_DIAN_PING) {
                     return <Link to={"#"}>查点评</Link>
                 } else {
@@ -327,7 +347,16 @@ const BanJiDianMingJiLu = () => {
                         visible={showDianMingJiGuo}
                         paiKeJiLu={selectedPaiKeJiLu}
                         onClose={closeDianMingJieGuoModal}
-                    /> : ""}
+                    /> : ""
+            }
+            {
+                showDaoChuJieGuoModal ?
+                    <DaoChuWenJianJieGuoModal
+                        visible={showDaoChuJieGuoModal}
+                        onClose={handleShowDaoChuModal}
+                        errorStr={daoChuError}
+                    /> : ""
+            }
         </>
     )
 }

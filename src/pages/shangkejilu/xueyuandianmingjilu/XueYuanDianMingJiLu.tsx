@@ -3,13 +3,12 @@ import { action, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import moment, { Moment } from 'moment';
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
-import { BanJiView, DianMingJiLu, IMainStore, LaoShi, PaiKeJiLu, PaiKeJiLuZhuangTai, ShanKeXueYuan, XueYuanDaoKeZhuangTai } from '../../../customtypes';
+import DaoChuWenJianJieGuoModal from '../../../components/modals/daochuwenjian/DaoChuWenJianJieGuoModal';
+import { BanJiView, DianMingJiLu, IMainStore, LaoShi, PaiKeJiLu } from '../../../customtypes';
 import { huoQuBanJiAll } from '../../../services/banji';
 import { daoChuXueYuanDianMingJiLu } from '../../../services/combine';
 import { huoQuDianMingJiLuLieBiao } from '../../../services/dianmingjilu';
 import { huoQuLaoShiAll } from '../../../services/laoshi';
-import { huoQuPaiKeJiLuLieBiao } from '../../../services/pakejilu';
 import { getStore } from '../../../store/useStore';
 import { convertXueYuanDaoKeZhuangTai2Text } from '../../../utils/converter';
 import DianMingJieGuoModal from '../../banji/components/dianmingqingkuang/DianMingJieGuoModal';
@@ -108,6 +107,10 @@ const XueYuanDianMingJiLu = () => {
     const [laoShiList, setLaoShiList] = useState<LaoShi[]>([]);
     const [showDianMingJiGuo, setShowDianMingJieGuo] = useState<boolean>(false);
     const [selectedPaiKeJiLu, setSelectedPaiKeJiLu] = useState<PaiKeJiLu>();
+    // 展示导出结果窗口
+    const [showDaoChuJieGuoModal, setShowDaoChuJieGuoModal] = useState<boolean>(false);
+    // 导出时错误信息
+    const [daoChuError, setDaoChuError] = useState<string>("");
 
     const { shangKeRiQiBegin, shangKeRiQiEnd, banJiId, shangKeLaoShiId, pagination, dianMingJiLuList } = viewStore
 
@@ -188,8 +191,22 @@ const XueYuanDianMingJiLu = () => {
                     banJiId,
                     shangKeLaoShiId
                 );
+
+                await userStore.huoQuDaiXiaZaiWenJianShu();
+                // 显示导出结果窗口
+                handleShowDaoChuModal();
             }
-        } catch (e) { }
+        } catch (e) {
+            setDaoChuError(e.toString());
+            // 显示导出结果窗口
+            handleShowDaoChuModal();
+        }
+
+    }
+
+    // 导出窗口显示
+    const handleShowDaoChuModal = () => {
+        setShowDaoChuJieGuoModal(!showDaoChuJieGuoModal);
     }
 
     const columns: TableColumnType<DianMingJiLu>[] = [
@@ -336,7 +353,16 @@ const XueYuanDianMingJiLu = () => {
                         visible={showDianMingJiGuo}
                         paiKeJiLu={selectedPaiKeJiLu}
                         onClose={closeDianMingJieGuoModal}
-                    /> : ""}
+                    /> : ""
+            }
+            {
+                showDaoChuJieGuoModal ?
+                    <DaoChuWenJianJieGuoModal
+                        visible={showDaoChuJieGuoModal}
+                        onClose={handleShowDaoChuModal}
+                        errorStr={daoChuError}
+                    /> : ""
+            }
         </>
     )
 }

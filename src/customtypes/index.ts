@@ -782,3 +782,84 @@ export type DianMingJiLu = {
     // 点评内容
     dianPingNeiRong: string
 } & IdValue & ReactUninqueKey
+
+
+// 上传下载文件信息里 - 文件分类 - (上传 || 下载)
+export enum WenJianFenLei {
+    DOWNLOAD = "DOWNLOAD",
+    UPLOAD = "UPLOAD"
+}
+
+// 上传下载文件信息里 - 文件状态 - (未下载 | 已下载)
+export enum WenJianZhuangTai {
+    WEI_XIA_ZAI = "WEI_XIA_ZAI",
+    YI_XIA_ZAI = "YI_XIA_ZAI"
+}
+
+// 上传下载文件信息
+export type DownloadUploadFile = {
+    // 创建时间
+    createTime: number
+    // 文件名称
+    mingCheng: string
+    // 后缀
+    houZhui: string
+    // oss上key(文件名)
+    ossKey: string
+    // 大小
+    daXiao: number
+    // 上传下载文件分类
+    wenJianFenLei: WenJianFenLei
+    // 上传下载文件状态
+    wenJianZhuangTai: WenJianZhuangTai
+    // 操作者Id
+    zhangHaoId: string
+    // 账号姓名
+    zhangHaoXingMing: string
+} & IdValue & ReactUninqueKey
+
+/**
+ * 成长记录类型
+ * KE_HOU_DIAN_PING： 课后点评
+ * HUO_LI_KE_TANG：活力课堂
+ * XUE_YUAN_FENG_CAI：学员风采
+ * ZUO_PIN_ZHAN_SHI：作品展示
+ * SHENG_HUO_JI_LU：生活记录
+ */
+export enum ChengZhangJiLuLeiXing {
+    KE_HOU_DIAN_PING = 'KE_HOU_DIAN_PING',
+    HUO_LI_KE_TANG = 'HUO_LI_KE_TANG',
+    XUE_YUAN_FENG_CAI = 'XUE_YUAN_FENG_CAI',
+    ZUO_PIN_ZHAN_SHI = 'ZUO_PIN_ZHAN_SHI',
+    SHENG_HUO_JI_LU = 'SHENG_HUO_JI_LU'
+}
+
+// 成长记录
+export type ChengZhangJiLu = {
+    // 学员Id
+    xueYuanId: string
+    // 内容
+    neiRong: string
+    // 成长记录文件组
+    chengZhangJiLuWenJianZu: ChengZhangJiLuWenJian[]
+    // 排课记录Id，成长记录类型 = [KE_HOU_DIAN_PING： 课后点评]
+    paiKeJiLuId?: string
+    // 成长记录类型
+    chengZhangJiLuLeiXing: ChengZhangJiLuLeiXing
+    // 家长已读
+    jiaZhangYiDu: boolean
+} & IdValue & ReactUninqueKey
+
+// 成长记录文件
+export type ChengZhangJiLuWenJian = {
+    // 名称
+    mingCheng?: string
+    // 后缀名
+    houZhui: string
+    // oss上key
+    ossKey: string
+    // oss的bucket名称
+    ossBucketName: string
+    // 大小
+    daXiao: number
+} & IdValue & ReactUninqueKey

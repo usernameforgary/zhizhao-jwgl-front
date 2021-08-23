@@ -31,6 +31,7 @@ import { CloudServerOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react';
 import { getDefinedRouteByRouteName, routeName } from '../../router';
 import PaiKeJiLuDianPing from '../shangkejilu/dianping/PaiKeJiLuDianPing';
+import ChaKanDianPing from '../shangkejilu/dianping/ChaKanDianPing';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -201,6 +202,7 @@ const Index = () => {
                                 <PrivateRouter exact key="jiaofeijiluxiangqing" path="/sys/jiaofeijiluxiangqing/:id" component={JiaoFeiJiLuXiangQing} />
                                 <PrivateRouter exact key="shangkejiluliebiao" path="/sys/shangkejiluliebiao" component={ShangKeJiLuLieBiao} />
                                 <PrivateRouter exact key="paikejiludianping" path="/sys/paikejiludianping/:paiKeJiLuId" component={PaiKeJiLuDianPing} />
+                                <PrivateRouter exact key="chakandianping" path="/sys/chakandianping/:paiKeJiLuId" component={ChaKanDianPing} />
                                 <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>
                                 <Route path="*" component={Page404} />
                             </Switch>

@@ -9,6 +9,7 @@ import JiaoFenJiLu from '../pages/jiaofeijilu/JiaoFenJiLu';
 import KeChengLieBiao from '../pages/kecheng/KeChengLieBiao';
 import XinJianKeCheng from '../pages/kecheng/xinzengkecheng/XinJianKeCheng';
 import Page404 from '../pages/page404/Page404';
+import ChaKanDianPing from '../pages/shangkejilu/dianping/ChaKanDianPing';
 import PaiKeJiLuDianPing from '../pages/shangkejilu/dianping/PaiKeJiLuDianPing';
 import ShangKeJiLuLieBiao from '../pages/shangkejilu/ShangKeJiLuLieBiao';
 import XueYuanBaoMing from '../pages/xueyuan/XueYuanBaoMing';
@@ -46,6 +47,7 @@ export enum routeName {
     jiaofeijiluxiangqing,
     shangkejiluliebiao,
     shangkejiludianping,
+    chakandianping
 }
 
 //TODO 因为webpack动态路由，不能指定全路径。暂时未找到解决方案
@@ -70,6 +72,7 @@ const subRoutes: RouteComponent[] = [
     { name: routeName.jiaofeijiluxiangqing, path: "/sys/jiaofeijiluxiangqing/:id", component: JiaoFeiJiLuXiangQing, withoutLayout: false },
     { name: routeName.shangkejiluliebiao, path: "/sys/shangkejiluliebiao", component: ShangKeJiLuLieBiao, withoutLayout: false },
     { name: routeName.shangkejiludianping, path: "/sys/paikejiludianping", component: PaiKeJiLuDianPing, withoutLayout: false },
+    { name: routeName.chakandianping, path: "/sys/chakandianping", component: ChaKanDianPing, withoutLayout: false },
     { name: routeName.dashboard, path: "/sys", component: DashBord, withoutLayout: false },
 ]
 

@@ -1,5 +1,5 @@
 import { post, get } from "../api/customApi";
-import { JiaoFeiLiShi, PaiKeJiLu, PaiKeJiLuZhuangTai, XueYuanKeCheng, XueYuanXinXi } from "../customtypes";
+import { ChengZhangJiLu, JiaoFeiLiShi, PaiKeJiLu, PaiKeJiLuZhuangTai, XueYuanKeCheng, XueYuanXinXi } from "../customtypes";
 
 // 学员报名
 export const xueYuanBaoMing = async (
@@ -89,4 +89,12 @@ export const daoChuXueYuanDianMingJiLu = async (
     if (!shangKeRiQiEnd) { shangKeRiQiEnd = "" };
     if (!banJiId) { banJiId = "" };
     await get('/combine/daoChuXueYuanDianMingJiLu', { zhangHaoId, xueYuanId, shangKeRiQiBegin, shangKeRiQiEnd, banJiId, shangKeLaoShiId });
+}
+
+/**
+ * 保存课后点评记录
+ * @param chengZhangJiLu 成长记录，类型为【课后点评】的成长记录
+ */
+export const baoCunKeHouDianPingXinXi = async (chengZhangJiLuZu: ChengZhangJiLu[]): Promise<void> => {
+    await post('/combine/baoCunKeHouDianPingXinXi', { chengZhangJiLuZu });
 }

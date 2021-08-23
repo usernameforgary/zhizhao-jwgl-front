@@ -1,5 +1,5 @@
 import { get } from "../api/customApi";
-import { DownloadUploadFile, PageableListResponse, SearchResult, SourceData } from "../customtypes";
+import { DownloadUploadFile, OssSignature, PageableListResponse, SearchResult, SourceData } from "../customtypes";
 import { convertSearchResult } from "../utils/converter";
 
 const convertDownloadUploadFile = (obj: SourceData): DownloadUploadFile => {
@@ -57,4 +57,14 @@ export const huoQuXiaZaiWenJianByZhangHaoId = async (pageNum: number, pageSize: 
 export const xiaZaiWenJianById = async (id: string): Promise<string> => {
     const { url } = await get("/downloaduploadfile/xiaZaiWenJianById", { id });
     return url;
+}
+
+/**
+ * 根据文件名获取阿里云Oss签名信息
+ * @param fileName 文件名
+ * @returns 
+ */
+export const huoQuShangChuanWenJianOssXinXi = async (fileName: string): Promise<OssSignature> => {
+    const result: OssSignature = await get("/downloaduploadfile/huoQuShangChuanWenJianOssXinXi", { fileName });
+    return result;
 }

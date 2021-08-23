@@ -1,5 +1,5 @@
 import { get, post } from "../api/customApi";
-import { SearchResult, PageableListResponse, SourceData, PaiKeJiLu, PaiKeJiLuZhuangTai } from "../customtypes";
+import { SearchResult, PageableListResponse, SourceData, PaiKeJiLu, PaiKeJiLuZhuangTai, NonPageableListResponse, NoPageSearchResult } from "../customtypes";
 import { convertSearchResult } from "../utils/converter";
 
 const convertPaiKeJiLu = (obj: SourceData): PaiKeJiLu => {
@@ -41,6 +41,8 @@ const convertPaiKeJiLu = (obj: SourceData): PaiKeJiLu => {
         banJiMingCheng: obj.banJiMingCheng,
         // 课程名称
         keChengMingCheng: obj.keChengMingCheng,
+        // 成长记录组
+        chengZhangJiLuZu: obj.chengZhangJiLuZu,
 
         key: obj.id
     }
@@ -48,6 +50,12 @@ const convertPaiKeJiLu = (obj: SourceData): PaiKeJiLu => {
     item.shangKeXueYuanZu.forEach(v => {
         v.key = v.xueYuanId
     })
+    // 成长记录组，react循环显示需要key 
+    if (item.chengZhangJiLuZu) {
+        item.chengZhangJiLuZu.forEach(v => {
+            v.key = v.id
+        })
+    }
     return item;
 }
 
@@ -79,4 +87,14 @@ export const huoQuPaiKeJiLuLieBiao = async (
     return convertSearchResult<PaiKeJiLu>(res, (obj: SourceData) => {
         return convertPaiKeJiLu(obj);
     });
+}
+
+/**
+ * 根据排课记录Id，查询排课记录，课后点评
+ * @param id 排课记录Id
+ * @returns 
+ */
+export const huoQuPaiKeJiLuKeHouDianPingById = async (id: string): Promise<PaiKeJiLu> => {
+    const res = await get('/paikejilu/huoQuPaiKeJiLuKeHouDianPingById', { id });
+    return convertPaiKeJiLu(res);
 }

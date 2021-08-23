@@ -22,7 +22,7 @@ class BanJiLieBiaoStore {
     list: BanJiView[] = [];
 
     @observable
-    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 2 };
+    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 10 };
 
     @action
     async search(pagination: TablePaginationConfig) {

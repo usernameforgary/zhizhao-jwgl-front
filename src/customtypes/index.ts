@@ -1,4 +1,5 @@
 import { DataNode } from "antd/lib/tree";
+import { UploadChangeParam } from "antd/lib/upload";
 import React from "react";
 
 export type GlobalConfig = {
@@ -738,6 +739,8 @@ export type PaiKeJiLu = {
     banJiId: string
     // 班级名称
     banJiMingCheng: string
+    // 成长记录组（成长记录类型为课后点评[KE_HOU_DIAN_PING]的记录）
+    chengZhangJiLuZu: ChengZhangJiLu[]
 } & IdValue & ReactUninqueKey
 
 // 点名记录
@@ -842,9 +845,9 @@ export type ChengZhangJiLu = {
     neiRong: string
     // 成长记录文件组
     chengZhangJiLuWenJianZu: ChengZhangJiLuWenJian[]
-    // 排课记录Id，成长记录类型 = [KE_HOU_DIAN_PING： 课后点评]
+    // 排课记录Id
     paiKeJiLuId?: string
-    // 成长记录类型
+    // 成长记录类型，成长记录类型 = [KE_HOU_DIAN_PING： 课后点评]
     chengZhangJiLuLeiXing: ChengZhangJiLuLeiXing
     // 家长已读
     jiaZhangYiDu: boolean
@@ -862,4 +865,16 @@ export type ChengZhangJiLuWenJian = {
     ossBucketName: string
     // 大小
     daXiao: number
+    // 文件访问url
+    url?: string
 } & IdValue & ReactUninqueKey
+
+// 阿里云OSS签名信息
+export type OssSignature = {
+    accessid: string
+    dir: string
+    expire: string
+    host: string
+    policy: string
+    signature: string
+}

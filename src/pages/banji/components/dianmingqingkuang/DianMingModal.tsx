@@ -122,8 +122,6 @@ const DianMingModal: React.FC<DianMingModalProps> = ({ banJiXiangQing, visible, 
                 })
             })
 
-            console.log(paiKeJiLuDianMingResult);
-
             try {
                 await paiKeJiLuDianMing(paiKeJiLuDianMingResult);
                 refreshJiLuList();

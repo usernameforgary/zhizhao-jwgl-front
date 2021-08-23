@@ -1,0 +1,19 @@
+.daoke {
+  display: flex;
+  color: #b7eb8f;
+  border-color: #b7eb8f;
+  background-color: #f6ffed;
+  border: 1px solid;
+  width: 3rem;
+  justify-content: center;
+}
+
+.qingjia {
+  display: flex;
+  color: #fa541c;
+  border-color: #fa541c;
+  background-color: #fff2e8;
+  border: 1px solid;
+  width: 3rem;
+  justify-content: center;
+}/*# sourceMappingURL=zhuangtaispan.css.map */

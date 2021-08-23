@@ -23,7 +23,7 @@ class XueYuanLieBiaoStore {
     keyword: string = "";
 
     @observable
-    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 2 };
+    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 10 };
 
     @action
     updateKeyword(val: string) {
@@ -124,8 +124,8 @@ const XueYuanLieBiao = () => {
             title: '消课金额',
             dataIndex: 'xiaoKeJinE',
             key: 'xiaoKeJinE',
-            render: (values) => {
-                return <span style={{ whiteSpace: 'pre-line' }}>￥ {values} 元</span>;
+            render: (values, record) => {
+                return <span style={{ whiteSpace: 'pre-line' }}>￥ {record.xiaoKeJinE?.toFixed(2)} 元</span>;
             },
         },
         {

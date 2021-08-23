@@ -287,7 +287,7 @@ const BanJiDianMingJiLu = () => {
                 if (record.paiKeJiLuZhuangTai === PaiKeJiLuZhuangTai.YI_DIAN_MING) {
                     return <Link to={`${getDefinedRouteByRouteName(routeName.shangkejiludianping)?.path}/${record.id}`}>写点评</Link>
                 } else if (record.paiKeJiLuZhuangTai === PaiKeJiLuZhuangTai.YI_DIAN_PING) {
-                    return <Link to={"#"}>查点评</Link>
+                    return <Link to={`${getDefinedRouteByRouteName(routeName.chakandianping)?.path}/${record.id}`}>查点评</Link>
                 } else {
                     return ""
                 }

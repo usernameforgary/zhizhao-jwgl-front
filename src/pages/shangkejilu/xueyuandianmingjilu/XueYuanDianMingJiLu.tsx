@@ -1,10 +1,12 @@
-import { DatePicker, Select, Col, Row, TablePaginationConfig, Button, TableColumnType, Table, Space } from 'antd'
+import { DatePicker, Select, Col, Row, TablePaginationConfig, Button, TableColumnType, Table, Space, Tooltip } from 'antd'
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import moment, { Moment } from 'moment';
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import DaoChuWenJianJieGuoModal from '../../../components/modals/daochuwenjian/DaoChuWenJianJieGuoModal';
-import { BanJiView, DianMingJiLu, IMainStore, LaoShi, PaiKeJiLu } from '../../../customtypes';
+import { BanJiView, DianMingJiLu, IMainStore, LaoShi, PaiKeJiLu, PaiKeJiLuZhuangTai } from '../../../customtypes';
+import { getDefinedRouteByRouteName, routeName } from '../../../router';
 import { huoQuBanJiAll } from '../../../services/banji';
 import { daoChuXueYuanDianMingJiLu } from '../../../services/combine';
 import { huoQuDianMingJiLuLieBiao } from '../../../services/dianmingjilu';
@@ -284,21 +286,32 @@ const XueYuanDianMingJiLu = () => {
         {
             title: '点评内容',
             dataIndex: 'dianPingNeiRong',
-            key: 'dianPingNeiRong'
+            key: 'dianPingNeiRong',
+            render: (value, record) => {
+                if (record.dianPingNeiRong && record.dianPingNeiRong.length > 10) {
+                    return (
+                        <Tooltip title={record.dianPingNeiRong}>
+                            <span>{record.dianPingNeiRong.substring(0, 10)}...</span>
+                        </Tooltip>
+                    )
+                } else {
+                    return (
+                        <span>{record.dianPingNeiRong || ""}</span>
+                    )
+                }
+            }
         },
-        // {
-        //     title: '操作',
-        //     dataIndex: 'action',
-        //     render: (values, record) => {
-        //         if (record.paiKeJiLuZhuangTai === PaiKeJiLuZhuangTai.YI_DIAN_MING) {
-        //             return <Link to={"#"}>写点评</Link>
-        //         } else if (record.paiKeJiLuZhuangTai === PaiKeJiLuZhuangTai.YI_DIAN_PING) {
-        //             return <Link to={"#"}>查点评</Link>
-        //         } else {
-        //             return ""
-        //         }
-        //     },
-        // }
+        {
+            title: '操作',
+            dataIndex: 'action',
+            render: (values, record) => {
+                if (record.paiKeJiLuZhuangTai === PaiKeJiLuZhuangTai.YI_DIAN_PING) {
+                    return <Link to={`${getDefinedRouteByRouteName(routeName.chakandianping)?.path}/${record.paiKeJiLuId}`}>查点评</Link>
+                } else {
+                    return <Button type="link" disabled>查点评</Button>
+                }
+            },
+        }
     ];
 
     return (

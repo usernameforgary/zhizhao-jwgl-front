@@ -98,3 +98,12 @@ export const daoChuXueYuanDianMingJiLu = async (
 export const baoCunKeHouDianPingXinXi = async (chengZhangJiLuZu: ChengZhangJiLu[]): Promise<void> => {
     await post('/combine/baoCunKeHouDianPingXinXi', { chengZhangJiLuZu });
 }
+
+/**
+ * 学员课程结课
+ * @param xueYuanKeChengId 学员课程Id
+ * @param banJiId 学员课程Id
+ */
+export const xueYuanKeChengJieKe = async (xueYuanKeChengId: string, banJiId: string): Promise<void> => {
+    await get('/combine/xueYuanKeChengJieKe', { xueYuanKeChengId, banJiId })
+}

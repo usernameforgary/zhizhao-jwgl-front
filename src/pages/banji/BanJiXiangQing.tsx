@@ -111,7 +111,7 @@ const BanJiXiangQing = () => {
             {loading ? <Loading /> : ""}
             <Space size="large" direction="vertical" style={{ width: "100%" }}>
                 <Col span={24}>
-                    <Card title={banJiXiangQing?.mingCheng} extra={<Button type="primary">班级编辑</Button>} bordered={false}>
+                    <Card title={banJiXiangQing?.mingCheng} extra={<Button disabled type="primary">班级编辑</Button>} bordered={false}>
                         <Row gutter={[10, 15]}>
                             <Col offset={2} span={6}>
                                 <Space size="middle" style={{ width: '100%' }}>

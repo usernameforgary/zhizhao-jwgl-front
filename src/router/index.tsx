@@ -8,6 +8,7 @@ import JiaoFeiJiLuXiangQing from '../pages/jiaofeijilu/jiaofeijiluxiangqing/Jiao
 import JiaoFenJiLu from '../pages/jiaofeijilu/JiaoFenJiLu';
 import KeChengLieBiao from '../pages/kecheng/KeChengLieBiao';
 import XinJianKeCheng from '../pages/kecheng/xinzengkecheng/XinJianKeCheng';
+import LaoShiLieBiao from '../pages/laoshi/LaoShiLieBiao';
 import Page404 from '../pages/page404/Page404';
 import ChaKanDianPing from '../pages/shangkejilu/dianping/ChaKanDianPing';
 import PaiKeJiLuDianPing from '../pages/shangkejilu/dianping/PaiKeJiLuDianPing';
@@ -16,6 +17,7 @@ import XueYuanBaoMing from '../pages/xueyuan/XueYuanBaoMing';
 import XueYuanLieBiao from '../pages/xueyuan/XueYuanLieBiao';
 import XueYuanXiangQing from '../pages/xueyuan/XueYuanXiangQing';
 import XueYuanXuanBan from '../pages/xueyuan/xueyuanxuanban/XueYuanXuanBan';
+import XueYuanDangAn from '../pages/xueyuandangan/XueYuanDangAn';
 import XinJianYuanGong from '../pages/yuangong/xinjianyuangong/XinJianYuanGong';
 import YuanGongLieBiao from '../pages/yuangong/YuanGongLieBiao';
 
@@ -47,7 +49,9 @@ export enum routeName {
     jiaofeijiluxiangqing,
     shangkejiluliebiao,
     shangkejiludianping,
-    chakandianping
+    chakandianping,
+    xueyuandangan,
+    laoshiliebiao,
 }
 
 //TODO 因为webpack动态路由，不能指定全路径。暂时未找到解决方案
@@ -65,7 +69,7 @@ const subRoutes: RouteComponent[] = [
     { name: routeName.xueyuanxuanban, path: "/sys/xueyuanxuanban/:id", component: XueYuanXuanBan, withoutLayout: false },
     { name: routeName.kechengliebiao, path: "/sys/kechengliebiao", component: KeChengLieBiao, withoutLayout: false },
     { name: routeName.xinjiankecheng, path: "/sys/xinjiankecheng", component: XinJianKeCheng, withoutLayout: false },
-    { name: routeName.xueyuanbaoming, path: "/sys/xueyuanbaoming/:xueYuanId?", component: XueYuanBaoMing, withoutLayout: false },
+    { name: routeName.xueyuanbaoming, path: "/sys/xueyuanbaoming", component: XueYuanBaoMing, withoutLayout: false },
     { name: routeName.banjiliebiao, path: "/sys/banjiliebiao", component: BanJiLieBiao, withoutLayout: false },
     { name: routeName.banjixiangqing, path: "/sys/banjixiangqing", component: BanJiXiangQing, withoutLayout: false },
     { name: routeName.jiaofeijilu, path: "/sys/jiaofeijilu", component: JiaoFenJiLu, withoutLayout: false },
@@ -73,6 +77,8 @@ const subRoutes: RouteComponent[] = [
     { name: routeName.shangkejiluliebiao, path: "/sys/shangkejiluliebiao", component: ShangKeJiLuLieBiao, withoutLayout: false },
     { name: routeName.shangkejiludianping, path: "/sys/paikejiludianping", component: PaiKeJiLuDianPing, withoutLayout: false },
     { name: routeName.chakandianping, path: "/sys/chakandianping", component: ChaKanDianPing, withoutLayout: false },
+    { name: routeName.xueyuandangan, path: "/sys/xueyuandangan", component: XueYuanDangAn, withoutLayout: false },
+    { name: routeName.laoshiliebiao, path: "/sys/laoshiliebiao", component: LaoShiLieBiao, withoutLayout: false },
     { name: routeName.dashboard, path: "/sys", component: DashBord, withoutLayout: false },
 ]
 

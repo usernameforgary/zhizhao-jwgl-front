@@ -451,6 +451,32 @@ export enum XueYuanZhuangTai {
     LI_SHI = "LI_SHI"
 }
 
+/** 跟进学员状态
+ * 待跟进：没有添加任何跟进记录的潜在学员的跟进状态为“待跟进”
+ * 跟进中：添加过任意跟进记录，但没有约试听课的潜在学员的跟进状态为“跟进中”
+ * 已约课：添加过任意跟进记录，且预约过试听课的潜在学员的跟进状态为“已约课”
+ * 已体验：添加过任意跟进记录，且预约过试听课，老师对其的点名状态为“已到”或“迟到”时，该潜在学员的跟进状态为“已体验”
+ * 已失效：该状态由销售手动标记。
+ * 以上潜在学员的状态均可手动更改，更改后继续按照该逻辑显示跟进状态。
+ * 举例：潜在学员A当前的跟进状态为“已体验”，然后课程顾问张三把潜在学员A的跟进状态改为“跟进中”，那么这时候潜在学员的跟进状态显示为“跟进中”，后续有如有安排试听，则该学员的跟进状态会自动改为“已约课”。
+ * 更改跟进状态后，所有的跟进记录不发生任何变化。
+ */
+export enum GenJinZhuangTai {
+    DAI_GEN_JIN = 'DAI_GEN_JIN',
+    GEN_JIN_ZHONG = 'GEN_JIN_ZHONG',
+    YI_YUE_KE = 'YI_YUE_KE',
+    YI_TI_YAN = 'YI_TI_YAN',
+    YI_SHI_XIAO = 'YI_SHI_XIAO',
+}
+
+
+// 学员跟进级别。低 | 中 | 高
+export enum YiXiangJiBie {
+    DI,
+    ZHONG,
+    GAO
+}
+
 // 学员信息
 export type XueYuanXinXi = {
     // 所属账号
@@ -747,6 +773,8 @@ export type PaiKeJiLu = {
 export type DianMingJiLu = {
     // 排课记录Id
     paiKeJiLuId: string
+    // 排课记录状态
+    paiKeJiLuZhuangTai: PaiKeJiLuZhuangTai
     // 学员Id
     xueYuanId: string
     // 上课学员类型
@@ -784,6 +812,8 @@ export type DianMingJiLu = {
     keChengMingCheng: string
     // 点评内容
     dianPingNeiRong: string
+    // 成长记录Id（即点评记录ID）
+    chengZhangJiLuId: string
 } & IdValue & ReactUninqueKey
 
 
@@ -878,3 +908,98 @@ export type OssSignature = {
     policy: string
     signature: string
 }
+
+// 跟进记录
+export type GenJinJiLu = {
+    // 学员Id
+    xueYuanId: string
+    // 内容
+    neiRong: string
+    // 跟进时间
+    genJinShiJian: number
+    // 跟进人Id
+    genJinRenId: string
+    // 已完成
+    yiWanCheng: boolean
+} & IdValue & ReactUninqueKey
+
+// 潜在学员列表View
+export type QianZaiXueYuanView = {
+    // 姓名
+    xingMing: string
+    // 手机
+    shouJi: string
+    // 跟进状态
+    genJinZhangTai: GenJinZhuangTai
+    // 意向级别
+    yiXiangJiBie: YiXiangJiBie
+    // 跟进人Id
+    genJinRenId: string
+    // 跟进人姓名
+    genJinRenXingMing: string
+
+    // 最后一次跟进记录
+    latestGenJinJiLu: GenJinJiLu
+    // 下次跟进记录
+    nextGenJinJiLu: GenJinJiLu
+
+    // 年龄
+    nanLing: number
+    // 标签组
+    xueYuanBiaoQianZu: BiaoQian[]
+    // 创建时间
+    createTime: number
+
+    // 学员状态
+    xueYuanZhuangTai: XueYuanZhuangTai
+} & IdValue & ReactUninqueKey
+
+
+// 在读学员列表View
+export type ZaiDuXueYuanView = {
+    // 姓名
+    xingMing: string
+    // 手机
+    shouJi: string
+    // 当前年级
+    danqQianNianJi: string
+    // 年龄
+    nanLing: number
+
+    // 最后一次跟进记录
+    latestGenJinJiLu: GenJinJiLu
+
+    // 跟进人Id
+    genJinRenId: string
+    // 跟进人姓名
+    genJinRenXingMing: string
+    // 学员状态
+    xueYuanZhuangTai: XueYuanZhuangTai
+} & IdValue & ReactUninqueKey
+
+
+// 历史学员列表View
+export type LiShiXueYuanView = {
+    // 姓名
+    xingMing: string
+    // 手机
+    shouJi: string
+    // 年龄
+    nanLing: number
+
+    // 创建时间
+    createTime: number
+    // 结业时间
+    jieYeShiJian: number
+
+    // 最后就读课程
+    latestKeCheng: XueYuanKeCheng
+
+    // 跟进人Id
+    genJinRenId: string
+    // 跟进人姓名
+    genJinRenXingMing: string
+
+    // 学员状态
+    xueYuanZhuangTai: XueYuanZhuangTai
+} & IdValue & ReactUninqueKey

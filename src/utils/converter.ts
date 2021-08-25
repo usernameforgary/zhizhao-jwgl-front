@@ -5,7 +5,7 @@ import {
     NoPageSearchResult,
     OrderableDataNode,
     PaiKeFangShiFenLei, PaiKeChongFuFangShiFenLei, PaiKeJieShuFangShiFenLei,
-    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai, XueYuanKeCheng, DingJiaBiaoZhun, KeChengLeiXing, ShangKeXueYuanLeiXing, XueYuanDaoKeZhuangTai, WenJianZhuangTai
+    SearchResult, SourceData, XingBie, XiTongCaiDan, PaiKeShangKeTian, XueYuanZhuangTai, XueYuanKeCheng, DingJiaBiaoZhun, KeChengLeiXing, ShangKeXueYuanLeiXing, XueYuanDaoKeZhuangTai, WenJianZhuangTai, GenJinZhuangTai
 } from "../customtypes";
 import { xueYuanKeChengFormValueType } from "../pages/xueyuan/xueyuanbaoming/BaoMingGouMaiStep";
 
@@ -344,5 +344,28 @@ export function convertWenJianZhuangTai2Text(wenJianZhuangTai: WenJianZhuangTai)
             return "已下载";
         default:
             return "未知";
+    }
+}
+
+
+/**
+ * 转换文件状态
+ * @param wenJianZhuangTai 文件状态
+ * @returns 
+ */
+export function convertString2GenJinZhuangTai(genJinZhuangTaiStr: string): GenJinZhuangTai | undefined {
+    switch (genJinZhuangTaiStr) {
+        case 'DAI_GEN_JIN':
+            return GenJinZhuangTai.DAI_GEN_JIN;
+        case 'GEN_JIN_ZHONG':
+            return GenJinZhuangTai.GEN_JIN_ZHONG;
+        case 'YI_YUE_KE':
+            return GenJinZhuangTai.YI_YUE_KE;
+        case 'YI_TI_YAN':
+            return GenJinZhuangTai.YI_TI_YAN;
+        case 'YI_SHI_XIAO':
+            return GenJinZhuangTai.YI_SHI_XIAO;
+        default:
+            return undefined;
     }
 }

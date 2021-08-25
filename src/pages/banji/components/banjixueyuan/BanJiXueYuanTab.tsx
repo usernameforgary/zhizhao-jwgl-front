@@ -63,8 +63,8 @@ const BanJiXueYuanTab: React.FC<BanJiXueYuanTabProps> = ({ banJiXiangQing }) => 
             key: 'action',
             render: (value, record) => {
                 return (<>
-                    <Button type="link">调至其他班</Button>
-                    <Button type="link">移出本班</Button>
+                    <Button disabled type="link">调至其他班</Button>
+                    <Button disabled type="link">移出本班</Button>
                 </>);
             }
         },
@@ -73,7 +73,7 @@ const BanJiXueYuanTab: React.FC<BanJiXueYuanTabProps> = ({ banJiXiangQing }) => 
         <>
             <Space direction="vertical" style={{ width: '100%' }} size="large">
                 <Row>
-                    <Button type="primary">添加学员</Button>
+                    <Button disabled type="primary">添加学员</Button>
                 </Row>
                 <Row>
                     <Col span={24}>

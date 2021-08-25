@@ -32,6 +32,8 @@ import { observer } from 'mobx-react';
 import { getDefinedRouteByRouteName, routeName } from '../../router';
 import PaiKeJiLuDianPing from '../shangkejilu/dianping/PaiKeJiLuDianPing';
 import ChaKanDianPing from '../shangkejilu/dianping/ChaKanDianPing';
+import XueYuanDangAn from '../xueyuandangan/XueYuanDangAn';
+import LaoShiLieBiao from '../laoshi/LaoShiLieBiao';
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -132,8 +134,8 @@ const Index = () => {
                                             </Badge>
                                         </Link>
                                     </Col>
-                                    <Button type="primary">帮助</Button>
-                                    <Button type="primary">修改密码</Button>
+                                    <Button disabled type="primary">帮助</Button>
+                                    <Button disabled type="primary">修改密码</Button>
                                     <Button onClick={logout} type="primary">退出登录</Button>
                                 </Space>
                             </Row>
@@ -203,6 +205,8 @@ const Index = () => {
                                 <PrivateRouter exact key="shangkejiluliebiao" path="/sys/shangkejiluliebiao" component={ShangKeJiLuLieBiao} />
                                 <PrivateRouter exact key="paikejiludianping" path="/sys/paikejiludianping/:paiKeJiLuId" component={PaiKeJiLuDianPing} />
                                 <PrivateRouter exact key="chakandianping" path="/sys/chakandianping/:paiKeJiLuId" component={ChaKanDianPing} />
+                                <PrivateRouter exact key="xueyuandangan" path="/sys/xueyuandangan" component={XueYuanDangAn} />
+                                <PrivateRouter exact key="laoshiliebiao" path="/sys/laoshiliebiao" component={LaoShiLieBiao} />
                                 <PrivateRouter exact key="dashboard" path="/sys" component={DashBord}></PrivateRouter>
                                 <Route path="*" component={Page404} />
                             </Switch>

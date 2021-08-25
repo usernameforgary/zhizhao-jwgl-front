@@ -1,11 +1,12 @@
 import { Table, Button, Col, Row, TableColumnType, Space } from 'antd'
 import moment from 'moment'
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import IconBanJi from '../../../components/customicons/banji/IconBanJi'
 import LinkButton from '../../../components/linkbutton'
-import { XueYuanKeCheng, XueYuanXinXi } from '../../../customtypes'
+import { XueYuanKeCheng, XueYuanKeChengZhuangTai, XueYuanXinXi } from '../../../customtypes'
 import { getDefinedRouteByRouteName, routeName } from '../../../router'
+import { xueYuanKeChengJieKe } from '../../../services/combine'
 import { huoQuXueYuanKeChengByXueYuanId } from '../../../services/xueyuankecheng'
 import { TabNamesBanJiXiangQing } from '../../banji/BanJiXiangQing'
 
@@ -19,6 +20,7 @@ type BaoDuBanJiTabProps = {
  * @returns 
  */
 const BaoDuBanJiTab: React.FC<BaoDuBanJiTabProps> = ({ xueYuanXinXi }) => {
+    const history = useHistory();
     const [isLiShi, setIsLiShi] = useState<boolean>(false);
     const [xueYuanKeChengList, setXueYuanKeChengList] = useState<XueYuanKeCheng[]>([]);
 
@@ -50,6 +52,14 @@ const BaoDuBanJiTab: React.FC<BaoDuBanJiTabProps> = ({ xueYuanXinXi }) => {
         to = to.substring(0, to.lastIndexOf(":"));
         to += "" + xueYuanXinXi?.id;
         return to;
+    }
+
+    // 点击结课
+    const handleJieKeClick = async (xueYuanKeChengId: string, banJiId: string) => {
+        try {
+            await xueYuanKeChengJieKe(xueYuanKeChengId, banJiId);
+            history.goBack();
+        } catch (e) { }
     }
 
     const columns: TableColumnType<XueYuanKeCheng>[] = [
@@ -109,13 +119,20 @@ const BaoDuBanJiTab: React.FC<BaoDuBanJiTabProps> = ({ xueYuanXinXi }) => {
             title: '操作',
             key: 'action',
             render: (value, record) => {
-                return (
-                    <>
-                        <Button type="link">退课</Button>
-                        <span style={{ color: '#40a9ff' }}>|</span>
-                        <Button type="link">转课</Button>
-                    </>
-                );
+                if (record.keChengZhuangTai === XueYuanKeChengZhuangTai.DAI_JIE_KE) {
+                    return (
+                        <Button type="link" onClick={e => handleJieKeClick(record.id || "", record.banJi?.id || "")}>结课</Button>
+                    );
+                } else {
+                    return (
+                        <>
+                            <Button type="link">退课</Button>
+                            <span style={{ color: '#40a9ff' }}>|</span>
+                            <Button type="link">转课</Button>
+                        </>
+                    );
+                }
+
             },
         }
     ];

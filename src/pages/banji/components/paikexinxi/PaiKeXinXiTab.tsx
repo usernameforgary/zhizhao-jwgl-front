@@ -137,8 +137,10 @@ const PaiKeXinXiTab: React.FC<PaiKeXinXiProps> = ({ banJiXiangQing }) => {
             key: 'action',
             render: (value, record) => (
                 <>
-                    <a href={"/" + record.id}>编辑</a> |
-                    <a href={"/" + record.id}>删除</a>
+                    <Button disabled>编辑</Button>
+                    <Button disabled>删除</Button>
+                    {/* <a href={"/" + record.id}>编辑</a> |
+                    <a href={"/" + record.id}>删除</a> */}
                 </>
             ),
         },

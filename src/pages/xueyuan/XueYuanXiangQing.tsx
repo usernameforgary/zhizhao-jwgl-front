@@ -146,9 +146,9 @@ const XueYuanXiangQing = () => {
         return (
             <>
                 <Space size="small">
-                    <Button type="primary">编辑学员资料</Button>
-                    <Button>报名</Button>
-                    <Button>试听</Button>
+                    <Button disabled>编辑学员资料</Button>
+                    <Button disabled>报名</Button>
+                    <Button disabled>试听</Button>
                 </Space>
             </>
         );

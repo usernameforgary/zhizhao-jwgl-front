@@ -8,6 +8,8 @@ const convertDianMingJiLu = (obj: SourceData): DianMingJiLu => {
         id: obj.id,
         // 排课记录Id
         paiKeJiLuId: obj.paiKeJiLuId,
+        // 排课记录状态
+        paiKeJiLuZhuangTai: obj.paiKeJiLuZhuangTai,
         // 学员Id
         xueYuanId: obj.xueYuanId,
         // 上课学员类型
@@ -45,6 +47,8 @@ const convertDianMingJiLu = (obj: SourceData): DianMingJiLu => {
         keChengMingCheng: obj.keChengMingCheng,
         // 点评内容
         dianPingNeiRong: obj.dianPingNeiRong,
+        // 成长记录Id（即点评记录ID）
+        chengZhangJiLuId: obj.chengZhangJiLuId,
 
         key: obj.id
     }

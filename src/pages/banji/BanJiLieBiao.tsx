@@ -207,15 +207,15 @@ const BanJiLieBiao = () => {
                     </Col>
                     <Col span={3}>
                         <Row justify="end">
-                            <Button type="primary">导出</Button>
+                            <Button disabled type="primary">导出</Button>
                         </Row>
                     </Col>
                 </Row>
                 <Row>
                     <Space size="large">
                         <Button type="primary" onClick={toggleShowXinZengBanJi}>添加班级</Button>
-                        <Button type="primary">批量结业</Button>
-                        <Button type="primary">导出班级名单</Button>
+                        <Button disabled type="primary">批量结业</Button>
+                        <Button disabled type="primary">导出班级名单</Button>
                     </Space>
                 </Row>
                 <Row>

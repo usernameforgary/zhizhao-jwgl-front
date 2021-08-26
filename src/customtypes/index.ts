@@ -256,8 +256,25 @@ export type CommonType = {
 
 // 老师
 export type LaoShi = {
-    xingMing: string,
-    zhangHaoId: number
+    xingMing: string
+    // 所属账号Id
+    zhangHaoId: string
+    // 性别
+    xingBie: XingBie
+    // 擅长科目组
+    shanChangKeMuZu: ShanChangKeMu[]
+    // 手机
+    shouJi: string
+    // 上月点名率
+    shangYueDianMingLv: number
+    // 上月课时
+    shangYueKeShi: number
+    // 本月课时
+    benYueKeShi: number
+    // 已上课时
+    yiShangKeShi: number
+    // 在职状态
+    zaiZhiZhuangTai: boolean
 } & IdValue & ReactUninqueKey
 
 // 班级状态

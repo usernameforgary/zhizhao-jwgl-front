@@ -45,7 +45,7 @@ class YiShanKeJiLuStore {
 
     // 历史点名记录，分页信息
     @observable
-    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 2 };
+    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 10 };
 
     // 获取点名记录
     @action

@@ -27,7 +27,7 @@ class JiaoFenJiLuStore {
     keyword: string = "";
 
     @observable
-    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 2 };
+    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 10 };
 
     @action
     updateKeyword(val: string) {
@@ -159,7 +159,9 @@ const JiaoFenJiLu = () => {
                 if (routePath) {
                     routePath = routePath.substring(0, routePath.lastIndexOf(":"));
                 }
-                return (<Link to={routePath + value} >{value}</Link >)
+                // TODO
+                //return (<Link to={routePath + value} >{value}</Link >)
+                return (<Link to="#" >{value}</Link >)
             }
         },
         {

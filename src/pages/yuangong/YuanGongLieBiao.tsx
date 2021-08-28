@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx'
 import { YuanGong } from '../../customtypes'
-import { Table, Switch, TableColumnType, TablePaginationConfig } from 'antd';
+import { Table, Switch, TableColumnType, TablePaginationConfig, Button } from 'antd';
 import { observer } from 'mobx-react';
 import { useState } from 'react';
 
@@ -130,8 +130,8 @@ const YuanGongLieBiao = () => {
             key: 'action',
             render: (value, record) => (
                 <>
-                    <a href={"/" + record.id}>编辑</a> |
-                    <a href={"/" + record.id}>删除</a>
+                    <Button disabled type="link">编辑</Button>
+                    <Button disabled type="link">删除</Button>
                 </>
             ),
         },

@@ -24,7 +24,7 @@ class DiangMingQingKuangStore {
 
     // 一周内的未点名排课记录，分页信息
     @observable
-    yiZhouPagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 2 };
+    yiZhouPagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 5 };
 
     // 当前周
     @observable
@@ -36,7 +36,7 @@ class DiangMingQingKuangStore {
 
     // 历史点名记录，分页信息
     @observable
-    liShiPagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 2 };
+    liShiPagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 5 };
 
     // 显示点名结果的排课记录
     @observable
@@ -207,8 +207,8 @@ const DianMingQingKuangTab: React.FC<DianMingQingKuangProps> = ({ banJiXiangQing
                 const canDianMing: boolean = record.shangKeXueYuanZu && record.shangKeXueYuanZu.length > 0;
                 return <>
                     <Button disabled={!canDianMing} type="link" onClick={() => handleDianMingClick(record)}>点名</Button>
-                    <Button type="link" >调课</Button>
-                    <Button type="link">删除</Button>
+                    <Button disabled type="link" >调课</Button>
+                    <Button disabled type="link">删除</Button>
                 </>;
             }
         },

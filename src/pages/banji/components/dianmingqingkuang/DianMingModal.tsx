@@ -404,8 +404,8 @@ const DianMingModal: React.FC<DianMingModalProps> = ({ banJiXiangQing, visible, 
                     <Space size="large" direction="vertical" style={{ width: '100%' }}>
                         <Row>
                             <Space size="middle">
-                                <Button>+添加临时学员</Button>
-                                <Button>+添加补课学员</Button>
+                                <Button disabled>+添加临时学员</Button>
+                                <Button disabled>+添加补课学员</Button>
                             </Space>
                         </Row>
                         <Row>

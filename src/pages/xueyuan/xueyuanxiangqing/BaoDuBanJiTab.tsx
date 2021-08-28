@@ -126,9 +126,8 @@ const BaoDuBanJiTab: React.FC<BaoDuBanJiTabProps> = ({ xueYuanXinXi }) => {
                 } else {
                     return (
                         <>
-                            <Button type="link">退课</Button>
-                            <span style={{ color: '#40a9ff' }}>|</span>
-                            <Button type="link">转课</Button>
+                            <Button disabled type="link">退课</Button>
+                            <Button disabled type="link">转课</Button>
                         </>
                     );
                 }

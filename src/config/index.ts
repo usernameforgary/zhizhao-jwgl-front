@@ -50,6 +50,7 @@ const setting: Setting = win['__SETTING__'] ? {
     publicOSS: "",
     privateOSS: "",
     apiGateway: "http://localhost:8586"
+    //apiGateway: "http://139.224.133.133:8586"
 }
 
 export {

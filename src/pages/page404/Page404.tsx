@@ -7,8 +7,8 @@ const Page404 = () => {
     return (
         <Result
             status={404}
-            title="404"
-            subTitle="抱歉, 您所访问的页面不存在."
+            title="Comming soon..."
+            subTitle="抱歉, 未找到或开发中."
             extra={
                 <Button type="primary" onClick={() => history.push('/sys')}>
                     返回首页

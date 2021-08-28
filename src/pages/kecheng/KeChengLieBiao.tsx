@@ -21,7 +21,7 @@ class KeChengLieBiaoStore {
     keyword: string = "";
 
     @observable
-    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 2 };
+    pagination: TablePaginationConfig = { current: 1, total: 0, pageSize: 10 };
 
     @action
     updateKeyword(val: string) {
@@ -123,9 +123,8 @@ const KeChengLieBiao: React.FC = () => {
             key: 'action',
             render: (value, record) => (
                 <>
-                    <a href={"/" + record.id}>编辑</a>&nbsp;
-                    <span style={{ color: '#1890ff' }}>|</span>&nbsp;
-                    <a href={"/" + record.id}>删除</a>
+                    <Button disabled type="link">编辑</Button>
+                    <Button disabled type="link">删除</Button>
                 </>
             ),
         },

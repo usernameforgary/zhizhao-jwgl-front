@@ -150,7 +150,7 @@ const BanJiLieBiao = () => {
                     <Space size="middle">
                         <Link to={`${getDefinedRouteByRouteName(routeName.banjixiangqing)?.path}/${record.id}/${TabNamesBanJiXiangQing.banjixueyuan}`}>学员管理</Link>
                         <Link to={`${getDefinedRouteByRouteName(routeName.banjixiangqing)?.path}/${record.id}/${TabNamesBanJiXiangQing.dianmingqingkuang}`}>点名</Link>
-                        <a href={"/" + record.id}>结课</a>
+                        <Button type="link" disabled>结课</Button>
                     </Space>
                 </>
             ),
